@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "637766382072",
+    "firebase_url": "https://armenu-2220c.firebaseio.com",
+    "project_id": "armenu-2220c",
+    "storage_bucket": "armenu-2220c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637766382072:android:ca0ded0c085ade54",
+        "android_client_info": {
+          "package_name": "com.apcs.armenu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637766382072-2qr48t30t8273on2p53bnauls31er9c6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFb9Pn-UScOopMIu1NVBCOmI_Xh4KB_hc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
