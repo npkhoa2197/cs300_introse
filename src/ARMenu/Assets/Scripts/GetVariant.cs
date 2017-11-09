@@ -23,6 +23,10 @@ public class GetVariant : MonoBehaviour {
 	}
 
 	public void SwitchToVariant (int position) {
+		if (IsEmpty()) {
+			return;
+		}
+
 		if (position >= foodModels.Length) {
 			position = 0;
 		}
@@ -43,14 +47,22 @@ public class GetVariant : MonoBehaviour {
 	}
 
 	public void PrintInfo () {	
-		GetFoodInfo getFoodInfo = foodModels[selected].GetComponent(typeof(GetFoodInfo)) as GetFoodInfo;
+		if (IsEmpty()) {
+			return;
+		}
+
+		GetFoodInfo getFoodInfo = foodModels[selected].GetComponent<GetFoodInfo>();
 
 		if (getFoodInfo != null) {
 			Debug.Log(getFoodInfo.getFoodName() + " " + getFoodInfo.getVariant());
 		}
 	}
 
-	public int Count() {
+	public int Count () {
 		return foodModels.Length;
+	}
+
+	private bool IsEmpty () {
+		return foodModels.Length == 0;
 	}
 }
