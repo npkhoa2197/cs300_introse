@@ -20,7 +20,10 @@ public class OrderInformation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        currentcamposx = cam.transform.position.x;
+        if (cam != null)
+        {
+            currentcamposx = cam.transform.position.x;
+        }
         if (vieworder)
         {
             if (currentcamposx < nextcamposx)
