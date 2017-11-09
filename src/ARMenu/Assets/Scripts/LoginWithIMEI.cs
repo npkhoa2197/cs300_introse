@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//this script reads the device IMEI
+//this IMEI acts as an identifier for each table
 public class LoginWithIMEI : MonoBehaviour {
 
 	//code snippet adapted from 
