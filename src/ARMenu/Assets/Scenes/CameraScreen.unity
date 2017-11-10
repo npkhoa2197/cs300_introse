@@ -480,8 +480,7 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1905533044}
     m_Modifications:
-    - target: {fileID: 114570313768981832, guid: ee8784d0d4f72044a83013573abd44c1,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: foodModels.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -517,18 +516,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114570313768981832, guid: ee8784d0d4f72044a83013573abd44c1,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: foodModels.Array.data[0]
       value: 
       objectReference: {fileID: 2106166594}
-    - target: {fileID: 114570313768981832, guid: ee8784d0d4f72044a83013573abd44c1,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: foodModels.Array.data[1]
       value: 
       objectReference: {fileID: 1603499280}
     m_RemovedComponents:
-    - {fileID: 114570313768981832, guid: ee8784d0d4f72044a83013573abd44c1, type: 2}
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: ee8784d0d4f72044a83013573abd44c1, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1537020431 stripped
