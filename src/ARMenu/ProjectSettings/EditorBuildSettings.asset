@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/CameraScreen.unity
     guid: 191fd696bfedc074a8c9f2911042c9d7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ChefScreen.unity
     guid: 179c55c79aa44b147a704954468381e6
+  - enabled: 1
+    path: Assets/Scenes/WaiterScreen.unity
+    guid: c6c24c2f102ac1740b4d311f0760fef3
