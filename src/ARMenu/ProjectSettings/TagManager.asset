@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - OrderInfo
   - 
   - 
   - 
@@ -40,4 +40,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: OrderInfo
+    uniqueID: 466379825
+    locked: 0
+  - name: UI
+    uniqueID: 3230744349
     locked: 0
