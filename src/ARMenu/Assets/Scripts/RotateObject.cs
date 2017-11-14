@@ -9,11 +9,16 @@ public class RotateObject : MonoBehaviour {
 
 	public float rotSpeed = 100;
 
+	private Rigidbody rigidbody;
+
+	void Start () {
+		rigidbody = GetComponent<Rigidbody>();
+	}
+
 	void OnMouseDrag () {
 		//Only rotate horizontally
 		float rotX = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
 
-		transform.Rotate(Vector3.up * -rotX);
+		rigidbody.AddTorque(transform.up * -rotX);
 	}
-
 }

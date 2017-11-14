@@ -7,6 +7,5 @@ public class OnShareTouch : MonoBehaviour {
 
 	void OnMouseDown () {
 		Debug.Log("Share!");
-	}
-	
+	}	
 }
