@@ -156,6 +156,18 @@ Prefab:
       propertyPath: foodModel
       value: 
       objectReference: {fileID: 100000, guid: 23aa55fd89f04d149872c3c25e2653dc, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_AngularDrag
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ca212cdb108bed240b287c9f7eb32b00, type: 2}
   m_IsPrefabParent: 0
@@ -594,6 +606,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1746698970}
   - component: {fileID: 1746698971}
+  - component: {fileID: 1746698973}
+  - component: {fileID: 1746698972}
   m_Layer: 0
   m_Name: SelectCircle
   m_TagString: Untagged
@@ -627,7 +641,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testModel: {fileID: 100000, guid: 23aa55fd89f04d149872c3c25e2653dc, type: 3}
   objectCount: 10
-  radius: 500
+  radius: 600
+--- !u!114 &1746698972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1746698969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcd12239c05c87a45898cb1a621fa571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amount: 100
+--- !u!65 &1746698973
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1746698969}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4532381, y: 0.089039505, z: 1.3639386}
+  m_Center: {x: -0.015408933, y: 0.044355303, z: 0.012756109}
 --- !u!1 &1905533038
 GameObject:
   m_ObjectHideFlags: 0
