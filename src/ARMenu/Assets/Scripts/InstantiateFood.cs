@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InstantiateFood : MonoBehaviour {
 
-	public GameObject foodModel;
+	public GameObject defaultFoodModel;
 	//public float scale;
 
 	private GameObject clone;
@@ -12,14 +12,14 @@ public class InstantiateFood : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//foodModel.transform.localScale = new Vector3(scale, scale, scale);
+		//defaultFoodModel.transform.localScale = new Vector3(scale, scale, scale);
 		CreateModel();
 	}
 
 	public void UpdateFoodModel (GameObject newFoodModel) {
 		if (clone != null)
 			Destroy(clone);
-		foodModel = newFoodModel;
+		defaultFoodModel = newFoodModel;
 		CreateModel();
 	}
 
@@ -31,6 +31,6 @@ public class InstantiateFood : MonoBehaviour {
 		float y = container.position.y;
 		float z = container.position.z;
 
-		clone = Instantiate(foodModel, new Vector3(x, y, z), Quaternion.identity, container);
+		clone = Instantiate(defaultFoodModel, new Vector3(x, y, z), Quaternion.identity, container);
 	}
 }

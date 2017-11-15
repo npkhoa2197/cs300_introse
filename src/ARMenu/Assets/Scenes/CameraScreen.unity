@@ -112,7 +112,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &562935749
+--- !u!21 &571824079
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: french_friesMaterial
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 580ae5dd2206466cb4d49e741a83829c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
+--- !u!4 &601493437 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4812745111693056, guid: c76fde02d08bc094397f596f2aa1e2ba,
+    type: 2}
+  m_PrefabInternal: {fileID: 1644488413}
+--- !u!1001 &655355610
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -149,63 +179,22 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4636741718527918, guid: ca212cdb108bed240b287c9f7eb32b00, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114379717855250334, guid: ca212cdb108bed240b287c9f7eb32b00,
         type: 2}
-      propertyPath: foodModel
+      propertyPath: defaultFoodModel
       value: 
-      objectReference: {fileID: 100000, guid: 23aa55fd89f04d149872c3c25e2653dc, type: 3}
-    - target: {fileID: 0}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_AngularDrag
-      value: 2
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1300904998368742, guid: 93fb2574e712e0640827012407b38336,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ca212cdb108bed240b287c9f7eb32b00, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &562935750 stripped
+--- !u!4 &655355611 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4636741718527918, guid: ca212cdb108bed240b287c9f7eb32b00,
     type: 2}
-  m_PrefabInternal: {fileID: 562935749}
---- !u!21 &571824079
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: french_friesMaterial
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 580ae5dd2206466cb4d49e741a83829c, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
---- !u!4 &601493437 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4812745111693056, guid: c76fde02d08bc094397f596f2aa1e2ba,
-    type: 2}
-  m_PrefabInternal: {fileID: 1644488413}
+  m_PrefabInternal: {fileID: 655355610}
 --- !u!43 &740750718
 Mesh:
   m_ObjectHideFlags: 0
@@ -626,7 +615,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1905533044}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1746698971
 MonoBehaviour:
@@ -648,7 +637,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1746698969}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fcd12239c05c87a45898cb1a621fa571, type: 3}
   m_Name: 
@@ -791,8 +780,8 @@ Transform:
   - {fileID: 928219772}
   - {fileID: 1537020431}
   - {fileID: 601493437}
-  - {fileID: 562935750}
   - {fileID: 1746698970}
+  - {fileID: 655355611}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

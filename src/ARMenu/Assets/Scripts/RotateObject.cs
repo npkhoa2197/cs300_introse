@@ -6,11 +6,11 @@ using UnityEngine;
 //to rotate horizontally
 public class RotateObject : MonoBehaviour {
 
-	public float amount = 20f;
+	public float amount = 50f;
 
 	void OnMouseDrag () {
 		//Only rotate horizontally
 		float h = Input.GetAxis("Mouse X") * amount * Mathf.Deg2Rad;
-        transform.Rotate(transform.up * -h);
+  		transform.Rotate(transform.up * -h);
 	}
 }
