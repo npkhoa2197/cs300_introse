@@ -17,8 +17,8 @@ public class RotateObject : MonoBehaviour {
 
 	void OnMouseDrag () {
 		//Only rotate horizontally
-		float rotX = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
+		float rotX = Input.GetAxis("Horizontal") * rotSpeed;// * Mathf.Deg2Rad;
 
-		rigidbody.AddTorque(transform.up * -rotX);
+		rigidbody.AddTorque(transform.up * rotX);
 	}
 }
