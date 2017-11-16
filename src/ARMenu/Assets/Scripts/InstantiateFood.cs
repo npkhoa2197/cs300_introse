@@ -32,5 +32,12 @@ public class InstantiateFood : MonoBehaviour {
 		float z = container.position.z;
 
 		clone = Instantiate(defaultFoodModel, new Vector3(x, y, z), Quaternion.identity, container);
+
+		//set clone scale to 1
+		clone.transform.localScale = new Vector3(1, 1, 1);
+
+		//fit the box collider to the new model
+		FitBoxCollider fit = GetComponent<FitBoxCollider>();
+		fit.GetFit();
 	}
 }

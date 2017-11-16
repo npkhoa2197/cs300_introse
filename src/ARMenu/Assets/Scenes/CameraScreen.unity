@@ -185,8 +185,22 @@ Prefab:
         type: 2}
       propertyPath: defaultFoodModel
       value: 
-      objectReference: {fileID: 1300904998368742, guid: 93fb2574e712e0640827012407b38336,
+      objectReference: {fileID: 100000, guid: cdc94d3da34df8b4f9914dfeac1fc0ca, type: 3}
+    - target: {fileID: 65607200814786294, guid: ca212cdb108bed240b287c9f7eb32b00,
         type: 2}
+      propertyPath: m_Center.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65607200814786294, guid: ca212cdb108bed240b287c9f7eb32b00,
+        type: 2}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65607200814786294, guid: ca212cdb108bed240b287c9f7eb32b00,
+        type: 2}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ca212cdb108bed240b287c9f7eb32b00, type: 2}
   m_IsPrefabParent: 0
@@ -628,9 +642,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f142502229ef94cb5f6a18520aedcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testModel: {fileID: 100000, guid: 23aa55fd89f04d149872c3c25e2653dc, type: 3}
+  testModel: {fileID: 100000, guid: cdc94d3da34df8b4f9914dfeac1fc0ca, type: 3}
   objectCount: 10
   radius: 600
+  itemScale: 0.3
 --- !u!114 &1746698972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,7 +669,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.4532381, y: 0.089039505, z: 1.3639386}
-  m_Center: {x: -0.015408933, y: 0.044355303, z: 0.012756109}
+  m_Center: {x: -0, y: 0, z: 0}
 --- !u!1 &1905533038
 GameObject:
   m_ObjectHideFlags: 0
