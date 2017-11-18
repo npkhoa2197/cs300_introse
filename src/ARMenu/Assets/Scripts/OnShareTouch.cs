@@ -5,7 +5,7 @@ using UnityEngine;
 //the script is attached to the Share button
 public class OnShareTouch : MonoBehaviour {
 
-	void OnMouseDown () {
+	void OnMouseUpAsButton () {
 		Debug.Log("Share!");
 	}	
 }

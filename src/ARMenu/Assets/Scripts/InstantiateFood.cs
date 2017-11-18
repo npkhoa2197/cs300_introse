@@ -2,24 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstantiateFood : MonoBehaviour {
+public class InstantiateFood : MonoBehaviour, VariantChangeListener {
 
-	public GameObject defaultFoodModel;
 	//public float scale;
-
+	private VariantAdapter adapter;
+	private GameObject baseFoodModel;
 	private GameObject clone;
 	private Transform container;
 
 	// Use this for initialization
 	void Start () {
-		//defaultFoodModel.transform.localScale = new Vector3(scale, scale, scale);
+		//get adapter from parent
+		adapter = transform.parent.gameObject.GetComponent<VariantAdapter>();
+		//get selected variant model
+		baseFoodModel = adapter.GetSelectedVarModel();
 		CreateModel();
 	}
 
 	public void UpdateFoodModel (GameObject newFoodModel) {
 		if (clone != null)
 			Destroy(clone);
-		defaultFoodModel = newFoodModel;
+		baseFoodModel = newFoodModel;
 		CreateModel();
 	}
 
@@ -31,13 +34,17 @@ public class InstantiateFood : MonoBehaviour {
 		float y = container.position.y;
 		float z = container.position.z;
 
-		clone = Instantiate(defaultFoodModel, new Vector3(x, y, z), Quaternion.identity, container);
+		clone = Instantiate(baseFoodModel, new Vector3(x, y, z), Quaternion.identity, container);
 
 		//set clone scale to 1
 		clone.transform.localScale = new Vector3(1, 1, 1);
 
 		//fit the box collider to the new model
 		FitBoxCollider fit = GetComponent<FitBoxCollider>();
-		fit.GetFit();
+		fit.GetFit(1);
+	}
+
+	public void OnModelChange (GameObject gameObject) {
+		UpdateFoodModel(gameObject);
 	}
 }

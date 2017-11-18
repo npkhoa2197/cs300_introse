@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4636741718527918}
   - component: {fileID: 65607200814786294}
-  - component: {fileID: 114978657591046072}
   - component: {fileID: 114122014231867820}
   - component: {fileID: 114379717855250334}
   - component: {fileID: 114043103083796950}
@@ -91,18 +90,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultFoodModel: {fileID: 0}
---- !u!114 &114978657591046072
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1355287518442514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2f375cfbe00b6f4d8211dc2c396286c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  foodName: 
-  price: 0
-  description: 
-  variant: 

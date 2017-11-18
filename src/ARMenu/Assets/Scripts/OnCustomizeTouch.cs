@@ -5,21 +5,16 @@ using UnityEngine;
 //this script is attached to the Customize button
 public class OnCustomizeTouch : MonoBehaviour {
 
-	private GetVariant getVariant = null;
+	private GameObject selectCircle;
+	private bool isCustomizing = false;
 
 	void Start () {
-		//get parent imageTarget which contains the button
-		GameObject parentTarget = gameObject.transform.parent.gameObject;
-
-		if (parentTarget != null) {
-			getVariant = parentTarget.GetComponent<GetVariant>();
-		}
+		selectCircle = transform.parent.Find("SelectCircle").gameObject;
+		selectCircle.SetActive(isCustomizing);
 	}
 
-	void OnMouseDown () {
-		if (getVariant != null) {
-			getVariant.NextVariant();
-		}
+	void OnMouseUpAsButton () {
+		isCustomizing = !isCustomizing;
+		selectCircle.SetActive(isCustomizing);
 	}
-	
 }

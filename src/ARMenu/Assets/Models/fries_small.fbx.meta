@@ -1,42 +1,21 @@
 fileFormatVersion: 2
-guid: cdc94d3da34df8b4f9914dfeac1fc0ca
-timeCreated: 1510815910
+guid: c65c11566c3171346b8cad80b5c27138
+timeCreated: 1511027376
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
-    100002: group_0_MeshPart0
-    100004: group_0_MeshPart1
-    100006: group_0_MeshPart2
-    100008: group_0_MeshPart3
     400000: //RootNode
-    400002: group_0_MeshPart0
-    400004: group_0_MeshPart1
-    400006: group_0_MeshPart2
-    400008: group_0_MeshPart3
-    2300000: group_0_MeshPart0
-    2300002: group_0_MeshPart1
-    2300004: group_0_MeshPart2
-    2300006: group_0_MeshPart3
-    3300000: group_0_MeshPart0
-    3300002: group_0_MeshPart1
-    3300004: group_0_MeshPart2
-    3300006: group_0_MeshPart3
-    4300000: group_0_MeshPart0
-    4300002: group_0_MeshPart1
-    4300004: group_0_MeshPart2
-    4300006: group_0_MeshPart3
-    6400000: group_0_MeshPart0
-    6400002: group_0_MeshPart1
-    6400004: group_0_MeshPart2
-    6400006: group_0_MeshPart3
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: group_0
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: mat_0
-    second: {fileID: 2100000, guid: e038ad652d164fa4bb2ab9d1a94eeb8d, type: 2}
+    second: {fileID: 2100000, guid: 3734dd2304235f841b5e2446616d1985, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
