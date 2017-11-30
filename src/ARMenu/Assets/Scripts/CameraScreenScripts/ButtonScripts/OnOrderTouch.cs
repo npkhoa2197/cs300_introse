@@ -5,8 +5,15 @@ using UnityEngine;
 //this script is attached to the Order button
 public class OnOrderTouch : MonoBehaviour {
 
-	void OnMouseUpAsButton () {
-		Debug.Log("Order!");
+	private GameObject orderCanvas;
+	private bool isOrdering = false;
+
+	void Start () {
+		orderCanvas = GameObject.Find ("OrderCanvas");
+		orderCanvas.SetActive (false);
 	}
 
+	void OnMouseUpAsButton () {
+		orderCanvas.SetActive(true);
+	}
 }
