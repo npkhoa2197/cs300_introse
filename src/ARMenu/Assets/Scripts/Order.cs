@@ -4,13 +4,13 @@ namespace AssemblyCSharp
 {
 	public class Order
 	{
-		private string additionalRequirements;
-		private bool finished;
-		private string meal;
-		private bool paid;
-		private double price;
-		private long quantity;
-		private long tableNumber;
+		public string additionalRequirements;
+		public bool finished;
+		public string meal;
+		public bool paid;
+		public double price;
+		public long quantity;
+		public long tableNumber;
 
 		public Order ()
 		{

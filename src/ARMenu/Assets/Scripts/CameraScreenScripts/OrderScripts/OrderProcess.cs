@@ -6,7 +6,7 @@ using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
 using AssemblyCSharp;
-
+using Newtonsoft.Json;
 public class OrderProcess : MonoBehaviour {
 
 	private GameObject canvas; 
@@ -48,20 +48,31 @@ public class OrderProcess : MonoBehaviour {
 		string requirements = requirementsInput.text;
 
 		//create an Order object based on the information given by the users and the foodInfo
-		Order order = new Order (requirements, false, foodInfo.getFoodName(), false, 
-			foodInfo.getPrice(), long.Parse(quantity), 0);
-		
+		// Order order = new Order (requirements, false, foodInfo.getFoodName(), false, 
+		// 	foodInfo.getPrice(), long.Parse(quantity), 0);
+
+		//Debug.Log (order);
+
+		//string json = JsonConvert.SerializeObject (order);
+		long tableNumber = 0;
 		//write the new order as a new child node under Order entry
-		DatabaseReference _ref  = reference.Child ("Order").Push();
-		_ref.Child ("Additional Requirements").SetValueAsync (requirements);
-		_ref.Child ("Finished").SetValueAsync (false);
-		_ref.Child ("Meal").SetValueAsync (foodInfo.getFoodName ());
-		_ref.Child ("Paid").SetValueAsync (false);
-		_ref.Child ("Price").SetValueAsync (long.Parse (quantity));
-		_ref.Child ("Quantity").SetValueAsync (quantity);
-		_ref.Child ("Table").SetValueAsync (0);
+		DatabaseReference _ref = reference.Child ("Order").Push();
+		_ref.Child ("finished").SetValueAsync (false);
+		_ref.Child ("paid").SetValueAsync (false);
+//		_ref.Child ("additionalRequirements").SetValueAsync (requirements);
+//		_ref.Child ("meal").SetValueAsync (foodInfo.getFoodName ());
+//		_ref.Child ("price").SetValueAsync (foodInfo.getPrice());
+//		_ref.Child ("quantity").SetValueAsync (long.Parse(quantity));
+//		_ref.Child ("tableNumber").SetValueAsync (tableNumber);
 		
 		//after finishing the ordering, the order box will disappear
 		canvas.SetActive (false);
+		Debug.Log(requirements);
+		Debug.Log(foodInfo.getFoodName());
+		Debug.Log(foodInfo.getPrice());
+		Debug.Log(long.Parse(quantity));
+		Debug.Log(tableNumber);
+
+		//Debug.Log(json);
 	}
 }
