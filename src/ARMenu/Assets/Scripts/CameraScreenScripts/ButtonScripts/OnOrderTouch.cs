@@ -10,10 +10,10 @@ public class OnOrderTouch : MonoBehaviour {
 
 	void Start () {
 		orderCanvas = GameObject.Find ("OrderCanvas");
-		orderCanvas.SetActive (false);
+		orderCanvas.SetActive (true);
 	}
 
 	void OnMouseUpAsButton () {
-		orderCanvas.SetActive(true);
+		//orderCanvas.SetActive(true);
 	}
 }

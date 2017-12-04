@@ -5,14 +5,14 @@ using UnityEngine;
 public class FoodInfo : MonoBehaviour {
 
 	public string foodName;
-	public float price;
+	public double price;
 	public string description;
 
 	public string getFoodName () {
 		return foodName;
 	}
 
-	public float getPrice () {
+	public double getPrice () {
 		return price;
 	}
 
