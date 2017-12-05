@@ -24,26 +24,7 @@ public class ChefOrderControl : MonoBehaviour {
         orderList = new List<orderItem>();
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
-        
         FirebaseDatabase.DefaultInstance.GetReference("Order").ChildAdded += handleChildAdded;
-        /*FirebaseDatabase.DefaultInstance.GetReference("Order").GetValueAsync().ContinueWith(task => {
-            if (task.IsFaulted) {
-              // Handle the error...
-            }
-            else if (task.IsCompleted) {
-                DataSnapshot snapshot = task.Result; 
-                foreach ( DataSnapshot item in snapshot.Children) {
-                    
-                    IDictionary dictOrder = (IDictionary) item.Value;
-                    
-                    itemOr = new orderItem (Convert.ToString(dictOrder["meal"]), Convert.ToString(dictOrder["additionalRequirements"]),
-                        Convert.ToInt32(dictOrder["quantity"]), Convert.ToInt32(dictOrder["tableNumber"]), Convert.ToSingle(dictOrder["price"]), 
-                        (bool) dictOrder["finished"], (bool) dictOrder["paid"]);
-                    orderList.Add(itemOr);   
-                }   
-                initListView(null, orderList);
-            }
-        });*/
         
         Orders = new List<GameObject>();
         moveDisplacement = new List<float>();
@@ -56,7 +37,6 @@ public class ChefOrderControl : MonoBehaviour {
             Orders.Add(Orderitem);
             moveDisplacement.Add(0);
         }
-
         offset = ((RectTransform)orderPrefab.transform).rect.height * 0.03f;
         orderHeight = ((RectTransform)orderPrefab.transform).rect.height * 0.65f + offset;
         Content.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, orderHeight * Orders.Count + 10);
@@ -64,7 +44,6 @@ public class ChefOrderControl : MonoBehaviour {
 	 
     
     void handleChildAdded(object sender, ChildChangedEventArgs args) {
-        
         if (args.DatabaseError != null) {
             Debug.LogError(args.DatabaseError.Message);
             return;
@@ -72,20 +51,18 @@ public class ChefOrderControl : MonoBehaviour {
         
         IDictionary dictOrder = (IDictionary) args.Snapshot.Value;   
         Debug.Log(dictOrder["meal"]);
-        itemOr = new orderItem (Convert.ToString(dictOrder["meal"]), Convert.ToString(dictOrder["additionalRequirements"]),
-            Convert.ToInt32(dictOrder["quantity"]), Convert.ToInt32(dictOrder["tableNumber"]), Convert.ToSingle(dictOrder["price"]), 
+        itemOr = new orderItem (Convert.ToString(args.Snapshot.Key), Convert.ToString(dictOrder["meal"]), 
+            Convert.ToString(dictOrder["additionalRequirements"]), Convert.ToInt32(dictOrder["quantity"]), 
+            Convert.ToInt32(dictOrder["tableNumber"]), Convert.ToSingle(dictOrder["price"]), 
             (bool) dictOrder["finished"], (bool) dictOrder["paid"]);
         addOrder(null, itemOr);
           
     }       
-	private GameObject getNewOrder(){
-		return null;
-	}
 
-    private bool removeFromDatabase(GameObject order)
+    private bool removeFromDatabase(GameObject order, string key)
     {
         //Remove from database, send notification to waiters
-
+        FirebaseDatabase.DefaultInstance.GetReference("Order").Child(key).Child("finished").SetValueAsync(true);
         //Destroy object, update scroll view
         Destroy(order);
         Content.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ((RectTransform)Content.transform).rect.height - orderHeight);
@@ -119,7 +96,7 @@ public class ChefOrderControl : MonoBehaviour {
         order.transform.Find("Dishname").GetComponent<Text>().text = item.meal;
         order.transform.Find("Info1").GetComponent<Text>().text = "Table "+ item.tableNumber.ToString() + " Amount: "+ item.quantity.ToString() + " Price: " +item.price.ToString()+"vnd";
         order.transform.Find("Info2").GetComponent<Text>().text = "Additional requirement: "+ item.additionalRequirements;
-        order.transform.Find("CookDone").GetComponent<Button>().onClick.AddListener(() => onClickCooked());
+        order.transform.Find("CookDone").GetComponent<Button>().onClick.AddListener(() => onClickCooked(item.key));
         order.GetComponent<Button>().onClick.AddListener(() => gameObject.GetComponent<OrderInfo>().ViewOrder());
         Content.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ((RectTransform)Content.transform).rect.height + orderHeight);
 
@@ -131,12 +108,6 @@ public class ChefOrderControl : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
-		if (getNewOrder() != null){
-			// add new order to list	
-		}
-
-        //wl(Orders[0].transform.localPosition.x.ToString());
         //update new position for orders
         for (int i = 0; i < Orders.Count; i++){
 			if (moveDisplacement[i] != 0){
@@ -155,7 +126,7 @@ public class ChefOrderControl : MonoBehaviour {
         
 	}
 
-    public void onClickCooked()
+    public void onClickCooked(string key)
     {
         GameObject button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         GameObject order = button.transform.parent.gameObject;
@@ -180,16 +151,17 @@ public class ChefOrderControl : MonoBehaviour {
         }
 
         // remove from database
-        removeFromDatabase(order);
+        removeFromDatabase(order, key);
     }
 
     
     public class orderItem {
-        public string meal, additionalRequirements;
+        public string meal, additionalRequirements, key;
         public int quantity, tableNumber;
         public float price;
         public bool finished, paid;
-        public orderItem (string meal, string additionalRequirements, int quantity, int tableNumber, float price, bool finished, bool paid) {
+        public orderItem (string key, string meal, string additionalRequirements, int quantity, int tableNumber, float price, bool finished, bool paid) {
+            this.key = key;
             this.meal = meal;
             this.additionalRequirements = additionalRequirements;
             this.quantity = quantity;
