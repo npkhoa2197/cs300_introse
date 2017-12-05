@@ -1226,8 +1226,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1143741033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.7675781, y: 0.33398438, z: 0}
-  m_LocalScale: {x: 0.00052246096, y: 0.00052246096, z: 0.00052246096}
+  m_LocalPosition: {x: -0.9135742, y: 0.11230469, z: 0}
+  m_LocalScale: {x: 0.0001574707, y: 0.0001574707, z: 0.0001574707}
   m_Children:
   - {fileID: 1043016192}
   m_Father: {fileID: 1905533044}
@@ -1855,7 +1855,6 @@ GameObject:
   - component: {fileID: 1905533041}
   - component: {fileID: 1905533040}
   - component: {fileID: 1905533039}
-  - component: {fileID: 1905533046}
   - component: {fileID: 1905533045}
   m_Layer: 0
   m_Name: FrenchFriesTarget
@@ -1985,26 +1984,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09700e796afbcf847a166f5e9b75a6c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  variantModels:
-  - {fileID: 100000, guid: cdc94d3da34df8b4f9914dfeac1fc0ca, type: 3}
-  - {fileID: 100000, guid: c65c11566c3171346b8cad80b5c27138, type: 3}
-  - {fileID: 100000, guid: 66df3bd6cdd345b4c8dd63ebee7155e6, type: 3}
-  variantNames:
-  - Regular
-  - Small
-  - Spaghetti?
+  foodObjectIndex: 0
   selected: 0
---- !u!114 &1905533046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1905533038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69a51a8c4a82dee45bc111fefe2a26bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  foodName: French fries
-  price: 16.69
-  description: Good ol' fries

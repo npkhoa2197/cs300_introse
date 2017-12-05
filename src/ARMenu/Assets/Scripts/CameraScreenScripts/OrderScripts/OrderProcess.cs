@@ -14,15 +14,15 @@ public class OrderProcess : MonoBehaviour {
 	private InputField quantityInput; 
 	private InputField requirementsInput; 
 	private DatabaseReference rootRef;
-	private FoodInfo foodInfo;
+	private FoodObject foodObject;
 	private VariantAdapter foodVariant;
 
 	// Use this for initialization
 	void Start () {
 		// Referencing the order canvas and the current model and the input fields
 		canvas = GameObject.Find ("OrderCanvas");
-		foodInfo = transform.parent.GetComponent<FoodInfo> ();
 		foodVariant = transform.parent.GetComponent<VariantAdapter> ();
+		foodObject = foodVariant.GetFoodObject();
 		quantityInput = GameObject.Find ("QuantityInput").GetComponent<InputField> (); 
 		requirementsInput = GameObject.Find ("RequirementsInput").GetComponent<InputField> ();
 
@@ -31,11 +31,8 @@ public class OrderProcess : MonoBehaviour {
 
 		// Get the root reference location of the database.
 		rootRef = FirebaseDatabase.DefaultInstance.RootReference;
-	}
 
-	// Update is called once per frame
-	void Update () {
-
+		canvas.SetActive (false);
 	}
 
 	public void onCloseButtonClicked () {
@@ -49,9 +46,15 @@ public class OrderProcess : MonoBehaviour {
 		string quantity = quantityInput.text;
 		string requirements = requirementsInput.text;
 
-		//create an Order object based on the information given by the users and the foodInfo
-		Order order = new Order (requirements, false, foodInfo.getFoodName(), false, 
-			foodInfo.getPrice(), long.Parse(quantity), 0);
+		//create an Order object based on the information given by the users and the FoodObject
+		Order order = new Order (
+			requirements, 
+			false, 
+			foodObject.foodName + "(" + foodVariant.GetSelectedVarName() + ")", 
+			false, 
+			foodObject.price, 
+			long.Parse(quantity), 
+			0);
 		string jsonOrder = JsonUtility.ToJson(order);
 
 		//write the new order as a new child node under Order entry

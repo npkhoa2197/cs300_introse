@@ -29,7 +29,7 @@ public class SelectionCircle : MonoBehaviour {
 		//get adapter
 		adapter = transform.parent.gameObject.GetComponent<VariantAdapter>();
 		//get models
-		variantModels = adapter.variantModels;
+		variantModels = adapter.GetVarModels();
 		//initialize prop block
 		propBlock = new MaterialPropertyBlock();
 		//scaleVector to scale the models
