@@ -50,8 +50,8 @@ public class OrderProcess : MonoBehaviour {
 		string requirements = requirementsInput.text;
 
 		//create an Order object based on the information given by the users and the foodInfo
-		Order order = new Order (requirements, false, foodInfo.getFoodName(), false, 
-			foodInfo.getPrice(), long.Parse(quantity), 0);
+		Order order = new Order ("", foodInfo.getFoodName(), requirements, long.parse(quantity), 
+			0, false, false);
 		string jsonOrder = JsonUtility.ToJson(order);
 
 		//write the new order as a new child node under Order entry
