@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
-
+using AssemblyCSharp;
 public class ChefOrderControl : MonoBehaviour {
 
 	private List<GameObject> Orders;
@@ -52,8 +52,8 @@ public class ChefOrderControl : MonoBehaviour {
         IDictionary dictOrder = (IDictionary) args.Snapshot.Value;   
         Debug.Log(dictOrder["meal"]);
         itemOr = new orderItem (Convert.ToString(args.Snapshot.Key), Convert.ToString(dictOrder["meal"]), 
-            Convert.ToString(dictOrder["additionalRequirements"]), Convert.ToInt32(dictOrder["quantity"]), 
-            Convert.ToInt32(dictOrder["tableNumber"]), Convert.ToSingle(dictOrder["price"]), 
+            Convert.ToString(dictOrder["additionalRequirements"]), Convert.ToInt64(dictOrder["quantity"]), 
+            Convert.ToInt64(dictOrder["tableNumber"]), Convert.ToDouble(dictOrder["price"]), 
             (bool) dictOrder["finished"], (bool) dictOrder["paid"]);
         addOrder(null, itemOr);
           
@@ -96,8 +96,8 @@ public class ChefOrderControl : MonoBehaviour {
         order.transform.Find("Dishname").GetComponent<Text>().text = item.meal;
         order.transform.Find("Info1").GetComponent<Text>().text = "Table "+ item.tableNumber.ToString() + " Amount: "+ item.quantity.ToString() + " Price: " +item.price.ToString()+"vnd";
         order.transform.Find("Info2").GetComponent<Text>().text = "Additional requirement: "+ item.additionalRequirements;
-        order.transform.Find("CookDone").GetComponent<Button>().onClick.AddListener(() => onClickCooked(item.key));
-        order.GetComponent<Button>().onClick.AddListener(() => gameObject.GetComponent<OrderInfo>().ViewOrder());
+        order.transform.Find("CookDone").GetComponent<Button>().onClick.AddListener(() => onClickCooked(order, item.key));
+        order.GetComponent<Button>().onClick.AddListener(() => gameObject.GetComponent<OrderInfo>().ViewOrder(order, item));
         Content.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ((RectTransform)Content.transform).rect.height + orderHeight);
 
         //add to orders list
@@ -126,10 +126,9 @@ public class ChefOrderControl : MonoBehaviour {
         
 	}
 
-    public void onClickCooked(string key)
+    public void onClickCooked(GameObject order, string key)
     {
         GameObject button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        GameObject order = button.transform.parent.gameObject;
 
         //remove object in order list
         int pivot = -1;
@@ -154,21 +153,5 @@ public class ChefOrderControl : MonoBehaviour {
         removeFromDatabase(order, key);
     }
 
-    
-    public class orderItem {
-        public string meal, additionalRequirements, key;
-        public int quantity, tableNumber;
-        public float price;
-        public bool finished, paid;
-        public orderItem (string key, string meal, string additionalRequirements, int quantity, int tableNumber, float price, bool finished, bool paid) {
-            this.key = key;
-            this.meal = meal;
-            this.additionalRequirements = additionalRequirements;
-            this.quantity = quantity;
-            this.tableNumber = tableNumber;
-            this.price = price;
-            this.finished = finished;
-            this.paid = paid;
-        }
-    }
+
 }
