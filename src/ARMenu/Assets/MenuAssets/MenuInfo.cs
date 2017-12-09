@@ -10,6 +10,12 @@ public class MenuInfo : MonoBehaviour {
     private bool viewlist;
     private float v;
     public float vx;
+
+    //DEBUG
+    void wl(string s)
+    {
+        Debug.Log(s, gameObject);
+    }
 	// Use this for initialization
 	void Start () {
         viewinfo = false;
@@ -34,13 +40,20 @@ public class MenuInfo : MonoBehaviour {
         }
 	}
 
+	private bool updateMenuItemDetail(){
+		wl("updateMenuItemDetail");
+		return(true);
+	}
+
     public void ViewMenuItem()
     {
-        menuinfo = GameObject.Find("MenuDetail");
-        posx = menuinfo.transform.position.x;
-        nextx = Screen.width / 2;
-        v = -vx;
-        viewinfo = true;
+    	if (updateMenuItemDetail()){
+        	menuinfo = GameObject.Find("MenuDetail");
+        	posx = menuinfo.transform.position.x;
+        	nextx = Screen.width / 2;
+        	v = -vx;
+        	viewinfo = true;
+    	}
     }
 
     public void ViewMenuList()

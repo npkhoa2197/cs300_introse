@@ -76,7 +76,7 @@ public class MenuListControl : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        wl(MenuItems[0].transform.localPosition.x.ToString());
+        //wl(MenuItems[0].transform.localPosition.x.ToString());
         //update new position for MenuItems
         for (int i = 0; i < MenuItems.Count; i++){
 			if (moveDisplacement[i] != 0){
@@ -96,10 +96,12 @@ public class MenuListControl : MonoBehaviour {
 
 	public void onClickOrder(){
 		//order
+		wl("Order");
 	}
 
 	public void onClickShare(){
 		//share
+		wl("Share");
 	}
 
     public void onClickAddMenuItem()
