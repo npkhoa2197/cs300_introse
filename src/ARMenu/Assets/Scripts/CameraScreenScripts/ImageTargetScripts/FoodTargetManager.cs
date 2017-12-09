@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VariantAdapter : MonoBehaviour {
+public class FoodTargetManager : MonoBehaviour {
 
+	//index of FoodObject in Content Provider
 	public int foodObjectIndex;
+	//selected food variant
 	public int selected = 0;
 	
 	private FoodObject foodObject;
@@ -15,9 +17,17 @@ public class VariantAdapter : MonoBehaviour {
 		foodObject = contentProvider.foods[foodObjectIndex];
 		variants = foodObject.variants;
 	}
-	
-	public FoodObject GetFoodObject() {
-		return foodObject;
+
+	public string GetFoodName() {
+		return foodObject.foodName;
+	}
+
+	public double GetFoodPrice() {
+		return foodObject.price;
+	}
+
+	public string GetFoodDescription() {
+		return foodObject.description;
 	}
 
 	public void SelectVariant (int position) {

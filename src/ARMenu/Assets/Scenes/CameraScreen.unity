@@ -1854,8 +1854,8 @@ GameObject:
   - component: {fileID: 1905533042}
   - component: {fileID: 1905533041}
   - component: {fileID: 1905533040}
-  - component: {fileID: 1905533039}
   - component: {fileID: 1905533045}
+  - component: {fileID: 1905533039}
   m_Layer: 0
   m_Name: FrenchFriesTarget
   m_TagString: Untagged
@@ -1981,7 +1981,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1905533038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09700e796afbcf847a166f5e9b75a6c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 60105b3e8bb44504c91ddf7aea2d0397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   foodObjectIndex: 0
