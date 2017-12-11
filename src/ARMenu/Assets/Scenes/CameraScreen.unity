@@ -2831,6 +2831,8 @@ GameObject:
   - component: {fileID: 1905533040}
   - component: {fileID: 1905533045}
   - component: {fileID: 1905533039}
+  - component: {fileID: 1905533046}
+  - component: {fileID: 1905533045}
   m_Layer: 0
   m_Name: FrenchFriesTarget
   m_TagString: Untagged
