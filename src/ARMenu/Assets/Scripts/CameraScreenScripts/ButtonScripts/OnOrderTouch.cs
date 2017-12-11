@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //this script is attached to the Order button
-public class OnOrderTouch : MonoBehaviour {
+public class OnOrderTouch : MonoBehaviour, ButtonElement {
 
 	private GameObject orderCanvas;
-	private bool isOrdering = false;
+	private ButtonManager btnManager;
 
 	void Start () {
 		orderCanvas = GameObject.Find ("OrderCanvas");
-		orderCanvas.SetActive (true);
+		btnManager = transform.parent.Find("ButtonManager").GetComponent<ButtonManager>();
 	}
 
 	void OnMouseUpAsButton () {
-		//orderCanvas.SetActive(true);
+		btnManager.OnButtonClick(this, false);
+	}
+
+	public void Activate() {
+		orderCanvas.SetActive(true);
+	}
+
+	public void Deactivate() {
+		orderCanvas.SetActive(false);
 	}
 }

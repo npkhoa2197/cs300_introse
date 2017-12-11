@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //this script is attached to the Customize button
-public class OnCustomizeTouch : MonoBehaviour {
+public class OnCustomizeTouch : MonoBehaviour, ButtonElement {
 
 	private GameObject selectCircle;
-	private bool isCustomizing = false;
+	private ButtonManager btnManager;
 
 	void Start () {
 		selectCircle = transform.parent.Find("SelectCircle").gameObject;
-		selectCircle.SetActive(isCustomizing);
+		btnManager = transform.parent.Find("ButtonManager").gameObject.GetComponent<ButtonManager>();
 	}
 
 	void OnMouseUpAsButton () {
-		isCustomizing = !isCustomizing;
-		selectCircle.SetActive(isCustomizing);
+		btnManager.OnButtonClick(this, true);
+	}
+
+	public void Activate() {
+		selectCircle.SetActive(true);
+	}
+
+	public void Deactivate() {
+		selectCircle.SetActive(false);
 	}
 }
