@@ -10,7 +10,6 @@ public class OnCustomizeTouch : MonoBehaviour {
 
 	void Start () {
 		selectCircle = transform.parent.Find("SelectCircle").gameObject;
-		selectCircle.SetActive(isCustomizing);
 	}
 
 	void OnMouseUpAsButton () {
