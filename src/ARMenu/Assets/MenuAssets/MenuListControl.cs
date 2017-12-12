@@ -40,7 +40,7 @@ public class MenuListControl : MonoBehaviour {
         //wl(MenuItems[0].transform.localScale.x.ToString());
     }
 
-    private void addMenuItem(Sprite image, string name, string info1, string info2)
+    private void addMenuItem(Sprite image, string name, string info1, float score)
     {
         //Intantiate object
         GameObject menuitem = (GameObject)GameObject.Instantiate(menuPrefab);
@@ -63,9 +63,10 @@ public class MenuListControl : MonoBehaviour {
         menuitem.transform.Find("Image").GetComponent<Image>().sprite = image;
         menuitem.transform.Find("Dishname").GetComponent<Text>().text = name;
         menuitem.transform.Find("Info").GetComponent<Text>().text = info1;
+        menuitem.transform.Find("Rating").GetComponent<Rating>().scorevalue = score;
         menuitem.transform.Find("Order").GetComponent<Button>().onClick.AddListener(() => onClickOrder());
         menuitem.transform.Find("Share").GetComponent<Button>().onClick.AddListener(() => onClickShare());
-      	menuitem.GetComponent<Button>().onClick.AddListener(() => gameObject.GetComponent<MenuInfo>().ViewMenuItem());
+        menuitem.transform.Find("ItemClick").GetComponent<Button>().onClick.AddListener(() => gameObject.GetComponent<MenuInfo>().ViewMenuItem());
         Content.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ((RectTransform)Content.transform).rect.height + menuHeight);
 
         //add to MenuItems list
@@ -106,6 +107,6 @@ public class MenuListControl : MonoBehaviour {
 
     public void onClickAddMenuItem()
     {
-        addMenuItem(null, "Please give name", "Table? Amount? Price? Option?", "Additional information");
+        addMenuItem(null, "Please give name", "Table? Amount? Price? Option?", 0.4f);
     }
 }
