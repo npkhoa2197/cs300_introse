@@ -1226,8 +1226,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1143741033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.9135742, y: 0.11230469, z: 0}
-  m_LocalScale: {x: 0.0001574707, y: 0.0001574707, z: 0.0001574707}
+  m_LocalPosition: {x: -0.8979492, y: 0.13964844, z: 0}
+  m_LocalScale: {x: 0.00019653319, y: 0.00019653319, z: 0.00019653319}
   m_Children:
   - {fileID: 1043016192}
   m_Father: {fileID: 1905533044}
@@ -1855,7 +1855,7 @@ GameObject:
   - component: {fileID: 1905533041}
   - component: {fileID: 1905533040}
   - component: {fileID: 1905533039}
-  - component: {fileID: 1905533045}
+  - component: {fileID: 1905533046}
   m_Layer: 0
   m_Name: FrenchFriesTarget
   m_TagString: Untagged
@@ -1973,7 +1973,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1905533045
+--- !u!114 &1905533046
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1981,7 +1981,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1905533038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09700e796afbcf847a166f5e9b75a6c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 99cd4342612f2324ea91753ceaa89438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   foodObjectIndex: 0

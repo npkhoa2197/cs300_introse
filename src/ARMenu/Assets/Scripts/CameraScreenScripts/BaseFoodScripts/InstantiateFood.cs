@@ -5,17 +5,17 @@ using UnityEngine;
 public class InstantiateFood : MonoBehaviour, VariantChangeListener {
 
 	//public float scale;
-	private VariantAdapter adapter;
+	private FoodTargetManager foodManager;
 	private GameObject baseFoodModel;
 	private GameObject clone;
 	private Transform container;
 
 	// Use this for initialization
 	void Start () {
-		//get adapter from parent
-		adapter = transform.parent.gameObject.GetComponent<VariantAdapter>();
+		//get foodManager from parent
+		foodManager = transform.parent.gameObject.GetComponent<FoodTargetManager>();
 		//get selected variant model
-		baseFoodModel = adapter.GetSelectedVarModel();
+		baseFoodModel = foodManager.GetSelectedVarModel();
 		CreateModel();
 	}
 
