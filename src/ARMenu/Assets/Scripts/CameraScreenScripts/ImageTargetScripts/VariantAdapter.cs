@@ -4,24 +4,12 @@ using UnityEngine;
 
 public class VariantAdapter : MonoBehaviour {
 
-	public int foodObjectIndex;
+	public GameObject[] variantModels;
+	public string[] variantNames;
 	public int selected = 0;
 	
-	private FoodObject foodObject;
-	private Variant[] variants;
-
-	void Awake() {
-		GlobalContentProvider contentProvider = GlobalContentProvider.Instance;
-		foodObject = contentProvider.foods[foodObjectIndex];
-		variants = foodObject.variants;
-	}
-	
-	public FoodObject GetFoodObject() {
-		return foodObject;
-	}
-
 	public void SelectVariant (int position) {
-		if (position < 0 || position >= variants.Length)
+		if (position < 0 || position >= variantNames.Length)
 			return;
 
 		if (selected == position)
@@ -34,20 +22,11 @@ public class VariantAdapter : MonoBehaviour {
 	}
 
 	public string GetSelectedVarName () {
-		return variants[selected].variantName;
+		return variantNames[selected];
 	}
 
 	public GameObject GetSelectedVarModel () {
-		return variants[selected].variantModel;
-	}
-
-	public GameObject[] GetVarModels() {
-		GameObject[] models = new GameObject[variants.Length];
-		for (int i = 0; i < models.Length; ++i) {
-			models[i] = variants[i].variantModel;
-		}
-
-		return models;
+		return variantModels[selected];
 	}
 
 	void NotifyChange () {
