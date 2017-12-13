@@ -16,8 +16,11 @@ public class Rating : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Slider score = this.transform.Find("Score").GetComponent<Slider>();
-        score.value = scorevalue;
+    }
+
+    public void setValue(float score)
+    {
+        this.transform.Find("Score").GetComponent<Slider>().value = score;
     }
     
 }
