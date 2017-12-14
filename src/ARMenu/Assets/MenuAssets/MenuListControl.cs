@@ -8,11 +8,16 @@ public class MenuListControl : MonoBehaviour {
 
 	private List<GameObject> MenuItems;
     public GameObject menuPrefab;
-	private List<float> moveDisplacement;
     private GameObject Content;
-	public float vy;
     private float offset;
     private float menuHeight;
+    private GameObject menuinfo;
+    //private GameObject commentinfo;
+    private float posx, nextx;
+    private bool viewinfo;
+    private bool viewlist;
+    private float v;
+    public float vx;
 
     //Debug
     void wl(string s)
@@ -22,8 +27,9 @@ public class MenuListControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        viewinfo = false;
+        menuinfo = null;
         MenuItems = new List<GameObject>();
-        moveDisplacement = new List<float>();
         
         Content = GameObject.Find("/Menulist/Background/ScrollView_1/ScrollRect/Content");
         
@@ -31,7 +37,6 @@ public class MenuListControl : MonoBehaviour {
         {
             GameObject Menuitem = Content.transform.GetChild(i).gameObject;
             MenuItems.Add(Menuitem);
-            moveDisplacement.Add(0);
         }
 
         offset = ((RectTransform)menuPrefab.transform).rect.height * 0.03f;
@@ -40,7 +45,7 @@ public class MenuListControl : MonoBehaviour {
         //wl(MenuItems[0].transform.localScale.x.ToString());
     }
 
-    private void addMenuItem(Sprite image, string name, string info1, string info2)
+    private void addMenuItem(Sprite image, string name, string info1, float score)
     {
         //Intantiate object
         GameObject menuitem = (GameObject)GameObject.Instantiate(menuPrefab);
@@ -63,36 +68,33 @@ public class MenuListControl : MonoBehaviour {
         menuitem.transform.Find("Image").GetComponent<Image>().sprite = image;
         menuitem.transform.Find("Dishname").GetComponent<Text>().text = name;
         menuitem.transform.Find("Info").GetComponent<Text>().text = info1;
+        menuitem.transform.Find("Rating").GetComponent<Rating>().scorevalue = score;
         menuitem.transform.Find("Order").GetComponent<Button>().onClick.AddListener(() => onClickOrder());
         menuitem.transform.Find("Share").GetComponent<Button>().onClick.AddListener(() => onClickShare());
-      	menuitem.GetComponent<Button>().onClick.AddListener(() => gameObject.GetComponent<MenuInfo>().ViewMenuItem());
+        menuitem.transform.Find("ItemClick").GetComponent<Button>().onClick.AddListener(() => ViewMenuItem());
         Content.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ((RectTransform)Content.transform).rect.height + menuHeight);
 
         //add to MenuItems list
         MenuItems.Add(menuitem);
-        moveDisplacement.Add(0);
     }
 
     // Update is called once per frame
     void Update () {
-
-        //wl(MenuItems[0].transform.localPosition.x.ToString());
-        //update new position for MenuItems
-        for (int i = 0; i < MenuItems.Count; i++){
-			if (moveDisplacement[i] != 0){
-                if (Math.Abs(moveDisplacement[i]) <= vy)
-                {
-                    MenuItems[i].transform.localPosition += new Vector3(0, moveDisplacement[i], 0);
-                    moveDisplacement[i] = 0;
-                }
-                else
-                {
-                    MenuItems[i].transform.localPosition += new Vector3(0, vy, 0);
-                    moveDisplacement[i] -= vy;
-                }
-			}
-		}
-	}
+        if (viewinfo || viewlist)
+        {
+            posx = menuinfo.transform.position.x;
+            if ((viewinfo && (posx < nextx)) || (viewlist && (posx > nextx)))
+            {
+                menuinfo.transform.Translate(nextx - posx, 0, 0);
+                viewinfo = false;
+                viewlist = false;
+            }
+            else
+            {
+                menuinfo.transform.Translate(v, 0, 0);
+            }
+        }
+    }
 
 	public void onClickOrder(){
 		//order
@@ -106,6 +108,34 @@ public class MenuListControl : MonoBehaviour {
 
     public void onClickAddMenuItem()
     {
-        addMenuItem(null, "Please give name", "Table? Amount? Price? Option?", "Additional information");
+        addMenuItem(null, "Please give name", "Table? Amount? Price? Option?", 0.4f);
+    }
+
+    private DishContent GetMenuItemContent()
+    {
+        return new DishContent();
+    }
+
+    public void ViewMenuItem()
+    {
+        //set content for MenuDetail
+        DishContent content = GetMenuItemContent();
+        menuinfo = GameObject.Find("MenuDetail");
+        menuinfo.GetComponent<MenuDetailControl>().setContent(content);
+
+        //Move MenuDetail
+        posx = menuinfo.transform.position.x;
+        nextx = Screen.width / 2;
+        v = -vx;
+        viewinfo = true;
+    }
+
+    public void ViewMenuList()
+    {
+        menuinfo = GameObject.Find("MenuDetail");
+        posx = menuinfo.transform.position.x;
+        nextx = Screen.width / 2 * 3;
+        v = vx;
+        viewlist = true;
     }
 }
