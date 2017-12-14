@@ -13,7 +13,7 @@ public class SelectionCircle : MonoBehaviour {
 	//check if user is manually dragging
 	private bool isAutoRotating = true;
 
-	private VariantAdapter adapter;
+	private FoodTargetManager foodManager;
 	private GameObject[] variantModels;
 	//array to hold set of clones of models
 	private GameObject[] clones;
@@ -24,24 +24,58 @@ public class SelectionCircle : MonoBehaviour {
 	//3D text to display variant name
 	private GameObject variantName;
 
-	// Use this for initialization
-	void Start () {
-		//get adapter
-		adapter = transform.parent.gameObject.GetComponent<VariantAdapter>();
+	void Awake() {
+		//set default to Inactive
+		gameObject.SetActive(false);
+	}
+
+	void Start() {
+		//get foodManager
+		foodManager = transform.parent.gameObject.GetComponent<FoodTargetManager>();
 		//get models
-		variantModels = adapter.variantModels;
+		variantModels = foodManager.GetVarModels();
 		//initialize prop block
 		propBlock = new MaterialPropertyBlock();
 		//scaleVector to scale the models
 		scaleVector = new Vector3(itemScale, itemScale, itemScale);
 		//initialize clones array
 		clones = new GameObject[variantModels.Length];
+		//create models for first time
+		CreateSmallModels();
 		//get 3D text object
 		variantName = transform.GetChild(0).gameObject;
+    	//show variant name
+    	ChangeVariantName(foodManager.GetSelectedVarName());
+	}
 
+	//make the circle auto rotate
+	void Update () {
+		if (isAutoRotating) {
+			transform.Rotate(Vector3.up * (rotateSpeed / 10) * Time.deltaTime);
+		}
+	}
+
+	//clean up the variant models
+	void OnDisable() {
+		if (clones != null) {
+			for (int i = 0; i < clones.Length; ++i) {
+				if (clones[i] != null) {
+					Destroy(clones[i]);
+				}
+			}
+		}
+	}
+
+	void OnEnable() {
+		if (variantModels != null) {
+			//only recreate if variant models is obtained
+			CreateSmallModels();
+		}
+	}
+
+	void CreateSmallModels() {
 		//position of item
 		Vector3 pos;
-		//create small-scaled food model items into a circle
 		for (int i = 0; i < variantModels.Length; i++) {
 	        float angle = i * Mathf.PI * 2 / variantModels.Length;
 	        pos = transform.position;
@@ -50,7 +84,7 @@ public class SelectionCircle : MonoBehaviour {
 	        clones[i].transform.localScale = scaleVector;
 
 	        //check if variant is selected => if no then make it partially visible
-	        if (i != adapter.selected) {
+	        if (i != foodManager.selected) {
 	        	SetVisibility(clones[i], 0.5f);
 	        }
 
@@ -63,21 +97,11 @@ public class SelectionCircle : MonoBehaviour {
 	    	mouseEvent.position = i;
 	    	mouseEvent.rotateSensitivity = rotateSensitivity;
     	}
-
-    	//show variant name
-    	ChangeVariantName(adapter.GetSelectedVarName());
-	}
-
-	//make the circle auto rotate
-	void Update () {
-		if (isAutoRotating) {
-			transform.Rotate(Vector3.up * (rotateSpeed / 10) * Time.deltaTime);
-		}
 	}
 
 	void ChangeVariantName (string name) {
     	TextMesh textMesh = variantName.GetComponent<TextMesh>();
-    	textMesh.text = adapter.GetSelectedVarName();
+    	textMesh.text = foodManager.GetSelectedVarName();
 	}
 
 	void SetVisibility (GameObject model, float transparentValue) {	
@@ -105,13 +129,13 @@ public class SelectionCircle : MonoBehaviour {
 
 	void OnItemClick (int position) {
 		//fade selected item
-		SetVisibility(clones[adapter.selected], 0.5f);
+		SetVisibility(clones[foodManager.selected], 0.5f);
 		//unfade newly selected item
 		SetVisibility(clones[position], 1f);
-		//notify adapter about the change
-		adapter.SelectVariant(position);
+		//notify foodManager about the change
+		foodManager.SelectVariant(position);
 		//update variant name
-		ChangeVariantName(adapter.GetSelectedVarName());
+		ChangeVariantName(foodManager.GetSelectedVarName());
 	}
 
 	void SetAutoRotation (bool isActive) {

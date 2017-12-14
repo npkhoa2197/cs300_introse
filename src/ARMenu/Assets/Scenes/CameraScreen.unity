@@ -363,6 +363,49 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 75473878}
+--- !u!1 &132063701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 132063702}
+  - component: {fileID: 132063703}
+  m_Layer: 0
+  m_Name: ButtonManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &132063702
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 132063701}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 928219772}
+  - {fileID: 1537020431}
+  - {fileID: 601493437}
+  m_Father: {fileID: 1905533044}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &132063703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 132063701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9561cbe228cbed4198c1d00214a812f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &433436163
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,11 +896,11 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1905533044}
+    m_TransformParent: {fileID: 132063702}
     m_Modifications:
     - target: {fileID: 4728125914434312, guid: 9836bf77ce522674eb16e8d125344835, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.001
+      value: 0.0009999871
       objectReference: {fileID: 0}
     - target: {fileID: 4728125914434312, guid: 9836bf77ce522674eb16e8d125344835, type: 2}
       propertyPath: m_LocalPosition.y
@@ -869,15 +912,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4728125914434312, guid: 9836bf77ce522674eb16e8d125344835, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4728125914434312, guid: 9836bf77ce522674eb16e8d125344835, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4728125914434312, guid: 9836bf77ce522674eb16e8d125344835, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4728125914434312, guid: 9836bf77ce522674eb16e8d125344835, type: 2}
       propertyPath: m_LocalRotation.w
@@ -885,7 +928,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4728125914434312, guid: 9836bf77ce522674eb16e8d125344835, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9836bf77ce522674eb16e8d125344835, type: 2}
@@ -1226,8 +1269,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1143741033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.7675781, y: 0.33398438, z: 0}
-  m_LocalScale: {x: 0.00052246096, y: 0.00052246096, z: 0.00052246096}
+  m_LocalPosition: {x: -0.8979492, y: 0.13964844, z: 0}
+  m_LocalScale: {x: 0.00019653319, y: 0.00019653319, z: 0.00019653319}
   m_Children:
   - {fileID: 1043016192}
   m_Father: {fileID: 1905533044}
@@ -1523,7 +1566,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1905533044}
+    m_TransformParent: {fileID: 132063702}
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: foodModels.Array.size
@@ -1531,7 +1574,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4755356273027774, guid: ee8784d0d4f72044a83013573abd44c1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.197
+      value: -0.19700003
       objectReference: {fileID: 0}
     - target: {fileID: 4755356273027774, guid: ee8784d0d4f72044a83013573abd44c1, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1543,15 +1586,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4755356273027774, guid: ee8784d0d4f72044a83013573abd44c1, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4755356273027774, guid: ee8784d0d4f72044a83013573abd44c1, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4755356273027774, guid: ee8784d0d4f72044a83013573abd44c1, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4755356273027774, guid: ee8784d0d4f72044a83013573abd44c1, type: 2}
       propertyPath: m_LocalRotation.w
@@ -1559,7 +1602,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4755356273027774, guid: ee8784d0d4f72044a83013573abd44c1, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: foodModels.Array.data[0]
@@ -1593,11 +1636,11 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1905533044}
+    m_TransformParent: {fileID: 132063702}
     m_Modifications:
     - target: {fileID: 4812745111693056, guid: c76fde02d08bc094397f596f2aa1e2ba, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.196
+      value: 0.19599998
       objectReference: {fileID: 0}
     - target: {fileID: 4812745111693056, guid: c76fde02d08bc094397f596f2aa1e2ba, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1609,15 +1652,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4812745111693056, guid: c76fde02d08bc094397f596f2aa1e2ba, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4812745111693056, guid: c76fde02d08bc094397f596f2aa1e2ba, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4812745111693056, guid: c76fde02d08bc094397f596f2aa1e2ba, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4812745111693056, guid: c76fde02d08bc094397f596f2aa1e2ba, type: 2}
       propertyPath: m_LocalRotation.w
@@ -1625,7 +1668,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4812745111693056, guid: c76fde02d08bc094397f596f2aa1e2ba, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114386636348526558, guid: c76fde02d08bc094397f596f2aa1e2ba,
         type: 2}
@@ -1856,7 +1899,6 @@ GameObject:
   - component: {fileID: 1905533040}
   - component: {fileID: 1905533039}
   - component: {fileID: 1905533046}
-  - component: {fileID: 1905533045}
   m_Layer: 0
   m_Name: FrenchFriesTarget
   m_TagString: Untagged
@@ -1968,32 +2010,10 @@ Transform:
   - {fileID: 655355611}
   - {fileID: 1746698970}
   - {fileID: 1143741037}
-  - {fileID: 928219772}
-  - {fileID: 1537020431}
-  - {fileID: 601493437}
+  - {fileID: 132063702}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1905533045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1905533038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09700e796afbcf847a166f5e9b75a6c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  variantModels:
-  - {fileID: 100000, guid: cdc94d3da34df8b4f9914dfeac1fc0ca, type: 3}
-  - {fileID: 100000, guid: c65c11566c3171346b8cad80b5c27138, type: 3}
-  - {fileID: 100000, guid: 66df3bd6cdd345b4c8dd63ebee7155e6, type: 3}
-  variantNames:
-  - Regular
-  - Small
-  - Spaghetti?
-  selected: 0
 --- !u!114 &1905533046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2002,9 +2022,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1905533038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69a51a8c4a82dee45bc111fefe2a26bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 99cd4342612f2324ea91753ceaa89438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodName: French fries
-  price: 16.69
-  description: Good ol' fries
+  foodObjectIndex: 0
+  selected: 0
