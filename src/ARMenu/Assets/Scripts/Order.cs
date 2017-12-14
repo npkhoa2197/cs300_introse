@@ -4,6 +4,7 @@ namespace AssemblyCSharp
 {
 	public class Order
 	{
+    public string key;
 		public string additionalRequirements;
 		public bool finished;
 		public string meal;
@@ -14,16 +15,16 @@ namespace AssemblyCSharp
 
 		public Order ()
 		{
-			meal = additionalRequirements = "";
+			key = meal = additionalRequirements = "";
 			price = 0;
 			tableNumber = 0;
 			quantity = 0;
 			paid = finished = false;
 		}
 
-		public Order (string additionalRequirements , bool finished, string meal, bool paid, double price, 
+		public Order (string key, string additionalRequirements , bool finished, string meal, bool paid, double price, 
 			long quantity, long tableNumber) {
-
+      this.key = key;
 			this.meal = meal;
 			this.price = price;
 			this.quantity = quantity;
@@ -34,4 +35,3 @@ namespace AssemblyCSharp
 		}
 	}
 }
-
