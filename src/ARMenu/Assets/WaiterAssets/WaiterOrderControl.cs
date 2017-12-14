@@ -17,11 +17,11 @@ public class WaiterOrderControl : MonoBehaviour {
     private float offset;
     private float orderHeight;
     public Text title;
-    public List<orderItem> orderList;
-    public orderItem itemOr;
+    public List<Order> orderList;
+    public Order itemOr;
     // Use this for initialization
     void Start () {
-        orderList = new List<orderItem>();
+        orderList = new List<Order>();
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
         FirebaseDatabase.DefaultInstance.GetReference("FinishedOrder").ChildAdded += handleChildAdded;
@@ -33,8 +33,8 @@ public class WaiterOrderControl : MonoBehaviour {
         
         for (int i = 0; i < Content.transform.childCount; i++)
         {
-            GameObject Orderitem = Content.transform.GetChild(i).gameObject;
-            Orders.Add(Orderitem);
+            GameObject Order = Content.transform.GetChild(i).gameObject;
+            Orders.Add(Order);
             moveDisplacement.Add(0);
         }
         offset = ((RectTransform)orderPrefab.transform).rect.height * 0.03f;
@@ -51,10 +51,16 @@ public class WaiterOrderControl : MonoBehaviour {
         
         IDictionary dictOrder = (IDictionary) args.Snapshot.Value;   
         Debug.Log(dictOrder["meal"]);
-        itemOr = new orderItem (Convert.ToString(args.Snapshot.Key), Convert.ToString(dictOrder["meal"]), 
-            Convert.ToString(dictOrder["additionalRequirements"]), Convert.ToInt64(dictOrder["quantity"]), 
-            Convert.ToInt64(dictOrder["tableNumber"]), Convert.ToDouble(dictOrder["price"]), 
-            (bool) dictOrder["finished"], (bool) dictOrder["paid"]);
+        itemOr = new Order (
+            Convert.ToString(args.Snapshot.Key), 
+            Convert.ToString(dictOrder["additionalRequirements"]),
+            (bool) dictOrder["finished"], 
+            Convert.ToString(dictOrder["meal"]),  
+            (bool) dictOrder["paid"],
+            Convert.ToDouble(dictOrder["price"]), 
+            Convert.ToInt64(dictOrder["quantity"]), 
+            Convert.ToInt64(dictOrder["tableNumber"])
+            );
         addOrder(null, itemOr);
           
     }       
@@ -69,7 +75,7 @@ public class WaiterOrderControl : MonoBehaviour {
         return true;
     }
 
-    private void addOrder(Sprite image, orderItem item)
+    private void addOrder(Sprite image, Order item)
     {
         
         Content.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, orderHeight * Orders.Count + 10);

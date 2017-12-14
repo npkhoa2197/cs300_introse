@@ -47,6 +47,7 @@ public class OrderProcess : MonoBehaviour {
 
 		//create an Order object based on the information given by the users and the FoodManager
 		Order order = new Order (
+			"",
 			requirements, 
 			false, 
 			foodManager.GetFoodName() + "(" + foodManager.GetSelectedVarName() + ")", 

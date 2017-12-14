@@ -35,7 +35,7 @@ public class OrderInfo : MonoBehaviour {
         }
 	}
 
-    public void ViewOrder(GameObject order, orderItem item)
+    public void ViewOrder(GameObject order, Order item)
     {
         orderinfo = GameObject.Find("OrderDetail");
         orderinfo.transform.Find("Title").Find("Text").GetComponent<Text>().text = item.meal;
