@@ -25,6 +25,21 @@ public class ChefScreenTest : UITest {
 
 		//click that order
 		yield return Press("OrderItem(Clone)");
+
+		//click back
+		yield return Press("Back");
+	}
+
+	[UnityTest]
+	public IEnumerator CanCooked() {
+		//open Chef scene
+		yield return LoadScene("ChefScreen");
+
+		//check if any order appears on screen
+		yield return WaitFor(new ObjectAppeared("OrderItem(Clone)"));
+
+		//click cooked
+		yield return Press("/Orderlist/Background/ScrollView_1/ScrollRect/Content/OrderItem(Clone)/CookDone");
 	}
 
 }
