@@ -4,12 +4,12 @@ using UnityEngine;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 
-public class ChefScreenTest : UITest {
+public class WaiterScreenTest : UITest {
 
 	[UnityTest]
-	public IEnumerator CanReceiveOrders() {
-		//open Chef scene
-		yield return LoadScene("ChefScreen");
+	public IEnumerator CanReceiveCookedOrders() {
+		//open Waiter scene
+		yield return LoadScene("WaiterScreen");
 		
 		//check if any order appears on screen
 		yield return WaitFor(new ObjectAppeared("OrderItem(Clone)"));
@@ -17,8 +17,8 @@ public class ChefScreenTest : UITest {
 	
 	[UnityTest]
 	public IEnumerator CanNavigateDetails() {
-		//open Chef scene
-		yield return LoadScene("ChefScreen");
+		//open Waiter scene
+		yield return LoadScene("WaiterScreen");
 
 		//check if any order appears on screen
 		yield return WaitFor(new ObjectAppeared("OrderItem(Clone)"));
@@ -31,19 +31,19 @@ public class ChefScreenTest : UITest {
 	}
 
 	[UnityTest]
-	public IEnumerator CanCookedOutside() {
-		//open Chef scene
-		yield return LoadScene("ChefScreen");
+	public IEnumerator CanPaidOutside() {
+		//open Waiter scene
+		yield return LoadScene("WaiterScreen");
 
 		//check if any order appears on screen
 		yield return WaitFor(new ObjectAppeared("OrderItem(Clone)"));
 
-		//click cooked
-		yield return Press("/Orderlist/Background/ScrollView_1/ScrollRect/Content/OrderItem(Clone)/CookDone");
+		//click paid
+		yield return Press("/Orderlist/Background/ScrollView_1/ScrollRect/Content/OrderItem(Clone)/Paid");
 	}
 
 	[UnityTest]
-	public IEnumerator CanCookedInside() {
+	public IEnumerator CanPaidInside() {
 		//open Waiter scene
 		yield return LoadScene("WaiterScreen");
 
@@ -54,7 +54,6 @@ public class ChefScreenTest : UITest {
 		yield return Press("OrderItem(Clone)");
 
 		//click paid
-		yield return Press("/Orderlist/OrderDetail/ScrollView_5/ScrollRect/Content/CookDone");
+		yield return Press("/Orderlist/OrderDetail/ScrollView_5/ScrollRect/Content/Paid");
 	}
-
 }
