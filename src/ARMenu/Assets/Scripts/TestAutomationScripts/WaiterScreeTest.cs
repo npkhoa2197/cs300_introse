@@ -36,10 +36,15 @@ public class WaiterScreenTest : UITest {
 		yield return LoadScene("WaiterScreen");
 
 		//check if any order appears on screen
-		yield return WaitFor(new ObjectAppeared("OrderItem(Clone)"));
+		ObjectAppeared testObj = new ObjectAppeared("OrderItem(Clone)");
+		yield return WaitFor(testObj);
 
 		//click paid
+		//the above testObj disapear -> pass the test
 		yield return Press("/Orderlist/Background/ScrollView_1/ScrollRect/Content/OrderItem(Clone)/Paid");
+		ObjectDisappeared _testObj = new ObjectDisappeared("OrderItem(Clone)");
+		if (testObj.o = _testObj.o) 
+			yield return WaitFor(_testObj);
 	}
 
 	[UnityTest]
@@ -48,12 +53,17 @@ public class WaiterScreenTest : UITest {
 		yield return LoadScene("WaiterScreen");
 
 		//check if any order appears on screen
-		yield return WaitFor(new ObjectAppeared("OrderItem(Clone)"));
+		ObjectAppeared testObj = new ObjectAppeared("OrderItem(Clone)");
+		yield return WaitFor(testObj);
 
 		//click that order
-		yield return Press("OrderItem(Clone)");
+		yield return Press(testObj.getPath());
 
 		//click paid
+		//the above testObj disapear -> pass the test
 		yield return Press("/Orderlist/OrderDetail/ScrollView_5/ScrollRect/Content/Paid");
+		ObjectDisappeared _testObj = new ObjectDisappeared("OrderItem(Clone)");
+		if (testObj.o = _testObj.o) 
+			yield return WaitFor(_testObj);
 	}
 }

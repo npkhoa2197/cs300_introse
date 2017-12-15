@@ -36,10 +36,15 @@ public class ChefScreenTest : UITest {
 		yield return LoadScene("ChefScreen");
 
 		//check if any order appears on screen
-		yield return WaitFor(new ObjectAppeared("OrderItem(Clone)"));
+		ObjectAppeared testObj = new ObjectAppeared("OrderItem(Clone)");
+		yield return WaitFor(testObj);
 
 		//click cooked
+		//the above testObj disappear -> pass the test
 		yield return Press("/Orderlist/Background/ScrollView_1/ScrollRect/Content/OrderItem(Clone)/CookDone");
+		ObjectDisappeared _testObj = new ObjectDisappeared("OrderItem(Clone)");
+		if (testObj.o = _testObj.o) 
+			yield return WaitFor(_testObj);
 	}
 
 	[UnityTest]
@@ -48,13 +53,18 @@ public class ChefScreenTest : UITest {
 		yield return LoadScene("WaiterScreen");
 
 		//check if any order appears on screen
-		yield return WaitFor(new ObjectAppeared("OrderItem(Clone)"));
+		ObjectAppeared testObj = new ObjectAppeared("OrderItem(Clone)");
+		yield return WaitFor(testObj);
 
 		//click that order
-		yield return Press("OrderItem(Clone)");
+		yield return Press(testObj.getPath());
 
-		//click paid
+		//click cooked
+		//the above testObj disapear -> pass the test
 		yield return Press("/Orderlist/OrderDetail/ScrollView_5/ScrollRect/Content/CookDone");
+		ObjectDisappeared _testObj = new ObjectDisappeared("OrderItem(Clone)");
+		if (testObj.o = _testObj.o) 
+			yield return WaitFor(_testObj);
 	}
 
 }
