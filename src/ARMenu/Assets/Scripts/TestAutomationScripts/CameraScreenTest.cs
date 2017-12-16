@@ -17,6 +17,9 @@ public class CameraScreenTest : UITest {
 
 	[UnityTest]
 	public IEnumerator CanSeeBaseModel() {
+		
+		string baseModelPath = "/FrenchFriesTarget/BaseFoodObject/fries(Clone)";
+
 		//open GlobalContentProvider
 		yield return LoadSceneIntermediate("ContentProviderScene");
 
@@ -24,11 +27,14 @@ public class CameraScreenTest : UITest {
 		yield return WaitFor(new SceneLoaded("CameraScreen"));
 
 		//check for Base model
-		yield return WaitFor(new ObjectAppeared("fries(Clone)"));
+		yield return WaitFor(new ObjectAppeared(baseModelPath));
 	}
 
 	[UnityTest]
 	public IEnumerator CanSelectVariants() {
+		string baseModelPath = "/FrenchFriesTarget/BaseFoodObject/fries(Clone)";
+		string selectedModelPath = "/FrenchFriesTarget/SelectCircle/fries_small(Clone)";
+
 		//open GlobalContentProvider
 		yield return LoadSceneIntermediate("ContentProviderScene");
 
@@ -36,8 +42,7 @@ public class CameraScreenTest : UITest {
 		yield return WaitFor(new SceneLoaded("CameraScreen"));
 
 		//get current base model
-		ObjectAppeared baseModel = new ObjectAppeared("fries(Clone)");
-		yield return WaitFor(baseModel);
+		yield return WaitFor(new ObjectAppeared(baseModelPath));
 
 		//press Customize button
 		yield return MouseUpAsButton("CustomizeSphere");
@@ -46,7 +51,16 @@ public class CameraScreenTest : UITest {
 		yield return WaitFor(new ObjectAppeared("SelectCircle"));
 
 		//click another model
-		yield return MouseUpAsButton("fries_small(Clone)");
+		yield return MouseUpAsButton(selectedModelPath);
+
+		//close SelectCircle
+		yield return MouseUpAsButton("CustomizeSphere");
+
+		//check if SelectCircle is closed
+		yield return WaitFor(new ObjectDisappeared("SelectCircle"));
+
+		//check if previous base model disappear
+		yield return WaitFor(new ObjectDisappeared(baseModelPath));
 	}
 
 	[UnityTest]
@@ -71,5 +85,29 @@ public class CameraScreenTest : UITest {
 
 		//click on Order
 		yield return Press("OrderButton");
+	}
+
+	[UnityTest]
+	public IEnumerator SelectCircleDisappearsWhenOrder() {
+		//open GlobalContentProvider
+		yield return LoadSceneIntermediate("ContentProviderScene");
+
+		//check if CameraScreen appear
+		yield return WaitFor(new SceneLoaded("CameraScreen"));
+
+		//click customize
+		yield return MouseUpAsButton("CustomizeSphere");
+
+		//check if Selection circle appear
+		yield return WaitFor(new ObjectAppeared("SelectCircle"));
+
+		//press Order button
+		yield return MouseUpAsButton("OrderSphere");
+
+		//check if OrderCanvas is appeared
+		yield return WaitFor(new ObjectAppeared("OrderCanvas"));
+
+		//check if SelectCircle disappear
+		yield return WaitFor(new ObjectDisappeared("SelectCircle"));
 	}
 }
