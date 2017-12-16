@@ -5,12 +5,12 @@ using NUnit.Framework;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 
-public class ChefScreenTest : UITest {
+public class WaiterScreenTest : UITest {
 
 	[UnityTest]
-	public IEnumerator CanReceiveOrders() {
-		//open Chef scene
-		yield return LoadScene("ChefScreen");
+	public IEnumerator CanReceiveCookedOrders() {
+		//open Waiter scene
+		yield return LoadScene("WaiterScreen");
 		
 		//check if any order appears on screen
 		yield return WaitFor(new ObjectAppeared("OrderItem(Clone)"));
@@ -18,8 +18,8 @@ public class ChefScreenTest : UITest {
 	
 	[UnityTest]
 	public IEnumerator CanNavigateDetails() {
-		//open Chef scene
-		yield return LoadScene("ChefScreen");
+		//open Waiter scene
+		yield return LoadScene("WaiterScreen");
 
 		//check if any order appears on screen
 		ObjectAppeared testObj = new ObjectAppeared("OrderItem(Clone)");
@@ -35,8 +35,8 @@ public class ChefScreenTest : UITest {
 
 	[UnityTest]
 	public IEnumerator CanNavigateBackFromDetails() {
-		//open Chef scene
-		yield return LoadScene("ChefScreen");
+		//open Waiter scene
+		yield return LoadScene("WaiterScreen");
 
 		//check if any order appears on screen
 		ObjectAppeared testObj = new ObjectAppeared("OrderItem(Clone)");
@@ -48,32 +48,32 @@ public class ChefScreenTest : UITest {
 		//check if the screen is navigated to the dish detail screen
 		GameObject testGameObject = testObj.o;
 		yield return AssertLabel("/Orderlist/OrderDetail/Title/Text", testGameObject.transform.Find("Dishname").GetComponent<Text>().text);
-		
+	
 		//press back button
 		//check if the screen is navigated back to the main waiter screen
 		yield return Press("Back");
-		yield return AssertLabel("/Orderlist/Title/Text", "Chef Name");
-	}		
+		yield return AssertLabel("/Orderlist/Title/Text", "Waiter name");
+	}
 
 	[UnityTest]
-	public IEnumerator CanCookedOutside() {
-		//open Chef scene
-		yield return LoadScene("ChefScreen");
+	public IEnumerator CanPaidOutside() {
+		//open Waiter scene
+		yield return LoadScene("WaiterScreen");
 
 		//check if any order appears on screen
 		ObjectAppeared testObj = new ObjectAppeared("OrderItem(Clone)");
 		yield return WaitFor(testObj);
 
-		//click cooked
-		//the above testObj disappear -> pass the test
-		yield return Press("/Orderlist/Background/ScrollView_1/ScrollRect/Content/OrderItem(Clone)/CookDone");
+		//click paid
+		//the above testObj disapear -> pass the test
+		yield return Press("/Orderlist/Background/ScrollView_1/ScrollRect/Content/OrderItem(Clone)/Paid");
 		ObjectDisappeared _testObj = new ObjectDisappeared("OrderItem(Clone)");
 		if (testObj.o = _testObj.o) 
 			yield return WaitFor(_testObj);
 	}
 
 	[UnityTest]
-	public IEnumerator CanCookedInside() {
+	public IEnumerator CanPaidInside() {
 		//open Waiter scene
 		yield return LoadScene("WaiterScreen");
 
@@ -84,12 +84,11 @@ public class ChefScreenTest : UITest {
 		//click that order
 		yield return Press(testObj.getPath());
 
-		//click cooked
+		//click paid
 		//the above testObj disapear -> pass the test
-		yield return Press("/Orderlist/OrderDetail/ScrollView_5/ScrollRect/Content/CookDone");
+		yield return Press("/Orderlist/OrderDetail/ScrollView_5/ScrollRect/Content/Paid");
 		ObjectDisappeared _testObj = new ObjectDisappeared("OrderItem(Clone)");
 		if (testObj.o = _testObj.o) 
 			yield return WaitFor(_testObj);
 	}
-
 }

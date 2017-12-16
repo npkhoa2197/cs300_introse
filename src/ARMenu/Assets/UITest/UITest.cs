@@ -310,6 +310,10 @@ public class UITest
         {
             return "ObjectAppeared(" + path + ")";
         }
+
+        public string getPath() {
+            return path;
+        }
     }
 
     protected class ObjectDisappeared : ObjectAppeared
