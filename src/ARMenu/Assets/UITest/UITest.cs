@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using System.IO;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class UITest
 {
-    const float WaitTimeout = 2;
+    const float WaitTimeout = 5;
     const float WaitIntervalFrames = 10;
     static MonoBehaviour mb;
 
@@ -38,6 +39,97 @@ public class UITest
         CreateMonoBehaviour();
         return mb.StartCoroutine(LoadSceneInternal(name));
     }
+
+    //CUSTOM COMMANDS
+
+    //Load scene without waiting
+    protected Coroutine LoadSceneIntermediate(string name) {
+        CreateMonoBehaviour();
+        return mb.StartCoroutine(LoadSceneIntermediateInternal(name));
+    }
+
+    IEnumerator LoadSceneIntermediateInternal(string name) {
+        SceneManager.LoadScene(name);
+        yield break;
+    }
+
+    //Simulate OnMouseUpAsButton
+    protected Coroutine MouseUpAsButton(string objectName) {
+        CreateMonoBehaviour();
+        return mb.StartCoroutine(MouseUpAsButtonInternal(objectName));
+    }
+
+    protected Coroutine MouseUpAsButton(GameObject o) {
+        CreateMonoBehaviour();
+        return mb.StartCoroutine(MouseUpAsButtonInternal(o));
+    }
+
+    IEnumerator MouseUpAsButtonInternal(string objectName) {
+        ObjectAppeared objectAppeared = new ObjectAppeared(objectName);
+        yield return WaitFor(objectAppeared);
+        yield return MouseUpAsButton(objectAppeared.o);
+    }
+
+    IEnumerator MouseUpAsButtonInternal(GameObject o) {
+        MonoBehaviour mono = o.GetComponent<MonoBehaviour>();
+        mono.Invoke("OnMouseUpAsButton", 0);
+        Debug.Log("Mouse up on: " + o);
+        yield return null;
+    }
+
+    //Set text on Object with Input Component
+    protected Coroutine SetInput(string objectName, string text) {
+        CreateMonoBehaviour();
+        return mb.StartCoroutine(SetInputInternal(objectName, text));
+    }
+
+    protected Coroutine SetInput(GameObject o, string text) {
+        CreateMonoBehaviour();
+        return mb.StartCoroutine(SetInputInternal(o, text));
+    }
+
+    IEnumerator SetInputInternal(string objectName, string text) {
+        ObjectAppeared objectAppeared = new ObjectAppeared(objectName);
+        yield return WaitFor(objectAppeared);
+        yield return SetInput(objectAppeared.o, text);
+    }
+
+    IEnumerator SetInputInternal(GameObject o, string text) {
+        yield return WaitFor(new TextInputAccessible(o));
+        InputField input = o.GetComponent<InputField>();
+        input.text = text;
+        yield return null;
+    }
+
+    protected class TextInputAccessible : Condition
+    {
+        GameObject textInput;
+
+        public TextInputAccessible(GameObject textInput)
+        {
+            this.textInput = textInput;
+        }
+
+        public override bool Satisfied()
+        {
+            return GetAccessibilityMessage() == null;
+        }
+
+        public override string ToString()
+        {
+            return GetAccessibilityMessage() ?? "TextInput " + textInput.name + " is accessible";
+        }
+
+        string GetAccessibilityMessage()
+        {
+            if (textInput == null)
+                return "TextInput " + textInput + " not found";
+            if (textInput.GetComponent<InputField>() == null)
+                return "GameObject " + textInput + " does not have a InputField component attached";
+            return null;
+        }
+    }
+    //CUSTOM COMMANDS
 
     IEnumerator LoadSceneInternal(string name)
     {           

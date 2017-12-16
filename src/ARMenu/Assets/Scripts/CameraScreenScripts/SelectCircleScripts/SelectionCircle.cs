@@ -88,14 +88,14 @@ public class SelectionCircle : MonoBehaviour {
 	        	SetVisibility(clones[i], 0.5f);
 	        }
 
-	    	//add a collider to each item to enable on child click
-	    	AddItemCollider(clones[i]);
-
 	    	//add mouse listener to child
 	    	ItemMouseEvent mouseEvent = clones[i].AddComponent<ItemMouseEvent>();
 	    	mouseEvent.parent = this;
 	    	mouseEvent.position = i;
 	    	mouseEvent.rotateSensitivity = rotateSensitivity;
+
+	    	//add a collider to each item to enable on child click
+	    	AddItemCollider(clones[i]);
     	}
 	}
 
