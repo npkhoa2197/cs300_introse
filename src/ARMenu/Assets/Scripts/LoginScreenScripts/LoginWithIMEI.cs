@@ -9,7 +9,13 @@ public class LoginWithIMEI : MonoBehaviour {
 	//code snippet adapted from 
 	//https://answers.unity.com/questions/1276254/how-to-get-imei-on-android.html
 	
-	public void Login () {
+    private string verify(string imei)
+    {
+        //check imei then return owner
+        return "guest"; //waiter //guest
+    }
+
+	public string Login () {
 		try {
 			string imei = SystemInfo.deviceUniqueIdentifier;
 
@@ -33,10 +39,12 @@ public class LoginWithIMEI : MonoBehaviour {
 			}
 
 			Debug.Log("IMEI: " + imei);
+            return verify(imei);
 		}
 		catch(System.Exception exc)
 		{
 			Debug.Log(exc.ToString());
+            return "";
 		}
 	}
 }
