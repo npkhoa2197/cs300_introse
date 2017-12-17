@@ -26,7 +26,6 @@ public class LoginControl : MonoBehaviour {
         if (owner != "")
         {
             StartCoroutine(AccessGranted(owner));
-
         }
     }
 
@@ -36,6 +35,9 @@ public class LoginControl : MonoBehaviour {
         yield return new WaitForSeconds(4);
         float fadeTime = GameObject.Find("Transition").GetComponent<Transition>().BeginFade(1);
         yield return new WaitForSeconds(fadeTime);
-        SceneManager.LoadScene("HomeScreen");
+        if (owner == "guest")
+        {
+            SceneManager.LoadScene("HomeScreen");
+        }
     }
 }

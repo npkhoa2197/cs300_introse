@@ -73,19 +73,12 @@ public class LoginEffect : MonoBehaviour {
                 if (fadeo2 > 400)
                 {
                     isStart2 = false;
-                    startScene();
                 }
             }
             GameObject.Find("Greeting").GetComponent<Text>().color = new Color(0xFF, 0xFF, 0xFF, Math.Min(fadeo2, 100) / 100);
         }
 	}
-
-    private void startScene()
-    {
-        wl("finish");
-       // SceneManager.LoadScene("HomeScreen");
-    }
-
+    
     public void startEffect(string owner)
     {
         isStart = true;
