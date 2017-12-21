@@ -17,12 +17,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WaiterScreen.unity
     guid: c6c24c2f102ac1740b4d311f0760fef3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MenuScreen.unity
     guid: 3d0b044c24195d6499e47ca9a7816e88
   - enabled: 1
-    path: Assets/UITest/Examples/TestableGameScene.unity
-    guid: cf4b10a3abc1a406b82c6e856ad8899f
+    path: Assets/Scenes/LoginScreenV2.unity
+    guid: 5c061d243ee9eb746bf2e3420488de31
+  - enabled: 1
+    path: Assets/Scenes/HomeScreen.unity
+    guid: bb6c517e93c54cb4bb59e4b67b735b3f
   - enabled: 1
     path: Assets/Scenes/ContentProviderScene.unity
     guid: c4ed31ca18776684dbb78f82d3a387eb
