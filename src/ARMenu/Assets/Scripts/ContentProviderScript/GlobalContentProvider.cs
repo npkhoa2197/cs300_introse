@@ -18,11 +18,15 @@ public class GlobalContentProvider : MonoBehaviour {
 
     void Start() {
         //Load first game scene (probably main menu)
-        SceneManager.LoadScene("CameraScreen");
+        SceneManager.LoadScene("LoginScreenV2");
     }
 
     // Food and variants data
 	public FoodObject[] foods;
+    // Store ratings information of customer
+    public Dictionary<string, string> ratings;
+    // Store table number
+    public long tableNumber;
 }
 
 [System.Serializable]
