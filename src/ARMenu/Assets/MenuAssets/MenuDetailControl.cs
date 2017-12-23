@@ -22,6 +22,7 @@ public class MenuDetailControl : MonoBehaviour {
     private InputField quantityInput; 
     private InputField requirementsInput; 
     private DatabaseReference rootRef;
+    private float totalPrice;
 
     // Use this for initialization
     void Start () {
@@ -42,7 +43,7 @@ public class MenuDetailControl : MonoBehaviour {
 	}
 
     public void onQuantityChanged(DishContent content) {
-        float totalPrice = float.Parse(quantityInput.text)*content.price;
+        totalPrice = float.Parse(quantityInput.text)*content.price;
         menuinfoTransform.Find("Total").GetComponent<Text>().text = totalPrice.ToString() + "$";
     }
 	
@@ -60,12 +61,12 @@ public class MenuDetailControl : MonoBehaviour {
         //create an Order object based on the information given by the users and the FoodManager
         Order order = new Order (
             "",
-            content.additionalinfo, 
+            requirements, 
             false, 
             content.dishname, 
             false, 
-            content.price, 
-            (long)content.amount, 
+            Convert.ToDouble(totalPrice), 
+            long.Parse(quantity), 
             0);
         string jsonOrder = JsonUtility.ToJson(order);
 
@@ -74,10 +75,9 @@ public class MenuDetailControl : MonoBehaviour {
         _ref.SetRawJsonValueAsync(jsonOrder);
         
         //after finishing the ordering, navigating back to the menulist
-        // GameObject temp = GameObject.Find("Menulist");
-        // temp.GetComponent<MenuListControl>().ViewMenuList();
-        // quantityInput.text = "";
-        // requirementsInput.text = "";
+        quantityInput.text = "1";
+        GameObject temp = GameObject.Find("Menulist");
+        temp.GetComponent<MenuListControl>().PostInsideOrderButtonClicked();
     }
 
     public void setOptions(GameObject optionprefab, GameObject DishContent)

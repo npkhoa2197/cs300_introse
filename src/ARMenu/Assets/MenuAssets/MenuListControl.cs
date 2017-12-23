@@ -166,7 +166,15 @@ public class MenuListControl : MonoBehaviour {
         v = vx;
         viewlist = true;
 
-        quantityInput.text = "";
-        requirementsInput.text = "";
+        quantityInput.text = "1";
+    }
+
+    public void PostInsideOrderButtonClicked()
+    {
+        menuinfo = GameObject.Find("MenuDetail");
+        posx = menuinfo.transform.position.x;
+        nextx = Screen.width / 2 * 3;
+        v = vx;
+        viewlist = true;
     }
 }
