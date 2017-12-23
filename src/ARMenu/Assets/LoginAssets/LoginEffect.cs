@@ -12,7 +12,7 @@ public class LoginEffect : MonoBehaviour {
     public float fadev, t;
     private bool isStart;
     private bool isStart2;
-    private string owner;
+    private long owner;
 
     private float fadeo2, fadev2;
 
@@ -79,21 +79,26 @@ public class LoginEffect : MonoBehaviour {
         }
 	}
     
-    public void startEffect(string owner)
+    public void startEffect(long owner)
     {
         isStart = true;
         this.owner = owner;
-        if (owner == "waiter")
+        if (owner == -1)
         {
             GameObject.Find("Greeting").GetComponent<Text>().text = "Welcome, Waiter Make sure you clean up everything";
         }
         else
-        if (owner == "chef") {
+        if (owner == 0) {
             GameObject.Find("Greeting").GetComponent<Text>().text = "Welcome, Chef What to cook today ?"; 
         }
         else
+        if (owner > 0)
         {
             GameObject.Find("Greeting").GetComponent<Text>().text = "Welcome, Guests Enjoy your day";
+        }
+        else 
+        {
+            GameObject.Find("Greeting").GetComponent<Text>().text = "ERROR";
         }
     }
 }
