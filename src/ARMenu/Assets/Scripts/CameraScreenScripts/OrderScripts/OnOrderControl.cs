@@ -34,6 +34,7 @@ public class OnOrderControl : MonoBehaviour {
 		detail = canvas.transform.Find("ScrollView_5/ScrollRect/Content");
 		//quantityInput = GameObject.Find ("Amount").GetComponent<InputField> (); 
 		quantityInput = detail.Find("Amount").GetComponent<InputField>();
+		quantityInput.onValueChange.AddListener(delegate {onQuantityChanged();});
 		//requirementsInput = GameObject.Find ("RequirementsInput").GetComponent<InputField> ();
 		requirementsInput = detail.Find("AdditionalInfo").GetComponent<InputField>();
 
@@ -99,6 +100,11 @@ public class OnOrderControl : MonoBehaviour {
 		quantityInput.text = "";
 		requirementsInput.text = "";
 		canvas.SetActive (false);
+	}
+
+	public void onQuantityChanged() {
+		double totalPrice = double.Parse(quantityInput.text)*foodManager.GetFoodPrice();
+		detail.Find("Total").GetComponent<Text>().text = totalPrice.ToString() + "$";
 	}
 
  //    public void setOptions(GameObject optionprefab, GameObject DishContent)
