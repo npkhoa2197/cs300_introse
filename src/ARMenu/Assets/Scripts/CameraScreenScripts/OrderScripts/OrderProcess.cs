@@ -32,6 +32,8 @@ public class OrderProcess : MonoBehaviour {
 
 		// set default to inactive
 		canvas.SetActive (false);
+
+		Debug.Log("abc");
 	}
 
 	public void onCloseButtonClicked () {
