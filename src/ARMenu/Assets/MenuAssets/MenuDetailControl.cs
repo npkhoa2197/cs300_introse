@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Firebase;
+using Firebase.Database;
+using Firebase.Unity.Editor;
+using AssemblyCSharp;
+using System;
 
 public class MenuDetailControl : MonoBehaviour {
 
@@ -10,16 +15,70 @@ public class MenuDetailControl : MonoBehaviour {
     public GameObject optionprefab;
     public GameObject commentprefab;
     private DishContent content;
+    private GameObject menuinfo;
+    private Transform menuinfoTransform;
+
+    //variables to process order
+    private InputField quantityInput; 
+    private InputField requirementsInput; 
+    private DatabaseReference rootRef;
 
     // Use this for initialization
     void Start () {
-		
+		// Set up the Editor before calling into the realtime database.
+        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
+
+        // Get the root reference location of the database.
+        rootRef = FirebaseDatabase.DefaultInstance.RootReference;
+
+        //referencing variables for order process
+        menuinfo = GameObject.Find("MenuDetail");
+        menuinfoTransform = menuinfo.transform.Find("ScrollView_5/ScrollRect/Content");
+        quantityInput = menuinfoTransform.Find("Amount").GetComponent<InputField>();
+        requirementsInput = menuinfoTransform.Find("AdditionalInfo").GetComponent<InputField>();
+
+        //add listener for quantity input field on value changes
+        quantityInput.onValueChange.AddListener(delegate {onQuantityChanged(content);});
 	}
+
+    public void onQuantityChanged(DishContent content) {
+        float totalPrice = float.Parse(quantityInput.text)*content.price;
+        menuinfoTransform.Find("Total").GetComponent<Text>().text = totalPrice.ToString() + "$";
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+
+    public void onButtonOrderClicked() {
+        //get inputs from the input fields
+        string quantity = quantityInput.text;
+        string requirements = requirementsInput.text;
+
+        //create an Order object based on the information given by the users and the FoodManager
+        Order order = new Order (
+            "",
+            content.additionalinfo, 
+            false, 
+            content.dishname, 
+            false, 
+            content.price, 
+            (long)content.amount, 
+            0);
+        string jsonOrder = JsonUtility.ToJson(order);
+
+        //write the new order as a new child node under Order entry
+        DatabaseReference _ref = rootRef.Child("Order").Push();
+        _ref.SetRawJsonValueAsync(jsonOrder);
+        
+        //after finishing the ordering, navigating back to the menulist
+        // GameObject temp = GameObject.Find("Menulist");
+        // temp.GetComponent<MenuListControl>().ViewMenuList();
+        // quantityInput.text = "";
+        // requirementsInput.text = "";
+    }
 
     public void setOptions(GameObject optionprefab, GameObject DishContent)
     {
