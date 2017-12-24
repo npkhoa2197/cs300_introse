@@ -13,28 +13,24 @@ public class ButtonManager : MonoBehaviour {
 
 	//true: btnManager save the activate state of the button
 	//false: btnManager doesn't save the activate state of the button
-	public void OnButtonClick(ButtonElement btn, bool saveState) {
+	public void OnButtonClick(ButtonElement btn) {
 		//if there are no current activated button -> activate the given button and save it
 		if (currentBtn == null) {
 			btn.Activate();
-			if (saveState) {
-				currentBtn = btn;
-			}
+			currentBtn = btn;
 		}
 		//if the current activate btn is the same as the given one
 		//-> deactivate it and remove the saved btn
 		else if (currentBtn == btn) {
-			currentBtn.Deactivate();
+			currentBtn.Deactivate(true);
 			currentBtn = null;
 		}
 		//if the current activate btn is not the same
 		//-> deactivate the current, save the given and activate it
 		else {
-			currentBtn.Deactivate();
+			currentBtn.Deactivate(false);
 			btn.Activate();
-			if (saveState) {
-				currentBtn = btn;
-			}
+			currentBtn = btn;
 		}
 	}
 }

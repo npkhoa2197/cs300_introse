@@ -18,7 +18,7 @@ public class GlobalContentProvider : MonoBehaviour {
 
     void Start() {
         //Load first game scene (probably main menu)
-        SceneManager.LoadScene("LoginScreenV2");
+        SceneManager.LoadScene("CameraScreen");
     }
 
     // Food and variants data

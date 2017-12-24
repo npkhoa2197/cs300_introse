@@ -64,16 +64,27 @@ public class OnOrderControl : MonoBehaviour {
         
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	void OnEnable() {
+		if (content != null) {
+			content.dishname = foodManager.GetFoodName() + " (" + foodManager.GetSelectedVarName() + ")";
+        	canvas.transform.Find("Title/Text").GetComponent<Text>().text = content.dishname;
+		}
 	}
 
-	public void onCloseButtonClicked () {
-		canvas.SetActive (false);
-		quantityInput.text = "";
-		requirementsInput.text = "";
+	void OnDisable() {
+		if (quantityInput != null) {
+			quantityInput.text = "";
+		}
+		if (requirementsInput != null) {
+			requirementsInput.text = "";
+		}
 	}
+
+	// public void onCloseButtonClicked () {
+	// 	canvas.SetActive (false);
+	// 	quantityInput.text = "";
+	// 	requirementsInput.text = "";
+	// }
 
 	public void onOrderButtonClicked () {
 		//get inputs from the input fields
