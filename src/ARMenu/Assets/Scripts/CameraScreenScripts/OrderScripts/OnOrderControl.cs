@@ -60,7 +60,7 @@ public class OnOrderControl : MonoBehaviour {
 			comments
 			);
 
-        //canvas.GetComponent<OnOrderControl>().setContent(_content);
+        setContent(_content);
 	}
 	
 	void OnEnable() {
@@ -71,24 +71,12 @@ public class OnOrderControl : MonoBehaviour {
 	}
 
 	void OnDisable() {
-		if (quantityInput != null) {
-			quantityInput.text = "";
-		}
-		if (requirementsInput != null) {
-			requirementsInput.text = "";
-		}
+		ResetInput();
 	}
-
-	// public void onCloseButtonClicked () {
-	// 	canvas.SetActive (false);
-	// 	quantityInput.text = "";
-	// 	requirementsInput.text = "";
-	// }
 
 	public void onOrderButtonClicked () {
 		//get inputs from the input fields
 		string quantity = quantityInput.text;
-		Debug.Log(quantity);
 		string requirements = requirementsInput.text;
 
 		//create an Order object based on the information given by the users and the FoodManager
@@ -98,7 +86,7 @@ public class OnOrderControl : MonoBehaviour {
 			false, 
 			foodManager.GetFoodName() + "(" + foodManager.GetSelectedVarName() + ")", 
 			false, 
-			long.Parse(detail.Find("Total").GetComponent<Text>().text), 
+			foodManager.GetFoodPrice() * long.Parse(quantity), 
 			long.Parse(quantity), 
 			0);
 		string jsonOrder = JsonUtility.ToJson(order);
@@ -108,14 +96,13 @@ public class OnOrderControl : MonoBehaviour {
 		_ref.SetRawJsonValueAsync(jsonOrder);
 		
 		//after finishing the ordering, the order box will disappear
-		quantityInput.text = "1";
-		requirementsInput.text = "";
-		//canvas.SetActive (false);
+		ResetInput();
 	}
 
 	public void onQuantityChanged() {
 		if (quantityInput.text == null || quantityInput.text == "") {
-			detail.Find("Total").GetComponent<Text>().text = foodManager.GetFoodPrice().ToString();
+			quantityInput.text = "1";
+			detail.Find("Total").GetComponent<Text>().text = foodManager.GetFoodPrice().ToString() + "$";
 		}
 		else {
 			double totalPrice = double.Parse(quantityInput.text)*foodManager.GetFoodPrice();
@@ -131,8 +118,19 @@ public class OnOrderControl : MonoBehaviour {
        	detail.localPosition = new Vector3(detail.localPosition.x, 0, detail.localPosition.z);
         canvas.transform.Find("Title/Text").GetComponent<Text>().text = content.dishname;
         detail.Find("Price").GetComponent<Text>().text = content.price.ToString() + "$";
-        detail.Find("Amount").Find("Placeholder").GetComponent<Text>().text = content.amount.ToString();
+        quantityInput.text = content.amount.ToString();
         detail.Find("Total").GetComponent<Text>().text = (content.price * content.amount).ToString() + "$";
         detail.Find("AdditionalInfo").GetComponent<InputField>().text = content.additionalinfo;
     }
+
+	void ResetInput() {
+		if (quantityInput != null) {
+			quantityInput.text = "1";
+			detail.Find("Total").GetComponent<Text>().text = foodManager.GetFoodPrice().ToString() + "$";
+		}
+
+		if (requirementsInput != null) {
+			requirementsInput.text = "";
+		}
+	}
 }

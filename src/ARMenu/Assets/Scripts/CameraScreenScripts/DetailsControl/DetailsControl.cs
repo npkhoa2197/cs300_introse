@@ -29,7 +29,6 @@ public class DetailsControl : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		foodManager = transform.parent.GetComponent<FoodTargetManager> ();
-
 		canvas = this.gameObject;
 		detail = canvas.transform.Find("ScrollView_5/ScrollRect/Content");
 
@@ -59,9 +58,9 @@ public class DetailsControl : MonoBehaviour {
 	}
 
 	//initialize comments in the detail screen
-	public void setComments(GameObject commentprefab, GameObject DishContent)
+	public void setComments()
 	{
-		GameObject commentsContent = DishContent.transform.Find("CommentList/ScrollRect/Content").gameObject;
+		GameObject commentsContent = detail.transform.Find("CommentList/ScrollRect/Content").gameObject;
 		for (int i = 0; i < commentsContent.transform.childCount; i++)
 		{
         	Destroy(commentsContent.transform.GetChild(i).gameObject);
@@ -96,9 +95,8 @@ public class DetailsControl : MonoBehaviour {
         detail.Find("Description").GetComponent<Text>().text = content.description;
 		
         detail.Find("Price").GetComponent<Text>().text = content.price.ToString() + "$";
-        detail.Find("Amount").Find("Placeholder").GetComponent<Text>().text = content.amount.ToString();
         
         //Comments content
-        setComments(commentprefab, detail.gameObject);
+        setComments();
     }
 }
