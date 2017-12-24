@@ -34,7 +34,7 @@ public class OnOrderControl : MonoBehaviour {
 		detail = canvas.transform.Find("ScrollView_5/ScrollRect/Content");
 		//quantityInput = GameObject.Find ("Amount").GetComponent<InputField> (); 
 		quantityInput = detail.Find("Amount").GetComponent<InputField>();
-		quantityInput.onValueChange.AddListener(delegate {onQuantityChanged();});
+		quantityInput.onEndEdit.AddListener(delegate {onQuantityChanged();});
 		//requirementsInput = GameObject.Find ("RequirementsInput").GetComponent<InputField> ();
 		requirementsInput = detail.Find("AdditionalInfo").GetComponent<InputField>();
 
@@ -60,8 +60,7 @@ public class OnOrderControl : MonoBehaviour {
 			comments
 			);
 
-        canvas.GetComponent<OnOrderControl>().setContent(_content);
-        
+        //canvas.GetComponent<OnOrderControl>().setContent(_content);
 	}
 	
 	void OnEnable() {
@@ -99,7 +98,7 @@ public class OnOrderControl : MonoBehaviour {
 			false, 
 			foodManager.GetFoodName() + "(" + foodManager.GetSelectedVarName() + ")", 
 			false, 
-			foodManager.GetFoodPrice(), 
+			long.Parse(detail.Find("Total").GetComponent<Text>().text), 
 			long.Parse(quantity), 
 			0);
 		string jsonOrder = JsonUtility.ToJson(order);
@@ -115,8 +114,13 @@ public class OnOrderControl : MonoBehaviour {
 	}
 
 	public void onQuantityChanged() {
-		double totalPrice = double.Parse(quantityInput.text)*foodManager.GetFoodPrice();
-		detail.Find("Total").GetComponent<Text>().text = totalPrice.ToString() + "$";
+		if (quantityInput.text == null || quantityInput.text == "") {
+			detail.Find("Total").GetComponent<Text>().text = foodManager.GetFoodPrice().ToString();
+		}
+		else {
+			double totalPrice = double.Parse(quantityInput.text)*foodManager.GetFoodPrice();
+			detail.Find("Total").GetComponent<Text>().text = totalPrice.ToString() + "$";
+		}
 	}
 
     public void setContent(DishContent _content)
