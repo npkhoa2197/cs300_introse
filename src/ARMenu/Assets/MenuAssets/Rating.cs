@@ -7,19 +7,16 @@ using UnityEngine.UI;
 
 public class Rating : MonoBehaviour {
 
-    public float scorevalue = 0.3f;
+    public float scorevalue = 0f;
 	// Use this for initialization
 	void Start () {
         Slider score = this.transform.Find("Score").GetComponent<Slider>();
         score.value = scorevalue;
     }
-	
-	// Update is called once per frame
-	void Update () {
-    }
 
     public void setValue(float score)
     {
+        scorevalue = score;
         this.transform.Find("Score").GetComponent<Slider>().value = score;
     }
     

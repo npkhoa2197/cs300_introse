@@ -11,19 +11,15 @@ using System;
 public class DetailsControl : MonoBehaviour {
 
 	//variables of order layout
-	private List<GameObject> optionlist;
     private List<GameObject> commentlist;
     //public GameObject optionprefab;
     public GameObject commentprefab;
     private DishContent content;
     private Transform detail;
-    public List<Tuple<string,string> > comments = new List<Tuple<string, string>> { new Tuple<string, string>("User1", "Delicious!"), new Tuple<string, string>("User2", "Brilliant!"), new Tuple<string, string>("User3", "Creative!!") };
+    public List<Tuple<string,string> > comments = new List<Tuple<string, string> >();
     
     //variables to process order
     private GameObject canvas;
-    private InputField quantityInput; 
-	private InputField requirementsInput; 
-	private DatabaseReference rootRef;
 	private FoodTargetManager foodManager;
 
     // Use this for initialization
@@ -35,9 +31,6 @@ public class DetailsControl : MonoBehaviour {
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
 
-		// Get the root reference location of the database.
-		rootRef = FirebaseDatabase.DefaultInstance.RootReference;
-
 		// set default to inactive
 		canvas.SetActive (false);
 	
@@ -45,7 +38,7 @@ public class DetailsControl : MonoBehaviour {
 		DishContent _content = new DishContent(
 			foodManager.GetFoodName(),
 			null,
-			0.7f,
+			0f,
 			foodManager.GetFoodDescription(),
 			null,
 			(float)foodManager.GetFoodPrice(),
@@ -54,11 +47,11 @@ public class DetailsControl : MonoBehaviour {
 			comments
 			);
 
-        setContent(_content); 
+        setContent(_content);
 	}
 
 	//initialize comments in the detail screen
-	public void setComments()
+	void SetComments()
 	{
 		GameObject commentsContent = detail.transform.Find("CommentList/ScrollRect/Content").gameObject;
 		for (int i = 0; i < commentsContent.transform.childCount; i++)
@@ -80,7 +73,12 @@ public class DetailsControl : MonoBehaviour {
 		}
 	}
 
-    public void setContent(DishContent _content)
+	void SetRating(double rating) {
+		content.score = (float) rating;
+        detail.Find("Rating").GetComponent<Rating>().setValue(content.score);
+	}
+
+    void setContent(DishContent _content)
     {
         content = _content;
         
@@ -95,8 +93,40 @@ public class DetailsControl : MonoBehaviour {
         detail.Find("Description").GetComponent<Text>().text = content.description;
 		
         detail.Find("Price").GetComponent<Text>().text = content.price.ToString() + "$";
-        
-        //Comments content
-        setComments();
+
+		InvokeDatabase();
     }
+
+	void InvokeDatabase() {
+
+		FirebaseDatabase.DefaultInstance
+      	.GetReference("Meal/" + foodManager.GetFoodKey() + "/AveRating/Rate")
+      	.GetValueAsync().ContinueWith(task => {
+			if (task.IsFaulted) {
+				//handle error
+			}
+			else if (task.IsCompleted) {
+				DataSnapshot rating = task.Result;
+				SetRating((double) rating.Value);
+			}
+		});
+
+		FirebaseDatabase.DefaultInstance
+      	.GetReference("Meal/" + foodManager.GetFoodKey() + "/Comments")
+      	.GetValueAsync().ContinueWith(task => {
+			if (task.IsFaulted) {
+				//handle error
+			}
+			else if (task.IsCompleted) {
+				DataSnapshot commentsSnap = task.Result;
+				foreach (DataSnapshot comment in commentsSnap.Children) {
+					content.comments.Add(new Tuple<string, string>(
+						(string) comment.Child("username").Value, 
+						(string) comment.Child("content").Value));
+				}
+
+				SetComments();
+			}
+		});
+	}
 }

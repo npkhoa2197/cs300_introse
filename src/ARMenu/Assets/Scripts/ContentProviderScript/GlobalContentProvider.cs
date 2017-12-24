@@ -11,6 +11,11 @@ public class GlobalContentProvider : MonoBehaviour {
         set;
     }
 
+    //function to get meal name on db
+    public static string GetMealKey(string name) {
+        return name.ToLower().Replace(" ", "_");
+    }
+
     void Awake () {
         DontDestroyOnLoad (transform.gameObject);
         Instance = this;
@@ -18,7 +23,8 @@ public class GlobalContentProvider : MonoBehaviour {
 
     void Start() {
         //Load first game scene (probably main menu)
-        SceneManager.LoadScene("CameraScreen");
+        //SceneManager.LoadScene("CameraScreen");
+        SceneManager.LoadScene("LoginScreenV2");
     }
 
     // Food and variants data

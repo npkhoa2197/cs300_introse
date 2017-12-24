@@ -22,6 +22,10 @@ public class FoodTargetManager : MonoBehaviour {
 		return foodObject.foodName;
 	}
 
+	public string GetFoodKey() {
+		return GlobalContentProvider.GetMealKey(foodObject.foodName);
+	}
+
 	public double GetFoodPrice() {
 		return foodObject.price;
 	}
