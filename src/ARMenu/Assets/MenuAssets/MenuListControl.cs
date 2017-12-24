@@ -53,7 +53,7 @@ public class MenuListControl : MonoBehaviour {
         Content.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, menuHeight * MenuItems.Count + 10);
         //wl(MenuItems[0].transform.localScale.x.ToString());
 
-        //add dishes the MenuItem list
+        //add dishes from GlobalContentProvider to the MenuItem list
         provider = GlobalContentProvider.Instance;
         for (int i = 0; i < provider.foods.Length; ++i) {
             
@@ -77,6 +77,29 @@ public class MenuListControl : MonoBehaviour {
                 "",
                 comments));   
         }
+
+        //2 dummy items for testing
+        addMenuItem(new DishContent(
+            "hot dog",
+            null,
+            0.7f,
+            "hot dog is not dog meat",
+            null,
+            20,
+            1,
+            "",
+            null));
+
+        addMenuItem(new DishContent(
+            "hot chicken",
+            null,
+            0.7f,
+            "hot chicken actually is chicken meat",
+            null,
+            20,
+            1,
+            "",
+            null));
     }
 
     private void addMenuItem(DishContent _content)
@@ -135,10 +158,10 @@ public class MenuListControl : MonoBehaviour {
 		wl("Share");
 	}
 
-    private DishContent GetMenuItemContent()
-    {
-        return new DishContent();
-    }
+    // private DishContent GetMenuItemContent()
+    // {
+    //     return new DishContent();
+    // }
 
     public void ViewMenuItem(DishContent content)
     {

@@ -39,16 +39,22 @@ public class MenuDetailControl : MonoBehaviour {
         quantityInput = menuinfoTransform.Find("Amount").GetComponent<InputField>();
         requirementsInput = menuinfoTransform.Find("AdditionalInfo").GetComponent<InputField>();
 
-        //add listener for quantity input field on value changes
-        quantityInput.onValueChange.AddListener(delegate {onQuantityChanged(content);});
+        //add listener for quantity input field on end edit
+        quantityInput.onEndEdit.AddListener(delegate {onQuantityChanged(content);});
 
         //init GlobalContentProvider object
         global = GlobalContentProvider.Instance;
 	}
 
+	//listener on end editing of quantity input field
     public void onQuantityChanged(DishContent content) {
-        totalPrice = float.Parse(quantityInput.text)*content.price;
-        menuinfoTransform.Find("Total").GetComponent<Text>().text = totalPrice.ToString() + "$";
+    	if (quantityInput.text == null || quantityInput.text == "") {
+    		menuinfoTransform.Find("Total").GetComponent<Text>().text = content.price.ToString() + "$";
+    	}
+    	else {
+        	totalPrice = float.Parse(quantityInput.text)*content.price;
+        	menuinfoTransform.Find("Total").GetComponent<Text>().text = totalPrice.ToString() + "$";
+    	}
     }
 	
 	// Update is called once per frame
@@ -56,12 +62,12 @@ public class MenuDetailControl : MonoBehaviour {
 		
 	}
 
-
     public void onButtonOrderClicked() {
         //get inputs from the input fields
         string quantity = quantityInput.text;
         string requirements = requirementsInput.text;
 
+        //get dish name of the selected option
         GameObject _menuDetail = GameObject.Find("MenuDetail");
         GameObject _menuDetailContent = _menuDetail.transform.Find("ScrollView_5/ScrollRect/Content").gameObject;
         GameObject _optionList = _menuDetailContent.transform.Find("OptionList/ScrollRect/Content").gameObject;
@@ -74,8 +80,7 @@ public class MenuDetailControl : MonoBehaviour {
             }
         }
 
-
-        //create an Order object based on the information given by the users and the FoodManager
+        //create an Order object for database storage 
         Order order = new Order (
             "",
             requirements, 
@@ -98,6 +103,7 @@ public class MenuDetailControl : MonoBehaviour {
         temp.GetComponent<MenuListControl>().PostInsideOrderButtonClicked();
     }
 
+    //set options
     public void setOptions(GameObject optionprefab, GameObject DishContent)
     {
     	GameObject optionsContent = DishContent.transform.Find("OptionList/ScrollRect/Content").gameObject;
@@ -114,7 +120,7 @@ public class MenuDetailControl : MonoBehaviour {
         Transform _optionList = _menuDetailContent.transform.Find("OptionList/ScrollRect/");
         ToggleGroup toggleGroup = _optionList.Find("Content").GetComponent<ToggleGroup>();
 
-        for (int i = 0; i < content.options.Count; i++)
+        for (int i = 0; content.options != null && i < content.options.Count; i++)
         {
         	GameObject option = GameObject.Instantiate(optionprefab);
             option.transform.SetParent(optionsContent.transform);
@@ -131,6 +137,7 @@ public class MenuDetailControl : MonoBehaviour {
         }
 	}
 
+	//set comments
 	public void setComments(GameObject commentprefab, GameObject DishContent)
 	{
 		GameObject commentsContent = DishContent.transform.Find("CommentList/ScrollRect/Content").gameObject;
@@ -140,7 +147,7 @@ public class MenuDetailControl : MonoBehaviour {
 		}
 		commentlist = new List<GameObject>();
         commentsContent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
-        for (int i = 0; i < content.comments.Count; i++)
+        for (int i = 0; content.comments != null && i < content.comments.Count; i++)
         {
         	GameObject comment = GameObject.Instantiate(commentprefab);
             comment.transform.SetParent(commentsContent.transform);
@@ -152,6 +159,8 @@ public class MenuDetailControl : MonoBehaviour {
             commentlist.Add(comment);
 		}
 	}
+
+	//set content of the detail screen
     public void setContent(DishContent _content)
     {
         content = _content;
