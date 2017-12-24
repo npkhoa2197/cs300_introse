@@ -23,6 +23,7 @@ public class MenuDetailControl : MonoBehaviour {
     private InputField requirementsInput; 
     private DatabaseReference rootRef;
     private float totalPrice;
+    private GlobalContentProvider global;
 
     // Use this for initialization
     void Start () {
@@ -40,6 +41,9 @@ public class MenuDetailControl : MonoBehaviour {
 
         //add listener for quantity input field on value changes
         quantityInput.onValueChange.AddListener(delegate {onQuantityChanged(content);});
+
+        //init GlobalContentProvider object
+        global = GlobalContentProvider.Instance;
 	}
 
     public void onQuantityChanged(DishContent content) {
@@ -80,7 +84,7 @@ public class MenuDetailControl : MonoBehaviour {
             false, 
             Convert.ToDouble(totalPrice), 
             long.Parse(quantity), 
-            0);
+            global.tableNumber);
         string jsonOrder = JsonUtility.ToJson(order);
 
         //write the new order as a new child node under Order entry
