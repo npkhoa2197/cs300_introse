@@ -167,6 +167,7 @@ public class MenuListControl : MonoBehaviour {
         viewlist = true;
 
         quantityInput.text = "1";
+        requirementsInput.text = "";
     }
 
     public void PostInsideOrderButtonClicked()

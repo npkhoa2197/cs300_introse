@@ -58,12 +58,25 @@ public class MenuDetailControl : MonoBehaviour {
         string quantity = quantityInput.text;
         string requirements = requirementsInput.text;
 
+        GameObject _menuDetail = GameObject.Find("MenuDetail");
+        GameObject _menuDetailContent = _menuDetail.transform.Find("ScrollView_5/ScrollRect/Content").gameObject;
+        GameObject _optionList = _menuDetailContent.transform.Find("OptionList/ScrollRect/Content").gameObject;
+        
+        string variant = "";
+        for (int i = 0; i < _optionList.transform.childCount; ++i) {
+            if (_optionList.transform.GetChild(i).gameObject.GetComponent<Toggle>().isOn == true) {
+                variant = " (" + _optionList.transform.GetChild(i).gameObject.GetComponentInChildren<Text>().text + ")";
+                break;
+            }
+        }
+
+
         //create an Order object based on the information given by the users and the FoodManager
         Order order = new Order (
             "",
             requirements, 
             false, 
-            content.dishname, 
+            content.dishname + variant, 
             false, 
             Convert.ToDouble(totalPrice), 
             long.Parse(quantity), 
@@ -76,6 +89,7 @@ public class MenuDetailControl : MonoBehaviour {
         
         //after finishing the ordering, navigating back to the menulist
         quantityInput.text = "1";
+        requirementsInput.text = "";
         GameObject temp = GameObject.Find("Menulist");
         temp.GetComponent<MenuListControl>().PostInsideOrderButtonClicked();
     }
@@ -89,6 +103,13 @@ public class MenuDetailControl : MonoBehaviour {
 		}
         optionlist = new List<GameObject>();
         optionsContent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
+
+        //referencing the toggleGroup in order to group all the toggles (options) into one Toggle Group
+        GameObject _menuDetail = GameObject.Find("MenuDetail");
+        GameObject _menuDetailContent = _menuDetail.transform.Find("ScrollView_5/ScrollRect/Content").gameObject;
+        Transform _optionList = _menuDetailContent.transform.Find("OptionList/ScrollRect/");
+        ToggleGroup toggleGroup = _optionList.Find("Content").GetComponent<ToggleGroup>();
+
         for (int i = 0; i < content.options.Count; i++)
         {
         	GameObject option = GameObject.Instantiate(optionprefab);
@@ -97,10 +118,15 @@ public class MenuDetailControl : MonoBehaviour {
             option.transform.localPosition = new Vector3(i*360 + 60, -50, 0);
             option.transform.Find("Text").GetComponent<Text>().text = content.options[i];
             option.GetComponent<Toggle>().isOn = false;
+            
+            //set the toggleGroup
+            option.GetComponent<Toggle>().group = toggleGroup; 
+            
             optionsContent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, ((RectTransform)optionsContent.transform).rect.width + 360);
             optionlist.Add(option);
         }
 	}
+
 	public void setComments(GameObject commentprefab, GameObject DishContent)
 	{
 		GameObject commentsContent = DishContent.transform.Find("CommentList/ScrollRect/Content").gameObject;
