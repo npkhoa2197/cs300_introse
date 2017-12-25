@@ -104,6 +104,11 @@ public class ReviewControlMenuList : MonoBehaviour {
 
 	}
 
+	public void onBackButtonClicked() {
+		ResetInput();
+		canvas.SetActive(false);
+	}
+
     public void setContent()
     {
         //Set content
