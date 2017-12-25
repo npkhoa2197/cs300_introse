@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Firebase;
+using Firebase.Database;
+using Firebase.Unity.Editor;
 
 public class MenuListControl : MonoBehaviour {
 
@@ -13,6 +16,7 @@ public class MenuListControl : MonoBehaviour {
     private float offset;
     private float menuHeight;
     private GameObject menuinfo;
+    private GameObject reviewCanvas;
 
     //private GameObject commentinfo;
     private float posx, nextx;
@@ -26,6 +30,7 @@ public class MenuListControl : MonoBehaviour {
 
     //GlobalContentProvider provides a list of supported dishes
     GlobalContentProvider provider;
+    private float score;
 
     //Debug
     void wl(string s)
@@ -41,6 +46,7 @@ public class MenuListControl : MonoBehaviour {
         
         Content = GameObject.Find("/Menulist/Background/ScrollView_1/ScrollRect/Content");
         dishDetail = GameObject.Find("/Menulist/MenuDetail/ScrollView_5/ScrollRect/Content");
+        reviewCanvas = GameObject.Find("ReviewCanvas");
         
         for (int i = 0; i < Content.transform.childCount; i++)
         {
@@ -53,6 +59,9 @@ public class MenuListControl : MonoBehaviour {
         Content.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, menuHeight * MenuItems.Count + 10);
         //wl(MenuItems[0].transform.localScale.x.ToString());
 
+        // Set up the Editor before calling into the realtime database.
+        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
+
         //add dishes from GlobalContentProvider to the MenuItem list
         provider = GlobalContentProvider.Instance;
         for (int i = 0; i < provider.foods.Length; ++i) {
@@ -64,12 +73,15 @@ public class MenuListControl : MonoBehaviour {
             }
 
             //init comments for each dish, init defaul value for demo
-            List<Tuple<string,string>> comments = new List<Tuple<string, string>> { new Tuple<string, string>("User1", "Delicious!"), new Tuple<string, string>("User2", "Brilliant!"), new Tuple<string, string>("User3", "Creative!!") };
+            List<Tuple<string,string>> comments = new List<Tuple<string, string>>();
+            
+            //get the rating score from database
+            getRatingFromDB(GlobalContentProvider.GetMealKey(provider.foods[i].foodName));
             
             addMenuItem(new DishContent(
                 provider.foods[i].foodName,
-                null,
-                0.7f,
+                provider.foods[i].foodImage,
+                score,
                 provider.foods[i].description,
                 options,
                 (float)provider.foods[i].price,
@@ -102,6 +114,21 @@ public class MenuListControl : MonoBehaviour {
             null));
     }
 
+
+    void getRatingFromDB(string dishKey) {
+        FirebaseDatabase.DefaultInstance
+        .GetReference("Meal/" + dishKey + "/AveRating/Rate")
+        .GetValueAsync().ContinueWith(task => {
+            if (task.IsFaulted) {
+                //handle error
+            }
+            else if (task.IsCompleted) {
+                DataSnapshot rating = task.Result;
+                score = (float) rating.Value;
+            }
+        });
+    }
+
     private void addMenuItem(DishContent _content)
     {
         //Intantiate object
@@ -121,19 +148,24 @@ public class MenuListControl : MonoBehaviour {
         }
 
         //set content
-        if (_content.image != null)
-        menuitem.transform.Find("Image").GetComponent<Image>().sprite = _content.image;
+        if (_content.image != null) {
+            menuitem.transform.Find("Image").GetComponent<Image>().color = Color.white;
+            menuitem.transform.Find("Image").GetComponent<Image>().sprite = _content.image;
+        }
         menuitem.transform.Find("Dishname").GetComponent<Text>().text = _content.dishname;
         menuitem.transform.Find("Info").GetComponent<Text>().text = _content.description + "\nPrice: $" + _content.price;
+        //menuitem.transform.Find("Rating").gameObject.transform.Find("Score").GetComponent<Slider>().maxValue = 5;
+        //menuitem.transform.Find("Rating").gameObject.transform.Find("Score").GetComponent<Slider>().value = _content.score;
         menuitem.transform.Find("Rating").GetComponent<Rating>().scorevalue = _content.score;
         menuitem.transform.Find("Order").GetComponent<Button>().onClick.AddListener(() => ViewMenuItem(_content));
-        menuitem.transform.Find("Share").GetComponent<Button>().onClick.AddListener(() => onClickShare());
+        menuitem.transform.Find("Share").GetComponent<Button>().onClick.AddListener(() => onClickShare(_content, reviewCanvas));
         menuitem.transform.Find("ItemClick").GetComponent<Button>().onClick.AddListener(() 
             => ViewMenuItem(_content));
 
         //add to MenuItems list
         MenuItems.Add(menuitem);
     }
+
 
     // Update is called once per frame
     void Update () {
@@ -153,15 +185,11 @@ public class MenuListControl : MonoBehaviour {
         }
     }
 
-	public void onClickShare(){
+	public void onClickShare(DishContent content, GameObject canvas){
 		//share
-		wl("Share");
+        canvas.SetActive(true);
+	    canvas.GetComponent<ReviewControlMenuList>().init(content);
 	}
-
-    // private DishContent GetMenuItemContent()
-    // {
-    //     return new DishContent();
-    // }
 
     public void ViewMenuItem(DishContent content)
     {

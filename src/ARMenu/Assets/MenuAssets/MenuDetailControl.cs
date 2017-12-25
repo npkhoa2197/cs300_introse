@@ -18,6 +18,8 @@ public class MenuDetailControl : MonoBehaviour {
     private GameObject menuinfo;
     private Transform menuinfoTransform;
 
+    private GameObject reviewCanvas;
+
     //variables to process order
     private InputField quantityInput; 
     private InputField requirementsInput; 
@@ -27,6 +29,7 @@ public class MenuDetailControl : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        reviewCanvas = GameObject.Find("ReviewCanvas");
 		// Set up the Editor before calling into the realtime database.
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
 
@@ -115,9 +118,7 @@ public class MenuDetailControl : MonoBehaviour {
         optionsContent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
 
         //referencing the toggleGroup in order to group all the toggles (options) into one Toggle Group
-        GameObject _menuDetail = GameObject.Find("MenuDetail");
-        GameObject _menuDetailContent = _menuDetail.transform.Find("ScrollView_5/ScrollRect/Content").gameObject;
-        Transform _optionList = _menuDetailContent.transform.Find("OptionList/ScrollRect/");
+        Transform _optionList = menuinfoTransform.gameObject.transform.Find("OptionList/ScrollRect/");
         ToggleGroup toggleGroup = _optionList.Find("Content").GetComponent<ToggleGroup>();
 
         for (int i = 0; content.options != null && i < content.options.Count; i++)
@@ -138,9 +139,10 @@ public class MenuDetailControl : MonoBehaviour {
 	}
 
 	//set comments
-	public void setComments(GameObject commentprefab, GameObject DishContent)
+	public void setComments()
 	{
-		GameObject commentsContent = DishContent.transform.Find("CommentList/ScrollRect/Content").gameObject;
+        GameObject commentsContent = menuinfoTransform.gameObject.transform.Find("CommentList/ScrollRect/Content").gameObject;
+
 		for (int i = 0; i < commentsContent.transform.childCount; i++)
 		{
         	Destroy(commentsContent.transform.GetChild(i).gameObject);
@@ -179,7 +181,35 @@ public class MenuDetailControl : MonoBehaviour {
         Content.Find("Amount").Find("Placeholder").GetComponent<Text>().text = content.amount.ToString();
         Content.Find("Total").GetComponent<Text>().text = (content.price * content.amount).ToString() + "$";
         Content.Find("AdditionalInfo").GetComponent<InputField>().text = content.additionalinfo;
-        //Comments content
-        setComments(commentprefab, Content.gameObject);
+        
+        //call database to get comments
+        InvokeDatabase();
+        //setComments(commentprefab, Content.gameObject);
+    }
+
+    void InvokeDatabase() {
+        FirebaseDatabase.DefaultInstance
+        .GetReference("Meal/" + GlobalContentProvider.GetMealKey(content.dishname) + "/Comments")
+        .GetValueAsync().ContinueWith(task => {
+            if (task.IsFaulted) {
+                //handle error
+            }
+            else if (task.IsCompleted) {
+                DataSnapshot commentsSnap = task.Result;
+                foreach (DataSnapshot comment in commentsSnap.Children) {
+                    if ((string) comment.Child("username").Value != "" && (string) comment.Child("content").Value != "")
+                    content.comments.Add(new Tuple<string, string>(
+                        (string) comment.Child("username").Value, 
+                        (string) comment.Child("content").Value));
+                }
+
+                setComments();
+            }
+        });
+    }
+
+    public void onShareButtonClick() {
+        reviewCanvas.SetActive(true);
+        reviewCanvas.GetComponent<ReviewControlMenuList>().init(content);
     }
 }
