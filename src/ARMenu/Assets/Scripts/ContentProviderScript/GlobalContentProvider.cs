@@ -40,6 +40,7 @@ public class FoodObject {
     public string foodName;
     public double price;
     public string description;
+    public Sprite foodImage;
     public Variant[] variants;
 }
 

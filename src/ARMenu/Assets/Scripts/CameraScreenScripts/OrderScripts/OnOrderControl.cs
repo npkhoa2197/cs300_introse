@@ -10,21 +10,17 @@ using System;
 
 public class OnOrderControl : MonoBehaviour {
 
-	//variables of order layout
-	private List<GameObject> optionlist;
-    private List<GameObject> commentlist;
     //public GameObject optionprefab;
-    public GameObject commentprefab;
     private DishContent content;
     private Transform detail;
-    public List<Tuple<string,string> > comments = new List<Tuple<string, string>> { new Tuple<string, string>("User1", "Delicious!"), new Tuple<string, string>("User2", "Brilliant!"), new Tuple<string, string>("User3", "Creative!!") };
-    
+
     //variables to process order
     private GameObject canvas;
     private InputField quantityInput; 
 	private InputField requirementsInput; 
 	private DatabaseReference rootRef;
 	private FoodTargetManager foodManager;
+	private Toast toast;
 
     // Use this for initialization
     void Start () {
@@ -37,6 +33,8 @@ public class OnOrderControl : MonoBehaviour {
 		quantityInput.onEndEdit.AddListener(delegate {onQuantityChanged();});
 		//requirementsInput = GameObject.Find ("RequirementsInput").GetComponent<InputField> ();
 		requirementsInput = detail.Find("AdditionalInfo").GetComponent<InputField>();
+		//get toast
+		toast = detail.Find("Toast").GetComponent<Toast>();
 
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
@@ -51,13 +49,13 @@ public class OnOrderControl : MonoBehaviour {
 		DishContent _content = new DishContent(
 			foodManager.GetFoodName() + " (" + foodManager.GetSelectedVarName() + ")",
 			null,
-			0.7f,
-			foodManager.GetFoodDescription(),
+			0f,
+			null,
 			null,
 			(float)foodManager.GetFoodPrice(),
 			1,
 			"",
-			comments
+			null
 			);
 
         setContent(_content);
@@ -87,14 +85,17 @@ public class OnOrderControl : MonoBehaviour {
 			foodManager.GetFoodName() + "(" + foodManager.GetSelectedVarName() + ")", 
 			false, 
 			foodManager.GetFoodPrice() * long.Parse(quantity), 
-			long.Parse(quantity), 
-			0);
+			long.Parse(quantity),
+			GlobalContentProvider.Instance.tableNumber);
 		string jsonOrder = JsonUtility.ToJson(order);
 
 		//write the new order as a new child node under Order entry
 		DatabaseReference _ref = rootRef.Child("Order").Push();
 		_ref.SetRawJsonValueAsync(jsonOrder);
 		
+		//show toast
+		toast.ShowText("Your order has been placed!");
+
 		//after finishing the ordering, the order box will disappear
 		ResetInput();
 	}

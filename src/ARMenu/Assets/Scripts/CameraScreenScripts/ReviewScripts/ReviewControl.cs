@@ -9,6 +9,7 @@ using Firebase.Unity.Editor;
 public class ReviewControl : MonoBehaviour {
 
     private Transform detail;
+	private Toast toast;
 
     //variables to process order
     private GameObject canvas;
@@ -43,6 +44,9 @@ public class ReviewControl : MonoBehaviour {
 		//get ref to rating
 		rating = detail.Find("Rating").Find("Score").GetComponent<Slider>();
 
+		//get toast
+		toast = detail.Find("Toast").GetComponent<Toast>();
+
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
 
@@ -53,16 +57,16 @@ public class ReviewControl : MonoBehaviour {
 		ratingRef = FirebaseDatabase.DefaultInstance
 			.GetReference("Meal/" + foodKey + "/Rating");
 
-		// Try to get the rating key
-		GlobalContentProvider.Instance.ratings.TryGetValue(foodKey, out ratingKey);
-		// if there is no rating key associated with this meal in this session -> push new one
-		if (ratingKey == "" || ratingKey == null) {
-			currentRatingRef = ratingRef.Push();
-			ratingKey = currentRatingRef.Key;
-			GlobalContentProvider.Instance.ratings.Add(foodKey, ratingKey);
-		} else {
-			currentRatingRef = ratingRef.Child(ratingKey);
-		}
+		// // Try to get the rating key
+		// GlobalContentProvider.Instance.ratings.TryGetValue(foodKey, out ratingKey);
+		// // if there is no rating key associated with this meal in this session -> push new one
+		// if (ratingKey == "" || ratingKey == null) {
+		// 	currentRatingRef = ratingRef.Push();
+		// 	ratingKey = currentRatingRef.Key;
+		// 	GlobalContentProvider.Instance.ratings.Add(foodKey, ratingKey);
+		// } else {
+		// 	currentRatingRef = ratingRef.Child(ratingKey);
+		// }
 
 		// set default to inactive
 		canvas.SetActive (false);
@@ -84,7 +88,13 @@ public class ReviewControl : MonoBehaviour {
 		DatabaseReference newComment = commentsRef.Push();
 		newComment.Child("username").SetValueAsync(commentName);
 		newComment.Child("content").SetValueAsync(commentContent);
-		currentRatingRef.SetValueAsync(score);
+
+		//At the mean time just push new key to rate
+		ratingRef.Push().SetValueAsync(score);
+		//currentRatingRef.SetValueAsync(score);
+
+		//Show toast
+		toast.ShowText("Your review has been submitted!");
 
 		ResetInput();
 	}

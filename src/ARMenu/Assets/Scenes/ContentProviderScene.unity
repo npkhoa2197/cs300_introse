@@ -156,6 +156,7 @@ MonoBehaviour:
   - foodName: French Fries
     price: 16.69
     description: Good ol' french fries
+    foodImage: {fileID: 21300000, guid: ef933b0f75a06c74ba7e91588e81956d, type: 3}
     variants:
     - variantModel: {fileID: 100000, guid: cdc94d3da34df8b4f9914dfeac1fc0ca, type: 3}
       variantName: Regular
@@ -163,3 +164,4 @@ MonoBehaviour:
       variantName: Small
     - variantModel: {fileID: 100000, guid: 66df3bd6cdd345b4c8dd63ebee7155e6, type: 3}
       variantName: Spaghetti
+  tableNumber: 0

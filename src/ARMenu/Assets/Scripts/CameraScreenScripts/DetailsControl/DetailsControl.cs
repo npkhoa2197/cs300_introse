@@ -37,7 +37,7 @@ public class DetailsControl : MonoBehaviour {
 		//set the layout content
 		DishContent _content = new DishContent(
 			foodManager.GetFoodName(),
-			null,
+			foodManager.GetFoodImage(),
 			0f,
 			foodManager.GetFoodDescription(),
 			null,

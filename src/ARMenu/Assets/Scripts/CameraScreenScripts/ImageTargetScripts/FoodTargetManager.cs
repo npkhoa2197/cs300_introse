@@ -26,6 +26,10 @@ public class FoodTargetManager : MonoBehaviour {
 		return GlobalContentProvider.GetMealKey(foodObject.foodName);
 	}
 
+	public Sprite GetFoodImage() {
+		return foodObject.foodImage;
+	}
+
 	public double GetFoodPrice() {
 		return foodObject.price;
 	}
