@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Firebase;
+using Firebase.Database;
+using Firebase.Unity.Editor;
+using AssemblyCSharp;
+using System;
 
 public class MenuDetailControl : MonoBehaviour {
 
@@ -10,17 +15,95 @@ public class MenuDetailControl : MonoBehaviour {
     public GameObject optionprefab;
     public GameObject commentprefab;
     private DishContent content;
+    private GameObject menuinfo;
+    private Transform menuinfoTransform;
+
+    //variables to process order
+    private InputField quantityInput; 
+    private InputField requirementsInput; 
+    private DatabaseReference rootRef;
+    private float totalPrice;
+    private GlobalContentProvider global;
 
     // Use this for initialization
     void Start () {
-		
+		// Set up the Editor before calling into the realtime database.
+        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
+
+        // Get the root reference location of the database.
+        rootRef = FirebaseDatabase.DefaultInstance.RootReference;
+
+        //referencing variables for order process
+        menuinfo = GameObject.Find("MenuDetail");
+        menuinfoTransform = menuinfo.transform.Find("ScrollView_5/ScrollRect/Content");
+        quantityInput = menuinfoTransform.Find("Amount").GetComponent<InputField>();
+        requirementsInput = menuinfoTransform.Find("AdditionalInfo").GetComponent<InputField>();
+
+        //add listener for quantity input field on end edit
+        quantityInput.onEndEdit.AddListener(delegate {onQuantityChanged(content);});
+
+        //init GlobalContentProvider object
+        global = GlobalContentProvider.Instance;
 	}
+
+	//listener on end editing of quantity input field
+    public void onQuantityChanged(DishContent content) {
+    	if (quantityInput.text == null || quantityInput.text == "") {
+    		menuinfoTransform.Find("Total").GetComponent<Text>().text = content.price.ToString() + "$";
+    	}
+    	else {
+        	totalPrice = float.Parse(quantityInput.text)*content.price;
+        	menuinfoTransform.Find("Total").GetComponent<Text>().text = totalPrice.ToString() + "$";
+    	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
+    public void onButtonOrderClicked() {
+        //get inputs from the input fields
+        string quantity = quantityInput.text;
+        string requirements = requirementsInput.text;
+
+        //get dish name of the selected option
+        GameObject _menuDetail = GameObject.Find("MenuDetail");
+        GameObject _menuDetailContent = _menuDetail.transform.Find("ScrollView_5/ScrollRect/Content").gameObject;
+        GameObject _optionList = _menuDetailContent.transform.Find("OptionList/ScrollRect/Content").gameObject;
+        
+        string variant = "";
+        for (int i = 0; i < _optionList.transform.childCount; ++i) {
+            if (_optionList.transform.GetChild(i).gameObject.GetComponent<Toggle>().isOn == true) {
+                variant = " (" + _optionList.transform.GetChild(i).gameObject.GetComponentInChildren<Text>().text + ")";
+                break;
+            }
+        }
+
+        //create an Order object for database storage 
+        Order order = new Order (
+            "",
+            requirements, 
+            false, 
+            content.dishname + variant, 
+            false, 
+            Convert.ToDouble(totalPrice), 
+            long.Parse(quantity), 
+            global.tableNumber);
+        string jsonOrder = JsonUtility.ToJson(order);
+
+        //write the new order as a new child node under Order entry
+        DatabaseReference _ref = rootRef.Child("Order").Push();
+        _ref.SetRawJsonValueAsync(jsonOrder);
+        
+        //after finishing the ordering, navigating back to the menulist
+        quantityInput.text = "1";
+        requirementsInput.text = "";
+        GameObject temp = GameObject.Find("Menulist");
+        temp.GetComponent<MenuListControl>().PostInsideOrderButtonClicked();
+    }
+
+    //set options
     public void setOptions(GameObject optionprefab, GameObject DishContent)
     {
     	GameObject optionsContent = DishContent.transform.Find("OptionList/ScrollRect/Content").gameObject;
@@ -30,7 +113,14 @@ public class MenuDetailControl : MonoBehaviour {
 		}
         optionlist = new List<GameObject>();
         optionsContent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
-        for (int i = 0; i < content.options.Count; i++)
+
+        //referencing the toggleGroup in order to group all the toggles (options) into one Toggle Group
+        GameObject _menuDetail = GameObject.Find("MenuDetail");
+        GameObject _menuDetailContent = _menuDetail.transform.Find("ScrollView_5/ScrollRect/Content").gameObject;
+        Transform _optionList = _menuDetailContent.transform.Find("OptionList/ScrollRect/");
+        ToggleGroup toggleGroup = _optionList.Find("Content").GetComponent<ToggleGroup>();
+
+        for (int i = 0; content.options != null && i < content.options.Count; i++)
         {
         	GameObject option = GameObject.Instantiate(optionprefab);
             option.transform.SetParent(optionsContent.transform);
@@ -38,10 +128,16 @@ public class MenuDetailControl : MonoBehaviour {
             option.transform.localPosition = new Vector3(i*360 + 60, -50, 0);
             option.transform.Find("Text").GetComponent<Text>().text = content.options[i];
             option.GetComponent<Toggle>().isOn = false;
+            
+            //set the toggleGroup
+            option.GetComponent<Toggle>().group = toggleGroup; 
+            
             optionsContent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, ((RectTransform)optionsContent.transform).rect.width + 360);
             optionlist.Add(option);
         }
 	}
+
+	//set comments
 	public void setComments(GameObject commentprefab, GameObject DishContent)
 	{
 		GameObject commentsContent = DishContent.transform.Find("CommentList/ScrollRect/Content").gameObject;
@@ -51,7 +147,7 @@ public class MenuDetailControl : MonoBehaviour {
 		}
 		commentlist = new List<GameObject>();
         commentsContent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
-        for (int i = 0; i < content.comments.Count; i++)
+        for (int i = 0; content.comments != null && i < content.comments.Count; i++)
         {
         	GameObject comment = GameObject.Instantiate(commentprefab);
             comment.transform.SetParent(commentsContent.transform);
@@ -63,6 +159,8 @@ public class MenuDetailControl : MonoBehaviour {
             commentlist.Add(comment);
 		}
 	}
+
+	//set content of the detail screen
     public void setContent(DishContent _content)
     {
         content = _content;
