@@ -89,29 +89,6 @@ public class MenuListControl : MonoBehaviour {
                 comments);
             InvokeDatabase(temp);
         }
-
-        //2 dummy items for testing
-        addMenuItem(new DishContent(
-            "hot dog",
-            null,
-            0.7f,
-            "hot dog is not dog meat",
-            null,
-            20,
-            1,
-            "",
-            null));
-
-        addMenuItem(new DishContent(
-            "hot chicken",
-            null,
-            0.7f,
-            "hot chicken actually is chicken meat",
-            null,
-            20,
-            1,
-            "",
-            null));
     }
 
 
