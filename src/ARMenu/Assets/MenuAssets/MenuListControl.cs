@@ -31,7 +31,6 @@ public class MenuListControl : MonoBehaviour {
 
     //GlobalContentProvider provides a list of supported dishes
     GlobalContentProvider provider;
-    private double score;
 
     //Debug
     void wl(string s)
@@ -77,7 +76,18 @@ public class MenuListControl : MonoBehaviour {
             List<Tuple<string,string>> comments = new List<Tuple<string, string>>();
             
             //invoke database to get the rating score and add menuitem once the async task is finished
-            DishContent temp = new DishContent(
+            // DishContent temp = new DishContent(
+            //     provider.foods[i].foodName,
+            //     provider.foods[i].foodImage,
+            //     0,
+            //     provider.foods[i].description,
+            //     options,
+            //     (float)provider.foods[i].price,
+            //     1,
+            //     "",
+            //     comments);
+            // InvokeDatabase(temp);
+            addMenuItem(new DishContent(
                 provider.foods[i].foodName,
                 provider.foods[i].foodImage,
                 0,
@@ -86,17 +96,16 @@ public class MenuListControl : MonoBehaviour {
                 (float)provider.foods[i].price,
                 1,
                 "",
-                comments);
-            InvokeDatabase(temp);
+                comments));
         }
     }
 
 
-    void InvokeDatabase(DishContent dishContent) {
+    void InvokeDatabase(Rating _rating, string key, DishContent content) {
     	double temp = 0;
 
         FirebaseDatabase.DefaultInstance
-        .GetReference("Meal/" + GlobalContentProvider.GetMealKey(dishContent.dishname) + "/AveRating/Rate")
+        .GetReference("Meal/" + key + "/AveRating/Rate")
         .GetValueAsync().ContinueWith(task => {
             if (task.IsFaulted) {
                 //handle error
@@ -104,8 +113,9 @@ public class MenuListControl : MonoBehaviour {
             else if (task.IsCompleted) {
                 DataSnapshot rating = task.Result;             
                 temp = (double) rating.Value;
-                dishContent.score = (float) temp;
-                addMenuItem(dishContent);
+                _rating.scorevalue = (float) temp;
+                _rating.setValue(_rating.scorevalue);
+                content.score = _rating.scorevalue;
             }
         });
     }
@@ -136,8 +146,9 @@ public class MenuListControl : MonoBehaviour {
         menuitem.transform.Find("Dishname").GetComponent<Text>().text = _content.dishname;
         menuitem.transform.Find("Info").GetComponent<Text>().text = _content.description + "\nPrice: $" + _content.price;
         menuitem.transform.Find("Rating").gameObject.transform.Find("Score").GetComponent<Slider>().maxValue = 5;
-        //menuitem.transform.Find("Rating").gameObject.transform.Find("Score").GetComponent<Slider>().value = _content.score;
-        menuitem.transform.Find("Rating").GetComponent<Rating>().scorevalue = _content.score;
+        //menuitem.transform.Find("Rating").GetComponent<Rating>().scorevalue = _content.value;
+        InvokeDatabase(menuitem.transform.Find("Rating").GetComponent<Rating>(),
+            GlobalContentProvider.GetMealKey(_content.dishname), _content);
         menuitem.transform.Find("Order").GetComponent<Button>().onClick.AddListener(() => ViewMenuItem(_content));
         menuitem.transform.Find("Share").GetComponent<Button>().onClick.AddListener(() => onClickShare(_content, reviewCanvas));
         menuitem.transform.Find("ItemClick").GetComponent<Button>().onClick.AddListener(() 
