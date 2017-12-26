@@ -38,6 +38,11 @@ public class InstantiateFood : MonoBehaviour, VariantChangeListener {
 
 		//set clone scale to 1
 		clone.transform.localScale = new Vector3(1, 1, 1);
+		
+		Transform baseFoodTransform = baseFoodModel.GetComponent<Transform>();
+		if (baseFoodTransform != null) {
+			clone.transform.rotation = baseFoodTransform.rotation;
+		}
 
 		//fit the box collider to the new model
 		FitBoxCollider fit = GetComponent<FitBoxCollider>();

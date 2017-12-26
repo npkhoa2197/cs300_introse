@@ -93,6 +93,9 @@ public class OnOrderControl : MonoBehaviour {
 		DatabaseReference _ref = rootRef.Child("Order").Push();
 		_ref.SetRawJsonValueAsync(jsonOrder);
 		
+		//add order to order history
+		GlobalContentProvider.Instance.AddOrderEntry(order, foodManager.GetFoodPrice());
+
 		//show toast
 		toast.ShowText("Your order has been placed!");
 

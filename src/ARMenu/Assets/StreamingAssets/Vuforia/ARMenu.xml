@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
-    <ImageTarget name="french_fries" size="1024.000000 682.666687" />
+    <ImageTarget name="hamburger" size="0.500000 0.325000" />
+    <ImageTarget name="burrito" size="0.500000 0.357083" />
+    <ImageTarget name="salad" size="0.500000 0.285501" />
+    <ImageTarget name="pizza" size="0.500000 0.298266" />
+    <ImageTarget name="peanut_bread" size="0.500000 0.301454" />
+    <ImageTarget name="cake" size="0.500000 0.298679" />
+    <ImageTarget name="fruit_tart" size="0.500000 0.305359" />
   </Tracking>
 </QCARConfig>

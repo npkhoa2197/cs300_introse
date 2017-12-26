@@ -37,8 +37,7 @@ public class LoginControl : MonoBehaviour {
         //get content provider to access app state
         GlobalContentProvider contentProvider = GlobalContentProvider.Instance;
         if (owner > 0) {
-            contentProvider.tableNumber = owner;
-            contentProvider.ratings = new Dictionary<string, string>();
+            contentProvider.InitCustomerSession(owner);
             sceneToLoad = "HomeScreen";
         }
         else if (owner == 0) {
