@@ -47,16 +47,9 @@ public class MenuListControl : MonoBehaviour {
         Content = GameObject.Find("/Menulist/Background/ScrollView_1/ScrollRect/Content");
         dishDetail = GameObject.Find("/Menulist/MenuDetail/ScrollView_5/ScrollRect/Content");
         reviewCanvas = GameObject.Find("ReviewCanvas");
-        
-        for (int i = 0; i < Content.transform.childCount; i++)
-        {
-            GameObject Menuitem = Content.transform.GetChild(i).gameObject;
-            MenuItems.Add(Menuitem);
-        }
 
         offset = ((RectTransform)menuPrefab.transform).rect.height * 0.03f;
         menuHeight = ((RectTransform)menuPrefab.transform).rect.height * 0.65f + offset;
-        Content.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, menuHeight * MenuItems.Count + 10);
         //wl(MenuItems[0].transform.localScale.x.ToString());
 
         // Set up the Editor before calling into the realtime database.
@@ -64,6 +57,7 @@ public class MenuListControl : MonoBehaviour {
 
         //add dishes from GlobalContentProvider to the MenuItem list
         provider = GlobalContentProvider.Instance;
+        Content.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, menuHeight * provider.foods.Length + 10);
         for (int i = 0; i < provider.foods.Length; ++i) {
             
             //init options (variants) for each dish
