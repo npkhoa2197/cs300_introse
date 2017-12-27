@@ -178,7 +178,7 @@ public class MenuDetailControl : MonoBehaviour {
         menuinfo.transform.Find("Title/Text").GetComponent<Text>().text = content.dishname;
         if (content.image == null) Content.Find("Image").GetComponent<Image>().color = Color.black;
         else Content.Find("Image").GetComponent<Image>().sprite = content.image;
-        Content.Find("Rating").GetComponent<Rating>().setValue(content.score);
+        Content.Find("Rating").GetComponent<Rating>().setValue(content.score/5);
         Content.Find("Description").GetComponent<Text>().text = content.description;
         //Options content
         setOptions(optionprefab, Content.gameObject);
