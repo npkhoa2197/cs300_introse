@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
@@ -19,20 +20,24 @@ public class DetailsControl : MonoBehaviour {
     public List<Tuple<string,string> > comments = new List<Tuple<string, string> >();
     
     //variables to process order
+	private Button backBtn;
     private GameObject canvas;
 	private FoodTargetManager foodManager;
 
     // Use this for initialization
     void Start () {
-		foodManager = transform.parent.GetComponent<FoodTargetManager> ();
+		//foodManager = transform.parent.GetComponent<FoodTargetManager> ();
+		foodManager = GlobalContentProvider.Instance.currentFoodManager;
 		canvas = this.gameObject;
 		detail = canvas.transform.Find("ScrollView_5/ScrollRect/Content");
+		backBtn = canvas.transform.Find("Title/BackBtn").GetComponent<Button>();
+		backBtn.onClick.AddListener(OnBackClick);
 
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
 
 		// set default to inactive
-		canvas.SetActive (false);
+		//canvas.SetActive (false);
 	
 		//set the layout content
 		DishContent _content = new DishContent(
@@ -48,6 +53,10 @@ public class DetailsControl : MonoBehaviour {
 			);
 
         setContent(_content);
+	}
+
+	void OnBackClick() {
+		SceneManager.UnloadSceneAsync("DetailsScene");
 	}
 
 	//initialize comments in the detail screen

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
@@ -21,10 +22,12 @@ public class OnOrderControl : MonoBehaviour {
 	private DatabaseReference rootRef;
 	private FoodTargetManager foodManager;
 	private Toast toast;
+	private Button backBtn;
 
     // Use this for initialization
     void Start () {
-		foodManager = transform.parent.GetComponent<FoodTargetManager> ();
+		//foodManager = transform.parent.GetComponent<FoodTargetManager> ();
+		foodManager = GlobalContentProvider.Instance.currentFoodManager;
 
 		canvas = this.gameObject;
 		detail = canvas.transform.Find("ScrollView_5/ScrollRect/Content");
@@ -35,15 +38,15 @@ public class OnOrderControl : MonoBehaviour {
 		requirementsInput = detail.Find("AdditionalInfo").GetComponent<InputField>();
 		//get toast
 		toast = detail.Find("Toast").GetComponent<Toast>();
+		//get back btn
+		backBtn = canvas.transform.Find("Title/BackBtn").GetComponent<Button>();
+		backBtn.onClick.AddListener(OnBackClick);
 
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
 
 		// Get the root reference location of the database.
 		rootRef = FirebaseDatabase.DefaultInstance.RootReference;
-
-		// set default to inactive
-		canvas.SetActive (false);
 	
 		//set the layout content
 		DishContent _content = new DishContent(
@@ -61,16 +64,20 @@ public class OnOrderControl : MonoBehaviour {
         setContent(_content);
 	}
 	
-	void OnEnable() {
-		if (content != null) {
-			content.dishname = foodManager.GetFoodName() + " (" + foodManager.GetSelectedVarName() + ")";
-        	canvas.transform.Find("Title/Text").GetComponent<Text>().text = content.dishname;
-		}
+	void OnBackClick() {
+		SceneManager.UnloadSceneAsync("OrderScene");
 	}
 
-	void OnDisable() {
-		ResetInput();
-	}
+	// void OnEnable() {
+	// 	if (content != null) {
+	// 		content.dishname = foodManager.GetFoodName() + " (" + foodManager.GetSelectedVarName() + ")";
+    //     	canvas.transform.Find("Title/Text").GetComponent<Text>().text = content.dishname;
+	// 	}
+	// }
+
+	// void OnDisable() {
+	// 	ResetInput();
+	// }
 
 	public void onOrderButtonClicked () {
 		//get inputs from the input fields

@@ -29,3 +29,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WaiterScreen.unity
     guid: c6c24c2f102ac1740b4d311f0760fef3
+  - enabled: 1
+    path: Assets/Scenes/SubCameraScenes/DetailsScene.unity
+    guid: 684f00f6cadf25a45b81d571568ca1ed
+  - enabled: 1
+    path: Assets/Scenes/SubCameraScenes/OrderScene.unity
+    guid: 5615136048554b54298de318d44fcda9
+  - enabled: 1
+    path: Assets/Scenes/SubCameraScenes/ReviewScene.unity
+    guid: 90ea61dfd8a3c6443aa267713d2d44dc

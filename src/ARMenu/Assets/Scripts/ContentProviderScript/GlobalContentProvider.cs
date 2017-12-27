@@ -24,13 +24,13 @@ public class GlobalContentProvider : MonoBehaviour {
 
     void Start() {
         //Load first game scene (probably main menu)
-        //InitCustomerSession(12);
+        InitCustomerSession(12);
         //SceneManager.LoadScene("MenuScreen");
         // for (int i = 0; i < 3; ++i) {
         //     orderList.Add("Entry #" + i, new OrderEntry("Entry #" + i, 1, 16.9, 16.9));
         // }
-        //SceneManager.LoadScene("CameraScreen");
-        SceneManager.LoadScene("LoginScreenV2");
+        SceneManager.LoadScene("CameraScreen");
+        //SceneManager.LoadScene("LoginScreenV2");
     }
 
     public void AddOrderEntry(Order order, double orignalPrice) {
@@ -49,6 +49,7 @@ public class GlobalContentProvider : MonoBehaviour {
         orderList = new Dictionary<string, OrderEntry>();
         this.tableNumber = tableNumber;
         this.totalPrice = 0;
+        currentFoodManager = null;
     }
 
     // Food and variants data
@@ -61,6 +62,8 @@ public class GlobalContentProvider : MonoBehaviour {
     public double totalPrice;
     // Store table number
     public long tableNumber;
+    // Store current FoodManager to use with Details, Review and Order scene
+    public FoodTargetManager currentFoodManager;
 }
 
 public class OrderEntry {
