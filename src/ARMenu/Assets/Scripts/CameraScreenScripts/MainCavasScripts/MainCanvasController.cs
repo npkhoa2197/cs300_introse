@@ -8,6 +8,7 @@ public class MainCanvasController : MonoBehaviour {
 
 	private Button backBtn;
 	private Button historyBtn;
+	public GameObject historyCanvas;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +23,6 @@ public class MainCanvasController : MonoBehaviour {
 	}
 
 	void OnHistoryClick() {
-
+		historyCanvas.SetActive(true);
 	}
 }
