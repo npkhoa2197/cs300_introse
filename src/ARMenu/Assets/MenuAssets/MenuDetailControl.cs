@@ -52,11 +52,10 @@ public class MenuDetailControl : MonoBehaviour {
 	//listener on end editing of quantity input field
     public void onQuantityChanged(DishContent content) {
     	if (quantityInput.text == null || quantityInput.text == "") {
-    		menuinfoTransform.Find("Total").GetComponent<Text>().text = content.price.ToString() + "$";
+    		menuinfoTransform.Find("Total").GetComponent<Text>().text = "$" + content.price.ToString();
     	}
     	else {
-        	totalPrice = float.Parse(quantityInput.text)*content.price;
-        	menuinfoTransform.Find("Total").GetComponent<Text>().text = totalPrice.ToString() + "$";
+        	menuinfoTransform.Find("Total").GetComponent<Text>().text = "$" + (float.Parse(quantityInput.text)*content.price).ToString();
     	}
     }
 	
@@ -67,7 +66,9 @@ public class MenuDetailControl : MonoBehaviour {
 
     public void onButtonOrderClicked() {
         //get inputs from the input fields
-        string quantity = quantityInput.text;
+        string quantity = "1";
+        if (quantityInput.text != null && quantityInput.text != "")
+            quantity = quantityInput.text;
         string requirements = requirementsInput.text;
 
         //get dish name of the selected option
@@ -90,14 +91,18 @@ public class MenuDetailControl : MonoBehaviour {
             false, 
             content.dishname + variant, 
             false, 
-            Convert.ToDouble(totalPrice), 
+            long.Parse(quantity)*content.price, 
             long.Parse(quantity), 
             global.tableNumber);
+
         string jsonOrder = JsonUtility.ToJson(order);
 
         //write the new order as a new child node under Order entry
         DatabaseReference _ref = rootRef.Child("Order").Push();
         _ref.SetRawJsonValueAsync(jsonOrder);
+
+        //add new order into global conent provider
+        GlobalContentProvider.Instance.AddOrderEntry(order, (double) content.price);
         
         //after finishing the ordering, navigating back to the menulist
         quantityInput.text = "1";
@@ -177,9 +182,9 @@ public class MenuDetailControl : MonoBehaviour {
         Content.Find("Description").GetComponent<Text>().text = content.description;
         //Options content
         setOptions(optionprefab, Content.gameObject);
-        Content.Find("Price").GetComponent<Text>().text = content.price.ToString() + "$";
+        Content.Find("Price").GetComponent<Text>().text = "$" + content.price.ToString();
         Content.Find("Amount").Find("Placeholder").GetComponent<Text>().text = content.amount.ToString();
-        Content.Find("Total").GetComponent<Text>().text = (content.price * content.amount).ToString() + "$";
+        Content.Find("Total").GetComponent<Text>().text = "$" + (content.price * content.amount).ToString();
         Content.Find("AdditionalInfo").GetComponent<InputField>().text = content.additionalinfo;
         
         //call database to get comments
