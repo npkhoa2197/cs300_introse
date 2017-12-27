@@ -20,17 +20,23 @@ public class GlobalContentProvider : MonoBehaviour {
     void Awake () {
         DontDestroyOnLoad (transform.gameObject);
         Instance = this;
+        InitCustomerSession(12);
     }
 
     void Start() {
         //Load first game scene (probably main menu)
-        InitCustomerSession(12);
         //SceneManager.LoadScene("MenuScreen");
         // for (int i = 0; i < 3; ++i) {
         //     orderList.Add("Entry #" + i, new OrderEntry("Entry #" + i, 1, 16.9, 16.9));
         // }
         SceneManager.LoadScene("CameraScreen");
         //SceneManager.LoadScene("LoginScreenV2");
+    }
+
+    void OnDestroy() {
+        if (manListeners != null) {
+            manListeners.Clear();
+        }
     }
 
     public void AddOrderEntry(Order order, double orignalPrice) {
@@ -50,6 +56,47 @@ public class GlobalContentProvider : MonoBehaviour {
         this.tableNumber = tableNumber;
         this.totalPrice = 0;
         currentFoodManager = null;
+        manListeners = new List<FoodManagerListener>();
+    }
+
+    public bool SetCurrentFoodManager(FoodTargetManager man) {
+        if (currentFoodManager == null) {
+            currentFoodManager = man;
+                
+            foreach(FoodManagerListener listeners in manListeners) {
+                listeners.OnNewFoodManager();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool RemoveCurrentFoodManager(FoodTargetManager man) {
+        if (man == currentFoodManager) {
+            currentFoodManager = null;
+            
+            foreach(FoodManagerListener listeners in manListeners) {
+                listeners.OnFoodManagerLost();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public FoodTargetManager GetCurrentFoodManager() {
+        return currentFoodManager;
+    }
+
+    public void AddManagerListener(FoodManagerListener listener) {
+        manListeners.Add(listener);
+    }
+
+    public void RemoveManagerListener(FoodManagerListener listener) {
+        manListeners.Remove(listener);
     }
 
     // Food and variants data
@@ -63,7 +110,11 @@ public class GlobalContentProvider : MonoBehaviour {
     // Store table number
     public long tableNumber;
     // Store current FoodManager to use with Details, Review and Order scene
-    public FoodTargetManager currentFoodManager;
+    private FoodTargetManager currentFoodManager;
+    // Store selection circle
+    public GameObject selectionCircle;
+    // Listeners for FoodManager changes
+    private List<FoodManagerListener> manListeners;
 }
 
 public class OrderEntry {
@@ -98,4 +149,9 @@ public class FoodObject {
 public class Variant {
     public GameObject variantModel;
     public string variantName;
+}
+
+public interface FoodManagerListener {
+    void OnNewFoodManager();
+    void OnFoodManagerLost();
 }

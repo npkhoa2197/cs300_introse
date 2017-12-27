@@ -23,14 +23,15 @@ public class ReviewControl : MonoBehaviour {
 	private DatabaseReference currentRatingRef;
 	private FoodTargetManager foodManager;
 	private string foodKey;
+	private GlobalContentProvider provider;
 	
 	// key of rating of this meal on the db in this session
 	private string ratingKey = "";
 
     // Use this for initialization
     void Start () {
-		//foodManager = transform.parent.GetComponent<FoodTargetManager> ();
-		foodManager = GlobalContentProvider.Instance.currentFoodManager;
+		provider = GlobalContentProvider.Instance;
+		foodManager = provider.GetCurrentFoodManager();
 		foodKey = foodManager.GetFoodKey();
 
 		canvas = GameObject.Find ("ReviewCanvas");
@@ -74,9 +75,6 @@ public class ReviewControl : MonoBehaviour {
 		// } else {
 		// 	currentRatingRef = ratingRef.Child(ratingKey);
 		// }
-
-		// set default to inactive
-		//canvas.SetActive (false);
 
 		setContent();
 	}

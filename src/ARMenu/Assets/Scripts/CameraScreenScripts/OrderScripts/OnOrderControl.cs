@@ -23,11 +23,12 @@ public class OnOrderControl : MonoBehaviour {
 	private FoodTargetManager foodManager;
 	private Toast toast;
 	private Button backBtn;
+	private GlobalContentProvider provider;
 
     // Use this for initialization
     void Start () {
-		//foodManager = transform.parent.GetComponent<FoodTargetManager> ();
-		foodManager = GlobalContentProvider.Instance.currentFoodManager;
+		provider = GlobalContentProvider.Instance;
+		foodManager = provider.GetCurrentFoodManager();
 
 		canvas = this.gameObject;
 		detail = canvas.transform.Find("ScrollView_5/ScrollRect/Content");
@@ -93,7 +94,7 @@ public class OnOrderControl : MonoBehaviour {
 			false, 
 			foodManager.GetFoodPrice() * long.Parse(quantity), 
 			long.Parse(quantity),
-			GlobalContentProvider.Instance.tableNumber);
+			provider.tableNumber);
 		string jsonOrder = JsonUtility.ToJson(order);
 
 		//write the new order as a new child node under Order entry
@@ -101,7 +102,7 @@ public class OnOrderControl : MonoBehaviour {
 		_ref.SetRawJsonValueAsync(jsonOrder);
 		
 		//add order to order history
-		GlobalContentProvider.Instance.AddOrderEntry(order, foodManager.GetFoodPrice());
+		provider.AddOrderEntry(order, foodManager.GetFoodPrice());
 
 		//show toast
 		toast.ShowText("Your order has been placed!");

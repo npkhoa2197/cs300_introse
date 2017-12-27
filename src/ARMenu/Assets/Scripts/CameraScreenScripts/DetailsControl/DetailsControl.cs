@@ -23,11 +23,12 @@ public class DetailsControl : MonoBehaviour {
 	private Button backBtn;
     private GameObject canvas;
 	private FoodTargetManager foodManager;
+	private GlobalContentProvider provider;
 
     // Use this for initialization
     void Start () {
-		//foodManager = transform.parent.GetComponent<FoodTargetManager> ();
-		foodManager = GlobalContentProvider.Instance.currentFoodManager;
+		provider = GlobalContentProvider.Instance;
+		foodManager = provider.GetCurrentFoodManager();
 		canvas = this.gameObject;
 		detail = canvas.transform.Find("ScrollView_5/ScrollRect/Content");
 		backBtn = canvas.transform.Find("Title/BackBtn").GetComponent<Button>();
@@ -36,9 +37,6 @@ public class DetailsControl : MonoBehaviour {
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
 
-		// set default to inactive
-		//canvas.SetActive (false);
-	
 		//set the layout content
 		DishContent _content = new DishContent(
 			foodManager.GetFoodName(),
