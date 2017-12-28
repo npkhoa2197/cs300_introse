@@ -34,6 +34,10 @@ public class ButtonPanel : MonoBehaviour, FoodManagerListener {
 	}
 
 	void OnDetailsClick() {
+		if (isCircleActive) {
+			provider.selectionCircle.SetActive(false);
+			isCircleActive = false;
+		}
 		SceneManager.LoadScene("DetailsScene", LoadSceneMode.Additive);
 	}
 
@@ -51,10 +55,18 @@ public class ButtonPanel : MonoBehaviour, FoodManagerListener {
 	}
 
 	void OnOrderClick() {
+		if (isCircleActive) {
+			provider.selectionCircle.SetActive(false);
+			isCircleActive = false;
+		}
 		SceneManager.LoadScene("OrderScene", LoadSceneMode.Additive);
 	}
 
 	void OnReviewClick() {
+		if (isCircleActive) {
+			provider.selectionCircle.SetActive(false);
+			isCircleActive = false;
+		}
 		SceneManager.LoadScene("ReviewScene", LoadSceneMode.Additive);
 	}
 
