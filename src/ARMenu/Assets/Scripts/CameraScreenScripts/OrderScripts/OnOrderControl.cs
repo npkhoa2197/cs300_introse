@@ -90,7 +90,7 @@ public class OnOrderControl : MonoBehaviour {
 			"",
 			requirements, 
 			false, 
-			foodManager.GetFoodName() + "(" + foodManager.GetSelectedVarName() + ")", 
+			foodManager.GetFoodName() + " (" + foodManager.GetSelectedVarName() + ")", 
 			false, 
 			foodManager.GetFoodPrice() * long.Parse(quantity), 
 			long.Parse(quantity),
