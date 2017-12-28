@@ -1304,7 +1304,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Waiter name
+  m_Text: 'Hello Waiter!
+
+'
 --- !u!222 &823538980
 CanvasRenderer:
   m_ObjectHideFlags: 0

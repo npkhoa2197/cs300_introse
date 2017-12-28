@@ -55,7 +55,7 @@ public class ChefOrderControl : MonoBehaviour {
         }
         
         IDictionary dictOrder = (IDictionary) args.Snapshot.Value;   
-        //Debug.Log(dictOrder["meal"]);
+        Debug.Log(dictOrder["meal"]);
         itemOr = new Order (
             Convert.ToString(args.Snapshot.Key), 
             Convert.ToString(dictOrder["additionalRequirements"]),
