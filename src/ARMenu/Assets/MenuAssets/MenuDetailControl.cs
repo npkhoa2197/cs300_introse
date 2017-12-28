@@ -59,7 +59,7 @@ public class MenuDetailControl : MonoBehaviour {
     		menuinfoTransform.Find("Total").GetComponent<Text>().text = "$" + content.price.ToString();
     	}
     	else {
-        	menuinfoTransform.Find("Total").GetComponent<Text>().text = "$" + (float.Parse(quantityInput.text)*content.price).ToString();
+        	menuinfoTransform.Find("Total").GetComponent<Text>().text = "$" + (Convert.ToInt64(quantityInput.text)*content.price).ToString();
     	}
     }
 	
@@ -97,7 +97,7 @@ public class MenuDetailControl : MonoBehaviour {
             false, 
             content.dishname + variant, 
             false, 
-            (double)float.Parse(quantity)*content.price, 
+            Convert.ToInt64(quantity)*content.price, 
             long.Parse(quantity), 
             global.tableNumber);
 
@@ -108,7 +108,7 @@ public class MenuDetailControl : MonoBehaviour {
         _ref.SetRawJsonValueAsync(jsonOrder);
 
         //add new order into global conent provider
-        GlobalContentProvider.Instance.AddOrderEntry(order, (double) content.price);
+        GlobalContentProvider.Instance.AddOrderEntry(order, content.price);
         
         //after finishing the ordering, navigating back to the menulist
         quantityInput.text = "1";
@@ -196,7 +196,7 @@ public class MenuDetailControl : MonoBehaviour {
         menuinfo.transform.Find("Title/Text").GetComponent<Text>().text = content.dishname;
         if (content.image == null) Content.Find("Image").GetComponent<Image>().color = Color.black;
         else Content.Find("Image").GetComponent<Image>().sprite = content.image;
-        Content.Find("Rating").GetComponent<Rating>().setValue(content.score/5);
+        Content.Find("Rating").GetComponent<Rating>().setValue((float)content.score/5);
         Content.Find("Description").GetComponent<Text>().text = content.description;
         //Options content
         setOptions(optionprefab, Content.gameObject);
