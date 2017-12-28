@@ -19,8 +19,13 @@ public class ChefOrderControl : MonoBehaviour {
     public Text title;
     public List<Order> orderList;
     public Order itemOr;
+
+    private GameObject confirmationCanvas;
 	// Use this for initialization
 	void Start () {
+        confirmationCanvas = GameObject.Find("ConfirmationCanvas");
+        confirmationCanvas.SetActive(false);
+
         orderList = new List<Order>();
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
@@ -134,8 +139,14 @@ public class ChefOrderControl : MonoBehaviour {
 
     public void onClickCooked(GameObject order, string key)
     {
-        GameObject button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        confirmationCanvas.SetActive(true);
+        confirmationCanvas.transform.Find("Confirmation/Image/Yes").GetComponent<Button>().onClick.AddListener(
+            () => onConfirmYesClicked(order, key));
+        confirmationCanvas.transform.Find("Confirmation/Image/No").GetComponent<Button>().onClick.AddListener(
+            () => onConfirmNoClicked());
+    }
 
+    public void onConfirmYesClicked(GameObject order, string key) {
         //remove object in order list
         int pivot = -1;
         for (int i = 0; i < Orders.Count; i++)
@@ -157,7 +168,14 @@ public class ChefOrderControl : MonoBehaviour {
 
         // remove from database
         removeFromDatabase(order, key);
+
+        //hide the confirmation dialog
+        confirmationCanvas.SetActive(false);
+
+        confirmationCanvas.transform.Find("Confirmation/Image/Yes").GetComponent<Button>().onClick.RemoveAllListeners();
     }
 
-
+    public void onConfirmNoClicked() {
+        confirmationCanvas.SetActive(false);
+    }
 }

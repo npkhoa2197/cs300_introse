@@ -19,8 +19,14 @@ public class WaiterOrderControl : MonoBehaviour {
     public Text title;
     public List<Order> orderList;
     public Order itemOr;
+
+    private GameObject confirmationCanvas;
+
     // Use this for initialization
     void Start () {
+        confirmationCanvas = GameObject.Find("ConfirmationCanvas");
+        confirmationCanvas.SetActive(false);
+
         orderList = new List<Order>();
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
@@ -50,7 +56,7 @@ public class WaiterOrderControl : MonoBehaviour {
         }
         
         IDictionary dictOrder = (IDictionary) args.Snapshot.Value;   
-        Debug.Log(dictOrder["meal"]);
+        
         itemOr = new Order (
             Convert.ToString(args.Snapshot.Key), 
             Convert.ToString(dictOrder["additionalRequirements"]),
@@ -132,12 +138,15 @@ public class WaiterOrderControl : MonoBehaviour {
         
     }
 
-    public void onClickPaid(GameObject order, string key)
-    {
+    public void onClickPaid(GameObject order, string key) {
+        confirmationCanvas.SetActive(true);
+        confirmationCanvas.transform.Find("Confirmation/Image/Yes").GetComponent<Button>().onClick.AddListener(
+            () => onConfirmYesClicked(order, key));
+        confirmationCanvas.transform.Find("Confirmation/Image/No").GetComponent<Button>().onClick.AddListener(
+            () => onConfirmNoClicked());
+    }
 
-        GameObject button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        //GameObject order = button.transform.parent.gameObject;
-
+    public void onConfirmYesClicked(GameObject order, string key) {
         //remove object in order list
         int pivot = -1;
         for (int i = 0; i < Orders.Count; i++)
@@ -150,7 +159,7 @@ public class WaiterOrderControl : MonoBehaviour {
                 break;
             }
         }
-
+    
         //set displacement to update position for order list
         for (int i = pivot; i < Orders.Count; i++)
         {
@@ -159,7 +168,14 @@ public class WaiterOrderControl : MonoBehaviour {
 
         // remove from database
         removeFromDatabase(order, key);
+
+        //hide the confirmation canvas after confirming
+        confirmationCanvas.SetActive(false);
+
+        confirmationCanvas.transform.Find("Confirmation/Image/Yes").GetComponent<Button>().onClick.RemoveAllListeners();
     }
 
-
+    public void onConfirmNoClicked() {
+        confirmationCanvas.SetActive(false);
+    }
 }

@@ -78,7 +78,7 @@ public class MenuListControl : MonoBehaviour {
                 0,
                 provider.foods[i].description,
                 options,
-                (float)provider.foods[i].price,
+                provider.foods[i].price,
                 1,
                 "",
                 comments);
@@ -159,7 +159,7 @@ public class MenuListControl : MonoBehaviour {
         menuitem.transform.Find("Dishname").GetComponent<Text>().text = _content.dishname;
         menuitem.transform.Find("Info").GetComponent<Text>().text = _content.description + "\nPrice: $" + _content.price;
         menuitem.transform.Find("Rating").gameObject.transform.Find("Score").GetComponent<Slider>().maxValue = 5;
-        menuitem.transform.Find("Rating").GetComponent<Rating>().scorevalue = _content.score;
+        menuitem.transform.Find("Rating").GetComponent<Rating>().scorevalue = (float)_content.score;
         // InvokeDatabase(menuitem.transform.Find("Rating").GetComponent<Rating>(),
         //     GlobalContentProvider.GetMealKey(_content.dishname), _content);
         menuitem.transform.Find("Order").GetComponent<Button>().onClick.AddListener(() => ViewMenuItem(_content));
