@@ -20,7 +20,7 @@ public class GlobalContentProvider : MonoBehaviour {
     void Awake () {
         DontDestroyOnLoad (transform.gameObject);
         Instance = this;
-        InitCustomerSession(12);
+        //InitCustomerSession(12);
     }
 
     void Start() {
@@ -29,8 +29,8 @@ public class GlobalContentProvider : MonoBehaviour {
         // for (int i = 0; i < 3; ++i) {
         //     orderList.Add("Entry #" + i, new OrderEntry("Entry #" + i, 1, 16.9, 16.9));
         // }
-        SceneManager.LoadScene("CameraScreen");
-        //SceneManager.LoadScene("LoginScreenV2");
+        //SceneManager.LoadScene("CameraScreen");
+        SceneManager.LoadScene("LoginScreenV2");
     }
 
     void OnDestroy() {
