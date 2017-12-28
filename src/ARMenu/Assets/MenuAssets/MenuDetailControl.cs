@@ -19,6 +19,7 @@ public class MenuDetailControl : MonoBehaviour {
     private Transform menuinfoTransform;
 
     private GameObject reviewCanvas;
+    private GameObject confirmationCanvas;
 
     //variables to process order
     private InputField quantityInput; 
@@ -30,6 +31,9 @@ public class MenuDetailControl : MonoBehaviour {
     // Use this for initialization
     void Start () {
         reviewCanvas = GameObject.Find("ReviewCanvas");
+        confirmationCanvas = GameObject.Find("ConfirmationCanvas");
+        confirmationCanvas.SetActive(false);
+
 		// Set up the Editor before calling into the realtime database.
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
 
@@ -64,7 +68,9 @@ public class MenuDetailControl : MonoBehaviour {
 		
 	}
 
-    public void onButtonOrderClicked() {
+    public void order() {
+        confirmationCanvas.SetActive(false);
+
         //get inputs from the input fields
         string quantity = "1";
         if (quantityInput.text != null && quantityInput.text != "")
@@ -72,9 +78,7 @@ public class MenuDetailControl : MonoBehaviour {
         string requirements = requirementsInput.text;
 
         //get dish name of the selected option
-        GameObject _menuDetail = GameObject.Find("MenuDetail");
-        GameObject _menuDetailContent = _menuDetail.transform.Find("ScrollView_5/ScrollRect/Content").gameObject;
-        GameObject _optionList = _menuDetailContent.transform.Find("OptionList/ScrollRect/Content").gameObject;
+        GameObject _optionList = menuinfoTransform.gameObject.transform.Find("OptionList/ScrollRect/Content").gameObject;
         
         string variant = "";
         for (int i = 0; i < _optionList.transform.childCount; ++i) {
@@ -84,6 +88,8 @@ public class MenuDetailControl : MonoBehaviour {
             }
         }
 
+        Debug.Log(long.Parse(quantity));
+        Debug.Log(float.Parse(quantity));
         //create an Order object for database storage 
         Order order = new Order (
             "",
@@ -91,7 +97,7 @@ public class MenuDetailControl : MonoBehaviour {
             false, 
             content.dishname + variant, 
             false, 
-            long.Parse(quantity)*content.price, 
+            (double)float.Parse(quantity)*content.price, 
             long.Parse(quantity), 
             global.tableNumber);
 
@@ -109,6 +115,14 @@ public class MenuDetailControl : MonoBehaviour {
         requirementsInput.text = "";
         GameObject temp = GameObject.Find("Menulist");
         temp.GetComponent<MenuListControl>().PostInsideOrderButtonClicked();
+    }
+
+    public void onButtonOrderClicked() {
+        confirmationCanvas.SetActive(true);
+    }
+
+    public void onNoButtonClicked() {
+        confirmationCanvas.SetActive(false);
     }
 
     //set options
@@ -133,7 +147,11 @@ public class MenuDetailControl : MonoBehaviour {
             option.transform.localScale = new Vector3(1, 1, 1);
             option.transform.localPosition = new Vector3(i*360 + 60, -50, 0);
             option.transform.Find("Text").GetComponent<Text>().text = content.options[i];
-            option.GetComponent<Toggle>().isOn = false;
+            if (i == 0)
+                option.GetComponent<Toggle>().isOn = true;
+            else 
+                option.GetComponent<Toggle>().isOn = false;
+
             
             //set the toggleGroup
             option.GetComponent<Toggle>().group = toggleGroup; 
