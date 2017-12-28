@@ -72,6 +72,7 @@ public class OrderInfo : MonoBehaviour {
         v = vx;
         viewlist = true;
     	order.transform.Find("Paid").GetComponent<Button>().onClick.Invoke();
+        orderinfo.transform.Find("ScrollView_5").Find("ScrollRect").Find("Content").Find("Paid").GetComponent<Button>().onClick.RemoveAllListeners();
     }
     public void cookedAndViewOrderList(GameObject order) 
     {
@@ -81,5 +82,6 @@ public class OrderInfo : MonoBehaviour {
         v = vx;
         viewlist = true;
     	order.transform.Find("CookDone").GetComponent<Button>().onClick.Invoke();
+        orderinfo.transform.Find("ScrollView_5").Find("ScrollRect").Find("Content").Find("CookDone").GetComponent<Button>().onClick.RemoveAllListeners();
     }
 }

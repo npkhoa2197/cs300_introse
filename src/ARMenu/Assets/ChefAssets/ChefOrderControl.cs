@@ -159,7 +159,7 @@ public class ChefOrderControl : MonoBehaviour {
                 break;
             }
         }
-        Debug.Log(pivot);
+
         //set displacement to update position for order list
         for (int i = pivot; i < Orders.Count; i++)
         {
@@ -171,6 +171,8 @@ public class ChefOrderControl : MonoBehaviour {
 
         //hide the confirmation dialog
         confirmationCanvas.SetActive(false);
+
+        confirmationCanvas.transform.Find("Confirmation/Image/Yes").GetComponent<Button>().onClick.RemoveAllListeners();
     }
 
     public void onConfirmNoClicked() {

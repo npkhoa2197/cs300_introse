@@ -56,7 +56,7 @@ public class WaiterOrderControl : MonoBehaviour {
         }
         
         IDictionary dictOrder = (IDictionary) args.Snapshot.Value;   
-        Debug.Log(dictOrder["meal"]);
+        
         itemOr = new Order (
             Convert.ToString(args.Snapshot.Key), 
             Convert.ToString(dictOrder["additionalRequirements"]),
@@ -159,7 +159,7 @@ public class WaiterOrderControl : MonoBehaviour {
                 break;
             }
         }
-        Debug.Log(pivot + "asdhkasjdak");
+    
         //set displacement to update position for order list
         for (int i = pivot; i < Orders.Count; i++)
         {
@@ -169,7 +169,10 @@ public class WaiterOrderControl : MonoBehaviour {
         // remove from database
         removeFromDatabase(order, key);
 
+        //hide the confirmation canvas after confirming
         confirmationCanvas.SetActive(false);
+
+        confirmationCanvas.transform.Find("Confirmation/Image/Yes").GetComponent<Button>().onClick.RemoveAllListeners();
     }
 
     public void onConfirmNoClicked() {
