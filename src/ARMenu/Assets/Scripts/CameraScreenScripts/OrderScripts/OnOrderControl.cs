@@ -24,6 +24,7 @@ public class OnOrderControl : MonoBehaviour {
 	private Toast toast;
 	private Button backBtn;
 	private GlobalContentProvider provider;
+	private ConfirmDialog confirm;
 
     // Use this for initialization
     void Start () {
@@ -42,6 +43,8 @@ public class OnOrderControl : MonoBehaviour {
 		//get back btn
 		backBtn = canvas.transform.Find("Title/BackBtn").GetComponent<Button>();
 		backBtn.onClick.AddListener(OnBackClick);
+		//get confirmation
+		confirm = transform.Find("ConfirmDialog").GetComponent<ConfirmDialog>();
 
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
@@ -81,6 +84,10 @@ public class OnOrderControl : MonoBehaviour {
 	// }
 
 	public void onOrderButtonClicked () {
+		confirm.Confirm(MakeOrder);
+	}
+
+	void MakeOrder() {
 		//get inputs from the input fields
 		string quantity = quantityInput.text;
 		string requirements = requirementsInput.text;

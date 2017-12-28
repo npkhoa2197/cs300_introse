@@ -94,6 +94,16 @@ public class ReviewControl : MonoBehaviour {
 		string commentName = usernameInput.text;
 		string commentContent = commentInput.text;
 
+		if (commentName == "") {
+			toast.ShowText("Please provide name");
+			return;
+		}
+
+		if (commentContent == "") {
+			toast.ShowText("Please provide comment content");
+			return;
+		}
+
 		DatabaseReference newComment = commentsRef.Push();
 		newComment.Child("username").SetValueAsync(commentName);
 		newComment.Child("content").SetValueAsync(commentContent);
