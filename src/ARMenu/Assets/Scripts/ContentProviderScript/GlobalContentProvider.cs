@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using AssemblyCSharp;
+using UnityEngine.XR;
 
 public class GlobalContentProvider : MonoBehaviour {
 
@@ -20,6 +21,8 @@ public class GlobalContentProvider : MonoBehaviour {
     void Awake () {
         DontDestroyOnLoad (transform.gameObject);
         Instance = this;
+        //disable Vuforia by default
+        XRSettings.enabled = false;
         //InitCustomerSession(12);
     }
 
