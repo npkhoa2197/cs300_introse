@@ -83,6 +83,12 @@ public class SelectionCircle : MonoBehaviour {
 	        clones[i] = Instantiate(variantModels[i], pos, Quaternion.identity, transform);
 	        clones[i].transform.localScale = scaleVector;
 
+			//check if base model has rotation
+			Transform baseTransform = variantModels[i].GetComponent<Transform>();
+			if (baseTransform != null) {
+				clones[i].transform.rotation = baseTransform.rotation;
+			}
+
 	        //check if variant is selected => if no then make it partially visible
 	        if (i != foodManager.selected) {
 	        	SetVisibility(clones[i], 0.5f);

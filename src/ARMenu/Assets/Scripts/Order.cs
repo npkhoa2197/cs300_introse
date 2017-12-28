@@ -4,7 +4,7 @@ namespace AssemblyCSharp
 {
 	public class Order
 	{
-    public string key;
+    	public string key;
 		public string additionalRequirements;
 		public bool finished;
 		public string meal;

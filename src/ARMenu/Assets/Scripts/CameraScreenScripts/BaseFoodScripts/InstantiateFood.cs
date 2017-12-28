@@ -10,6 +10,10 @@ public class InstantiateFood : MonoBehaviour, VariantChangeListener {
 	private GameObject clone;
 	private Transform container;
 
+	void Awake() {
+		gameObject.SetActive(false);
+	}
+
 	// Use this for initialization
 	void Start () {
 		//get foodManager from parent
@@ -17,6 +21,19 @@ public class InstantiateFood : MonoBehaviour, VariantChangeListener {
 		//get selected variant model
 		baseFoodModel = foodManager.GetSelectedVarModel();
 		CreateModel();
+	}
+
+	void OnEnable() {
+		if (baseFoodModel != null) {
+			CreateModel();
+		}
+	}
+
+	void OnDisable() {
+		if (clone != null) {
+			Destroy(clone);
+			clone = null;
+		}
 	}
 
 	public void UpdateFoodModel (GameObject newFoodModel) {
@@ -38,6 +55,11 @@ public class InstantiateFood : MonoBehaviour, VariantChangeListener {
 
 		//set clone scale to 1
 		clone.transform.localScale = new Vector3(1, 1, 1);
+		
+		Transform baseFoodTransform = baseFoodModel.GetComponent<Transform>();
+		if (baseFoodTransform != null) {
+			clone.transform.rotation = baseFoodTransform.rotation;
+		}
 
 		//fit the box collider to the new model
 		FitBoxCollider fit = GetComponent<FitBoxCollider>();

@@ -153,13 +153,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foods:
-  - foodName: French Fries
-    price: 16.69
-    description: Good ol' french fries
+  - foodName: Pizza
+    price: 40.67
+    description: Delicious pizza
+    foodImage: {fileID: 21300000, guid: 94e0a7a4546312248b7bfd02953195ef, type: 3}
     variants:
-    - variantModel: {fileID: 100000, guid: cdc94d3da34df8b4f9914dfeac1fc0ca, type: 3}
+    - variantModel: {fileID: 100012, guid: d19b4e65f3cea784b80700a891e1d8b8, type: 3}
+      variantName: Vegetarian
+    - variantModel: {fileID: 100006, guid: e79f7050257efcb4cbdffc7504f4c8d6, type: 3}
+      variantName: Meaty
+  - foodName: Cake
+    price: 4.59
+    description: Sweat cake
+    foodImage: {fileID: 21300000, guid: b9a5da66a6c0c7044818f25aafe5fbaa, type: 3}
+    variants:
+    - variantModel: {fileID: 100018, guid: 05b1b3a8867b6544bb09bbcdf6bf846c, type: 3}
+      variantName: Strawberry
+    - variantModel: {fileID: 100020, guid: 9a11fcba7512ad243af04ae170354b66, type: 3}
+      variantName: Chocolate
+    - variantModel: {fileID: 100018, guid: 2471b5d912b86604982cc5a451b7929d, type: 3}
+      variantName: Peanut
+  - foodName: Burrito
+    price: 7.89
+    description: Fast and delicious
+    foodImage: {fileID: 21300000, guid: c8a3868665713db49926339e56b6ecb9, type: 3}
+    variants:
+    - variantModel: {fileID: 100012, guid: 3096b0a78ecb9ff458f4c35db1c87ee9, type: 3}
+      variantName: Double Bacon
+    - variantModel: {fileID: 100004, guid: 923c4edfcb9058c4eb42a507c2960f85, type: 3}
+      variantName: Single Delight
+  - foodName: Fruit Tart
+    price: 8.99
+    description: Tasty
+    foodImage: {fileID: 21300000, guid: efdc0bc09dd7e544998b5d0839564f3a, type: 3}
+    variants:
+    - variantModel: {fileID: 100012, guid: 64d50109390b7af4faeee9e59c07eaf1, type: 3}
       variantName: Regular
-    - variantModel: {fileID: 100000, guid: c65c11566c3171346b8cad80b5c27138, type: 3}
-      variantName: Small
-    - variantModel: {fileID: 100000, guid: 66df3bd6cdd345b4c8dd63ebee7155e6, type: 3}
-      variantName: Spaghetti
+  - foodName: Hamburger
+    price: 15.99
+    description: Trendy and Fatty
+    foodImage: {fileID: 21300000, guid: 27f3bc8a2a544b540ac2cd01969fe43a, type: 3}
+    variants:
+    - variantModel: {fileID: 100018, guid: eb29de968224c074cb7b1cfd9234efdd, type: 3}
+      variantName: Regular
+  - foodName: Salad
+    price: 10.99
+    description: Healthy dish
+    foodImage: {fileID: 21300000, guid: 0d87d56c352f9ab40ab0f1830f1a8b30, type: 3}
+    variants:
+    - variantModel: {fileID: 100018, guid: 21edd07b79aa3b34b8c5095171a0f2f6, type: 3}
+      variantName: Regular
+  - foodName: Peanut Bread
+    price: 7.99
+    description: Good
+    foodImage: {fileID: 21300000, guid: 5f200f660ed3e7d42bfcfe21294481e3, type: 3}
+    variants:
+    - variantModel: {fileID: 100018, guid: 19c8b8d54f9acbd42a171a8353e8a6a2, type: 3}
+      variantName: Regular
+  tableNumber: 0

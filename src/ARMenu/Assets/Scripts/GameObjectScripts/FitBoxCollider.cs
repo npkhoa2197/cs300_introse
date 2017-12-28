@@ -53,6 +53,8 @@ public class FitBoxCollider : MonoBehaviour {
 		//set the size of box collider to the size of the bounds
 		//Debug.Log(outBound);
 		boxCollider.center = outBound.center;
-		boxCollider.size = outBound.size;
+
+		//hard code number for box collider size
+		boxCollider.size = new Vector3((float) 0.714094 * scaleFactor, (float) 0.1505819 * scaleFactor, (float) 0.719931 * scaleFactor);
 	}
 }
