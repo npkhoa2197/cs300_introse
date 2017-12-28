@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
@@ -21,10 +22,13 @@ public class OnOrderControl : MonoBehaviour {
 	private DatabaseReference rootRef;
 	private FoodTargetManager foodManager;
 	private Toast toast;
+	private Button backBtn;
+	private GlobalContentProvider provider;
 
     // Use this for initialization
     void Start () {
-		foodManager = transform.parent.GetComponent<FoodTargetManager> ();
+		provider = GlobalContentProvider.Instance;
+		foodManager = provider.GetCurrentFoodManager();
 
 		canvas = this.gameObject;
 		detail = canvas.transform.Find("ScrollView_5/ScrollRect/Content");
@@ -35,15 +39,15 @@ public class OnOrderControl : MonoBehaviour {
 		requirementsInput = detail.Find("AdditionalInfo").GetComponent<InputField>();
 		//get toast
 		toast = detail.Find("Toast").GetComponent<Toast>();
+		//get back btn
+		backBtn = canvas.transform.Find("Title/BackBtn").GetComponent<Button>();
+		backBtn.onClick.AddListener(OnBackClick);
 
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
 
 		// Get the root reference location of the database.
 		rootRef = FirebaseDatabase.DefaultInstance.RootReference;
-
-		// set default to inactive
-		canvas.SetActive (false);
 	
 		//set the layout content
 		DishContent _content = new DishContent(
@@ -61,16 +65,20 @@ public class OnOrderControl : MonoBehaviour {
         setContent(_content);
 	}
 	
-	void OnEnable() {
-		if (content != null) {
-			content.dishname = foodManager.GetFoodName() + " (" + foodManager.GetSelectedVarName() + ")";
-        	canvas.transform.Find("Title/Text").GetComponent<Text>().text = content.dishname;
-		}
+	void OnBackClick() {
+		SceneManager.UnloadSceneAsync("OrderScene");
 	}
 
-	void OnDisable() {
-		ResetInput();
-	}
+	// void OnEnable() {
+	// 	if (content != null) {
+	// 		content.dishname = foodManager.GetFoodName() + " (" + foodManager.GetSelectedVarName() + ")";
+    //     	canvas.transform.Find("Title/Text").GetComponent<Text>().text = content.dishname;
+	// 	}
+	// }
+
+	// void OnDisable() {
+	// 	ResetInput();
+	// }
 
 	public void onOrderButtonClicked () {
 		//get inputs from the input fields
@@ -86,7 +94,7 @@ public class OnOrderControl : MonoBehaviour {
 			false, 
 			foodManager.GetFoodPrice() * long.Parse(quantity), 
 			long.Parse(quantity),
-			GlobalContentProvider.Instance.tableNumber);
+			provider.tableNumber);
 		string jsonOrder = JsonUtility.ToJson(order);
 
 		//write the new order as a new child node under Order entry
@@ -94,7 +102,7 @@ public class OnOrderControl : MonoBehaviour {
 		_ref.SetRawJsonValueAsync(jsonOrder);
 		
 		//add order to order history
-		GlobalContentProvider.Instance.AddOrderEntry(order, foodManager.GetFoodPrice());
+		provider.AddOrderEntry(order, foodManager.GetFoodPrice());
 
 		//show toast
 		toast.ShowText("Your order has been placed!");

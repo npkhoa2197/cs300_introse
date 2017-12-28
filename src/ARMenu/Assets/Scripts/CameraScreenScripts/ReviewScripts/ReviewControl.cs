@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
@@ -10,6 +11,7 @@ public class ReviewControl : MonoBehaviour {
 
     private Transform detail;
 	private Toast toast;
+	private Button backBtn;
 
     //variables to process order
     private GameObject canvas;
@@ -21,13 +23,15 @@ public class ReviewControl : MonoBehaviour {
 	private DatabaseReference currentRatingRef;
 	private FoodTargetManager foodManager;
 	private string foodKey;
+	private GlobalContentProvider provider;
 	
 	// key of rating of this meal on the db in this session
 	private string ratingKey = "";
 
     // Use this for initialization
     void Start () {
-		foodManager = transform.parent.GetComponent<FoodTargetManager> ();
+		provider = GlobalContentProvider.Instance;
+		foodManager = provider.GetCurrentFoodManager();
 		foodKey = foodManager.GetFoodKey();
 
 		canvas = GameObject.Find ("ReviewCanvas");
@@ -46,6 +50,10 @@ public class ReviewControl : MonoBehaviour {
 
 		//get toast
 		toast = detail.Find("Toast").GetComponent<Toast>();
+
+		//get back btn
+		backBtn = canvas.transform.Find("Title/BackBtn").GetComponent<Button>();
+		backBtn.onClick.AddListener(OnBackClick);
 
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://armenu-2220c.firebaseio.com/");
@@ -68,10 +76,11 @@ public class ReviewControl : MonoBehaviour {
 		// 	currentRatingRef = ratingRef.Child(ratingKey);
 		// }
 
-		// set default to inactive
-		canvas.SetActive (false);
-
 		setContent();
+	}
+
+	void OnBackClick() {
+		SceneManager.UnloadSceneAsync("ReviewScene");
 	}
 
 	void ResetInput() {
