@@ -105,7 +105,7 @@ public class ChefOrderControl : MonoBehaviour {
         if (image != null)
         order.transform.Find("Image").GetComponent<Image>().sprite = image;
         order.transform.Find("Dishname").GetComponent<Text>().text = item.meal;
-        order.transform.Find("Info1").GetComponent<Text>().text = "Table "+ item.tableNumber.ToString() + " Amount: "+ item.quantity.ToString() + " Price: $" +item.price.ToString();
+        order.transform.Find("Info1").GetComponent<Text>().text = "Table "+ item.tableNumber.ToString() + ", Amount: "+ item.quantity.ToString() + ", Price: $" +item.price.ToString();
         order.transform.Find("Info2").GetComponent<Text>().text = "Additional requirement: "+ item.additionalRequirements;
         order.transform.Find("CookDone").GetComponent<Button>().onClick.AddListener(() => onClickCooked(order, item.key));
         order.GetComponent<Button>().onClick.AddListener(() => gameObject.GetComponent<OrderInfo>().ViewOrder(order, item));
