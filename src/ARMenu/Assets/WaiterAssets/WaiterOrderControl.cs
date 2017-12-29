@@ -144,6 +144,8 @@ public class WaiterOrderControl : MonoBehaviour {
             () => onConfirmYesClicked(order, key));
         confirmationCanvas.transform.Find("Confirmation/Image/No").GetComponent<Button>().onClick.AddListener(
             () => onConfirmNoClicked());
+        confirmationCanvas.transform.Find("Confirmation/Background").GetComponent<Button>().onClick.AddListener(
+            () => onConfirmNoClicked());
     }
 
     public void onConfirmYesClicked(GameObject order, string key) {
