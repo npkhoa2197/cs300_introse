@@ -59,7 +59,7 @@ public class OnOrderControl : MonoBehaviour {
 			0f,
 			null,
 			null,
-			(float)foodManager.GetFoodPrice(),
+			foodManager.GetFoodPrice(),
 			1,
 			"",
 			null

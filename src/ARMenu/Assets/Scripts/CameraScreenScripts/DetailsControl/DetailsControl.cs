@@ -44,7 +44,7 @@ public class DetailsControl : MonoBehaviour {
 			0f,
 			foodManager.GetFoodDescription(),
 			null,
-			(float)foodManager.GetFoodPrice(),
+			foodManager.GetFoodPrice(),
 			1,
 			"",
 			comments
