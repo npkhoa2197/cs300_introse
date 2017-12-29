@@ -57,7 +57,7 @@ public class LoginWithIMEI : MonoBehaviour {
 			Debug.Log("IMEI: " + imei);
 			//replace this with real imei
             //return verify(imei);
-			verify("123456789");
+			verify(imei);
 		}
 		catch(System.Exception exc)
 		{

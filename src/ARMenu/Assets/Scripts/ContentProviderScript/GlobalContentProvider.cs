@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using AssemblyCSharp;
+using UnityEngine.XR;
+using Vuforia;
 
 public class GlobalContentProvider : MonoBehaviour {
 
@@ -20,6 +22,8 @@ public class GlobalContentProvider : MonoBehaviour {
     void Awake () {
         DontDestroyOnLoad (transform.gameObject);
         Instance = this;
+        //disable camera by default
+        XRSettings.enabled = false;
         //InitCustomerSession(12);
     }
 
@@ -30,7 +34,29 @@ public class GlobalContentProvider : MonoBehaviour {
         //     orderList.Add("Entry #" + i, new OrderEntry("Entry #" + i, 1, 16.9, 16.9));
         // }
         //SceneManager.LoadScene("CameraScreen");
+
+        //set vuforia autofocus mode
+        var vuforia = VuforiaARController.Instance;
+        vuforia.RegisterVuforiaStartedCallback(OnVuforiaStarted);
+        vuforia.RegisterOnPauseCallback(OnVuforiaPaused);
+
         SceneManager.LoadScene("LoginScreenV2");
+    }
+
+    private void OnVuforiaStarted()
+    {
+        CameraDevice.Instance.SetFocusMode(
+            CameraDevice.FocusMode.FOCUS_MODE_CONTINUOUSAUTO);
+    }
+ 
+    private void OnVuforiaPaused(bool paused)
+    {
+        if (!paused) // resumed
+        {
+            // Set again autofocus mode when app is resumed
+            CameraDevice.Instance.SetFocusMode(
+                CameraDevice.FocusMode.FOCUS_MODE_CONTINUOUSAUTO);
+        }
     }
 
     void OnDestroy() {

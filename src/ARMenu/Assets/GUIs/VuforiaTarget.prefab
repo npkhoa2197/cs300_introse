@@ -105,8 +105,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1667000250622254}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 500, y: 0, z: 0}
-  m_LocalScale: {x: 1000, y: 1000, z: 1000}
+  m_LocalPosition: {x: 3500, y: 0, z: 0}
+  m_LocalScale: {x: 1000.00006, y: 1000.00006, z: 1000.00006}
   m_Children:
   - {fileID: 4101147509374872}
   - {fileID: 4655642101037754}
@@ -188,7 +188,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 82e84cb486cd0e144b6b5893117d8d9a, type: 3}
+  - {fileID: 2100000, guid: 7dfc2e1472ac84e1bb749a8a9f934483, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -244,10 +244,10 @@ TextMesh:
   m_FontSize: 190
   m_FontStyle: 1
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: 82e84cb486cd0e144b6b5893117d8d9a, type: 3}
+  m_Font: {fileID: 12800000, guid: 7dfc2e1472ac84e1bb749a8a9f934483, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4283862774
 --- !u!114 &114072348787955234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99cd4342612f2324ea91753ceaa89438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodObjectIndex: 0
+  foodObjectIndex: 2
   selected: 0
 --- !u!114 &114597249868427500
 MonoBehaviour:
@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mTrackableName: pizza
+  mTrackableName: burrito
   mPreserveChildSize: 0
   mInitializedInEditor: 1
   mDataSetPath: Vuforia/ARMenu.xml
@@ -356,10 +356,10 @@ MonoBehaviour:
   mSmartTerrainOccluderOffset: {x: 0, y: 0, z: 0}
   mSmartTerrainOccluderRotation: {x: 0, y: 0, z: 0, w: 0}
   mAutoSetOccluderFromTargetSize: 0
-  mAspectRatio: 0.596532
+  mAspectRatio: 0.714166
   mImageTargetType: 0
-  mWidth: 1000
-  mHeight: 596.532
+  mWidth: 1000.00006
+  mHeight: 714.166
 --- !u!114 &114839447099002984
 MonoBehaviour:
   m_ObjectHideFlags: 1
