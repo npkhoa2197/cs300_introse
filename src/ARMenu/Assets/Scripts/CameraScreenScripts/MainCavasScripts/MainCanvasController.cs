@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR;
 
 public class MainCanvasController : MonoBehaviour {
 
@@ -19,6 +20,8 @@ public class MainCanvasController : MonoBehaviour {
 	}
 	
 	void OnBackClick() {
+		//turn off camera
+		XRSettings.enabled = false;
 		SceneManager.LoadScene("HomeScreen");
 	}
 
