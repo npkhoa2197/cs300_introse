@@ -26,7 +26,7 @@ public class LoginControl : MonoBehaviour {
 
     public void OnLoginResult(long owner) {
         wl(owner);
-        if (owner != -2) {
+        if (owner != null && owner != -2) {
             StartCoroutine(AccessGranted(owner));
         }
     }

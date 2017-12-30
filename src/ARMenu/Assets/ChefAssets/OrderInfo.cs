@@ -40,9 +40,9 @@ public class OrderInfo : MonoBehaviour {
         orderinfo = GameObject.Find("OrderDetail");
         orderinfo.transform.Find("Title").Find("Text").GetComponent<Text>().text = item.meal;
         orderinfo.transform.Find("ScrollView_5").Find("ScrollRect").Find("Content").Find("Table").GetComponent<Text>().text = "Table "+ item.tableNumber.ToString();
-        orderinfo.transform.Find("ScrollView_5").Find("ScrollRect").Find("Content").Find("PriceVal").GetComponent<Text>().text = "$"+item.price.ToString(); 
+        orderinfo.transform.Find("ScrollView_5").Find("ScrollRect").Find("Content").Find("PriceVal").GetComponent<Text>().text = "$"+(item.price/item.quantity).ToString(); 
         orderinfo.transform.Find("ScrollView_5").Find("ScrollRect").Find("Content").Find("NumberVal").GetComponent<Text>().text = item.quantity.ToString();
-        orderinfo.transform.Find("ScrollView_5").Find("ScrollRect").Find("Content").Find("TotalValue").GetComponent<Text>().text = "$"+(item.price*item.quantity).ToString();
+        orderinfo.transform.Find("ScrollView_5").Find("ScrollRect").Find("Content").Find("TotalValue").GetComponent<Text>().text = "$"+item.price.ToString();
         orderinfo.transform.Find("ScrollView_5").Find("ScrollRect").Find("Content").Find("Additioninfo").Find("Text").GetComponent<Text>().text = item.additionalRequirements;
         if (orderinfo.transform.Find("ScrollView_5").Find("ScrollRect").Find("Content").Find("Paid") != null)
         	orderinfo.transform.Find("ScrollView_5").Find("ScrollRect").Find("Content").Find("Paid").GetComponent<Button>().onClick.AddListener(() => gameObject.GetComponent<OrderInfo>().paidAndViewOrderList(order));
