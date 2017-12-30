@@ -156,7 +156,7 @@ MonoBehaviour:
   - foodName: Pizza
     price: 40.67
     description: Delicious pizza
-    foodImage: {fileID: 21300000, guid: 94e0a7a4546312248b7bfd02953195ef, type: 3}
+    foodImage: {fileID: 21300000, guid: 4fd19cbf72007544790ea038a0bb451a, type: 3}
     variants:
     - variantModel: {fileID: 100012, guid: d19b4e65f3cea784b80700a891e1d8b8, type: 3}
       variantName: Vegetarian
@@ -165,7 +165,7 @@ MonoBehaviour:
   - foodName: Cake
     price: 4.59
     description: Sweat cake
-    foodImage: {fileID: 21300000, guid: b9a5da66a6c0c7044818f25aafe5fbaa, type: 3}
+    foodImage: {fileID: 21300000, guid: 24aaa313e552a774786a3e04ddbbbace, type: 3}
     variants:
     - variantModel: {fileID: 100018, guid: 05b1b3a8867b6544bb09bbcdf6bf846c, type: 3}
       variantName: Strawberry
@@ -176,7 +176,7 @@ MonoBehaviour:
   - foodName: Burrito
     price: 7.89
     description: Fast and delicious
-    foodImage: {fileID: 21300000, guid: c8a3868665713db49926339e56b6ecb9, type: 3}
+    foodImage: {fileID: 21300000, guid: a4387dc8eb8ff5744a93fd69d7b3d99c, type: 3}
     variants:
     - variantModel: {fileID: 100012, guid: 3096b0a78ecb9ff458f4c35db1c87ee9, type: 3}
       variantName: Double Bacon
@@ -185,29 +185,31 @@ MonoBehaviour:
   - foodName: Fruit Tart
     price: 8.99
     description: Tasty
-    foodImage: {fileID: 21300000, guid: efdc0bc09dd7e544998b5d0839564f3a, type: 3}
+    foodImage: {fileID: 21300000, guid: 883bea704a615cc4c812701d052e3038, type: 3}
     variants:
     - variantModel: {fileID: 100012, guid: 64d50109390b7af4faeee9e59c07eaf1, type: 3}
       variantName: Regular
   - foodName: Hamburger
     price: 15.99
     description: Trendy and Fatty
-    foodImage: {fileID: 21300000, guid: 27f3bc8a2a544b540ac2cd01969fe43a, type: 3}
+    foodImage: {fileID: 21300000, guid: 9f02496e4412e1040bc9f1353d6bd9d7, type: 3}
     variants:
     - variantModel: {fileID: 100018, guid: eb29de968224c074cb7b1cfd9234efdd, type: 3}
       variantName: Regular
   - foodName: Salad
     price: 10.99
     description: Healthy dish
-    foodImage: {fileID: 21300000, guid: 0d87d56c352f9ab40ab0f1830f1a8b30, type: 3}
+    foodImage: {fileID: 21300000, guid: 95ae5036eeb7e6e43ad664a3349bcbb8, type: 3}
     variants:
     - variantModel: {fileID: 100018, guid: 21edd07b79aa3b34b8c5095171a0f2f6, type: 3}
       variantName: Regular
   - foodName: Peanut Bread
     price: 7.99
     description: Good
-    foodImage: {fileID: 21300000, guid: 5f200f660ed3e7d42bfcfe21294481e3, type: 3}
+    foodImage: {fileID: 21300000, guid: 0fa87456f54b6e74eb227051e4db46b6, type: 3}
     variants:
     - variantModel: {fileID: 100018, guid: 19c8b8d54f9acbd42a171a8353e8a6a2, type: 3}
       variantName: Regular
+  totalPrice: 0
   tableNumber: 0
+  selectionCircle: {fileID: 0}
